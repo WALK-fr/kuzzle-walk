@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
-  <!-- #docregion head -->
-    <!-- #docregion base-href -->
-  <head>
+<!-- #docregion head -->
+<!-- #docregion base-href -->
+<head>
     <base href="/">
     <!-- #enddocregion base-href -->
     <title>Angular 2 Tour of Heroes</title>
@@ -25,15 +25,18 @@
     <!-- #docregion router -->
     <script src="node_modules/angular2/bundles/router.dev.js"></script>
     <!-- #enddocregion router -->
-    <script>
-      System.config({packages: {app: {format: 'register', defaultExtension: 'js'}}});
-      System.import('app/main')
-            .then(null, console.error.bind(console));
-    </script>
-  </head>
-  <!-- #enddocregion head -->
 
-  <body>
-    <tp-app>Loading...</tp-app>
-  </body>
+    <script src="node_modules/kuzzle-sdk/node_modules/socket.io-client/socket.io.js"></script>
+    <script src="node_modules/kuzzle-sdk/dist/kuzzle.min.js"></script>
+    <script>
+        System.config({packages: {app: {format: 'register', defaultExtension: 'js'}}});
+        System.import('app/main')
+                .then(null, console.error.bind(console));
+    </script>
+</head>
+<!-- #enddocregion head -->
+
+<body>
+<tp-app>Loading...</tp-app>
+</body>
 </html>
