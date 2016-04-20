@@ -11,6 +11,9 @@ Go to the root folder of the current repository and run `npm install` then run `
 
 Then just visit [http://localhost:3000](http://localhost:3000)
 
-## Code structure
+## Angular 2 Style Guide
 
-The root code folder that will be developed is defined in app folder.
+The root code folder is located in the `app` folder.
+
+Then follow the most you can this convention of programming : https://github.com/mgechev/angular2-style-guide
+

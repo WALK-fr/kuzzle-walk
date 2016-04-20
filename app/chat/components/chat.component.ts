@@ -1,7 +1,7 @@
 import {Component} from "angular2/core";
 
 /**
- * This component represent the chatroom of the travel.
+ * This components represent the chatroom of the travel.
  */
 @Component({
     'selector': 'chat'
