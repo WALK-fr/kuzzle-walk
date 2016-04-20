@@ -16,4 +16,3 @@ Then just visit [http://localhost:3000](http://localhost:3000)
 The root code folder is located in the `app` folder.
 
 Then follow the most you can this convention of programming : https://github.com/mgechev/angular2-style-guide
-
