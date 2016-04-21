@@ -1,6 +1,6 @@
-import {Injectable} from 'angular2/core';
+/// <reference path="../../../typings/kuzzle/kuzzle.d.ts"/>
 
-declare var Kuzzle: any;
+import {Injectable} from "angular2/core";
 
 /**
  * Handle kuzzle methods
@@ -11,5 +11,13 @@ export class KuzzleService {
 
     public constructor() {
         this.kuzzle = new Kuzzle('http://walk.challenge.kuzzle.io:7512');
+    }
+
+    echo() {
+        this.kuzzle
+            .dataCollectionFactory('walk', 'test')
+            .publishMessage({foo: 'bar', baz: 'qux'});
+
+        return this.kuzzle;
     }
 }

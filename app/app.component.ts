@@ -1,4 +1,5 @@
 import {Component} from "angular2/core";
+import {KuzzleService} from "./shared/services/KuzzleService.service";
 
 @Component({
     selector: 'tp-app',
@@ -8,4 +9,7 @@ import {Component} from "angular2/core";
 `
 })
 export class AppComponent {
+    constructor (private kuzzle: KuzzleService) {
+        console.log(kuzzle.echo());
+    }
 }
