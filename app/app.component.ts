@@ -1,5 +1,5 @@
 import {Component} from "angular2/core";
-import {KuzzleService} from "./shared/services/KuzzleService.service";
+import {KuzzleService} from "./shared/services/kuzzle/KuzzleService.service.ts";
 
 import {MapComponent} from "./map/map";
 
