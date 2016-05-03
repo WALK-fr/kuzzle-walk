@@ -4,11 +4,17 @@
 export class TravelMarker {
     private _latitude: number;
     private _longitude: number;
+    private _content: string;
 
 
-    constructor(latitude:number, longitude:number) {
+    constructor(content: string,latitude:number, longitude:number) {
+        this._content = content;
         this._latitude = latitude;
         this._longitude = longitude;
+    }
+
+    get content():string {
+        return this._content;
     }
 
     get latitude():number {

@@ -13,7 +13,5 @@ import {MapComponent} from "./map/map";
 `
 })
 export class AppComponent {
-    constructor (private kuzzle: KuzzleService) {
-        console.log(kuzzle.echo());
-    }
+    
 }
