@@ -1,6 +1,6 @@
 import {Component} from "angular2/core";
-import {KuzzleService} from "./shared/services/kuzzle/KuzzleService.service.ts";
 
+import {KuzzleService} from "./shared/services/kuzzle/KuzzleService.service";
 import {MapComponent} from "./map/map";
 
 @Component({
@@ -13,5 +13,5 @@ import {MapComponent} from "./map/map";
 `
 })
 export class AppComponent {
-    
+
 }
