@@ -1,6 +1,4 @@
-
 import {Component, OnInit} from "angular2/core";
-import Map = L.Map;
 
 @Component({
     selector: 'map',
@@ -10,7 +8,7 @@ import Map = L.Map;
 })
 export class MapComponent implements OnInit {
 
-    map:Map;
+    map:L.Map;
 
 
     constructor() {

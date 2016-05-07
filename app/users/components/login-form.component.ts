@@ -1,15 +1,15 @@
 import {Component} from 'angular2/core';
 import {ControlGroup, FormBuilder, Validators} from 'angular2/common';
 
-import {User} from '../models/user'
-import {KuzzleService} from "../../shared/services/kuzzle/KuzzleService.service";
+import {User} from '..'
+import {KuzzleService} from "../../shared/kuzzle";
 
 @Component({
     templateUrl: 'app/users/components/login-form.component.html',
 })
 export class LoginFormComponent {
     userForm: ControlGroup;
-    user = new User();
+    private _user = new User();
 
     constructor(fb: FormBuilder, private kuzzleService:KuzzleService) {
         this.userForm = fb.group({
@@ -23,6 +23,6 @@ export class LoginFormComponent {
      * handle login when the form is submitted
      */
     login() {
-        this.kuzzleService.userService.login(this.user.name,this.user.password);
+        this.kuzzleService.userService.login(this._user.login,this._user.password);
     }
 }

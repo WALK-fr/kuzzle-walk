@@ -1,4 +1,4 @@
-import {ChatMessage, ChatRoom} from "../../../chat/chat";
+import {ChatMessage, ChatRoom} from "../../../chat/index";
 
 /**
  * Handle each kuzzle calls related to the chat component.

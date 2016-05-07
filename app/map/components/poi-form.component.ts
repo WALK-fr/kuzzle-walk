@@ -1,7 +1,7 @@
 import {Component} from 'angular2/core';
 import {ControlGroup, FormBuilder, Validators} from 'angular2/common';
 
-import {Poi} from '../models/poi'
+import {Poi} from '../index'
 
 @Component({
     selector: 'poi-form',
