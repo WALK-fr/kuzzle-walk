@@ -1,0 +1,62 @@
+<form [ngFormModel]="poiForm" (ngSubmit)="save()">
+    <h3> Basic informations </h3>
+    <div class="row">
+        <div class="input-field col s12">
+            <input [(ngModel)]="poi.name"
+                    ngControl="name"
+                    id="poi_name"
+                    type="text"
+                    class="validate">
+            <label for="poi_name" data-error="wrong" data-success="right">Name</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s12">
+            <input [(ngModel)]="poi.address"
+                    ngControl="address"
+                    id="poi_address"
+                    type="text"
+                    class="validate">
+            <label for="poi_address" data-error="wrong" data-success="right">Address</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s12">
+            <select [(ngModel)]="poi.type" ngControl="type">
+                <option value="" disabled selected>Choose your option</option>
+                <option value="1">Landscape</option>
+                <option value="2">Hotel</option>
+                <option value="3">Informations</option>
+                <option value="4">Friends or Family place</option>
+                <option value="5">Other</option>
+            </select>
+            <label>Type</label>
+        </div>
+    </div>
+
+    <h3> Details </h3>
+    <div class="row">
+        <div class="input-field col s12">
+            <input [(ngModel)]="poi.duration" id="poi_duration" type="text" class="validate">
+            <label for="poi_duration" data-error="wrong" data-success="right">Duration</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s12">
+            <input [(ngModel)]="poi.price" id="poi_price" type="text" class="validate">
+            <label for="poi_price" data-error="wrong" data-success="right">Price</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="file-field input-field">
+            <div class="btn">
+                <span>File</span>
+                <input type="file" multiple>
+            </div>
+            <div class="file-path-wrapper">
+                <input class="file-path validate" type="text" placeholder="Upload one or more files">
+            </div>
+        </div>
+    </div>
+    <button type="submit">submit</button>
+</form>

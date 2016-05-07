@@ -5,7 +5,7 @@ import Map = L.Map;
 @Component({
     selector: 'map',
     template: `
-        <div id="mapid" style="height: 200px;"></div>
+        <div id="mapid"></div>
     `
 })
 export class MapComponent implements OnInit {
@@ -14,7 +14,7 @@ export class MapComponent implements OnInit {
 
 
     constructor() {
-        
+
     }
 
     ngOnInit() {

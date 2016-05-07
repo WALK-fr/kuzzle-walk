@@ -1,0 +1,65 @@
+
+html, body{
+  height:100%;
+}
+
+body{
+  background: #FFF url('../background4.jpg') top center no-repeat;
+  background-size: cover;
+}
+
+#tp-header{
+  width:100%;
+  position: absolute;
+  top:0;
+  left:0;
+}
+
+#tp-content{
+  margin-top: -60px;
+  width:100%;
+}
+
+#tp-app-grabber{
+  font-weight: 300;
+}
+
+#tp-app-grabber-subtitle{
+  padding-bottom: 40px;
+  font-weight: 300;
+}
+
+#tp-first-form{
+   background-color: rgba(255,255,255,0.4) ;
+ }
+
+.card {
+  background-color: rgba(255,255,255,0.7);
+}
+
+#tp-app-destination{
+  margin-top: 10px;
+}
+
+input#destination{
+  height: 80px;
+  font-size: 48px;
+  font-weight: 200;
+}
+
+#tp-steps-describer h5, #tp-steps-describer h4{
+  font-weight: 300;
+}
+
+#tp-footer{
+  width:100%;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  padding-top: 0px;
+}
+
+#tp-app-title{
+  font-style:italic;
+  font-weight: 200;
+}

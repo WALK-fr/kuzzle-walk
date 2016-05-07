@@ -1,2 +1,3 @@
 export * from "./components/map.component";
-export * from "./model/TravelMarker";
+export * from "./components/poi-form.component";
+export * from "./models/TravelMarker";
