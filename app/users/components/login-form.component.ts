@@ -1,8 +1,8 @@
 import {Component} from 'angular2/core';
 import {ControlGroup, FormBuilder, Validators} from 'angular2/common';
 
-import {User} from '..'
-import {KuzzleService} from "../../shared/kuzzle";
+import {User} from '../index'
+import {KuzzleService} from "../../shared/kuzzle/index";
 
 @Component({
     templateUrl: 'app/users/components/login-form.component.html',

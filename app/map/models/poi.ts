@@ -6,7 +6,7 @@ import {InterestInterface, Location} from "../index";
  * A POI (Point of Interest) is a point fetched from the backend that represent something associated to a location.
  * Per example : The Eiffel tower in Paris is a POI located at the Location 48.8583701, 2.2944813.
  */
-export class Poi implements InterestInterface {
+export class Poi {
     private _name:string;
     private _price:number;
     private _location:Location;

@@ -1,4 +1,4 @@
-import {ChatMessage, ChatRoom} from "../../../chat/index";
+import {ChatMessage} from "../../../chat/index";
 
 /**
  * Handle each kuzzle calls related to the chat component.
@@ -13,11 +13,10 @@ export class KuzzleChat {
     /**
      * Dispatch a message to the subscribers of the room.
      * @param message The message to send
-     * @param room The room where the message will be dispatched
      *
      * @returns {any}
      */
-    public sendMessage(message:ChatMessage, room:ChatRoom) {
+    public sendMessage(message:ChatMessage) {
         // TODO add room
         return this.kuzzle.dataCollectionFactory('travel', 'chat').publishMessage(message);
     }

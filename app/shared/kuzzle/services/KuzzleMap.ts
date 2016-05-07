@@ -27,10 +27,10 @@ export class KuzzleMap {
         var markers:Array<Location> = [];
         // TODO : Kuzzle call further to replace the mock.
 
-        markers.push(new Location("Marker 1", 51.5, -0.09));
-        markers.push(new Location("Ceci est un marqueur<br/>Avec du HTML", 51, -0.10));
-        markers.push(new Location("Ceci est un marqueur<br/>Retour à la ligne BR", 50.5, -0.09));
-        markers.push(new Location("Marker 4", 51.3, -0.09));
+        markers.push(new Location(51.5, -0.09));
+        markers.push(new Location(51, -0.10));
+        markers.push(new Location(50.5, -0.09));
+        markers.push(new Location(51.3, -0.09));
 
         return markers;
     }

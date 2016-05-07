@@ -1,7 +1,7 @@
 import {Component} from 'angular2/core';
 import {ControlGroup, FormBuilder, Validators} from 'angular2/common';
 
-import {Poi} from '../index'
+import {Poi,Location} from '../index'
 
 @Component({
     selector: 'poi-form',
@@ -9,7 +9,7 @@ import {Poi} from '../index'
 })
 export class PoiFormComponent {
     poiForm: ControlGroup;
-    poi = new Poi();
+    poi = new Poi("Un POI",45, new Location(45.0,25.0));
 
     constructor(fb: FormBuilder) {
         this.poiForm = fb.group({

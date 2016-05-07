@@ -1,7 +1,5 @@
 import {Injectable} from "angular2/core";
-import {KuzzleChat} from "./KuzzleChat";
-import {KuzzleMap} from "./KuzzleMap";
-import {KuzzleUserService} from "./KuzzleUserService";
+import {KuzzleChat, KuzzleMap, KuzzleUserService} from "../index";
 
 declare let Kuzzle:any;
 

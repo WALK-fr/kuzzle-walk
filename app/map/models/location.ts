@@ -3,7 +3,7 @@ import {InterestInterface} from "../index";
 /**
  * Represent a location on the map
  */
-export class Location implements InterestInterface {
+export class Location {
     private _address:string;
     private _latitude:number;
     private _longitude:number;
