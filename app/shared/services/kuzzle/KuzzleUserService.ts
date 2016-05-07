@@ -18,9 +18,17 @@ export class KuzzleUserService {
 
         var expiresIn = "1h";
 
-        this.kuzzle.login("local", {username: login, password: password}, expiresIn, function (err, res) {
+        this.kuzzle.login("local", {username: login, password: password}, expiresIn, (err, res) => {
             console.log(err);
             console.log(res);
+            if (null !== res) {
+                this.kuzzle.setJwtToken(res.jwt);
+                console.log(res.jwt);
+            }
+        });
+
+        this.kuzzle.whoAmI(function (err, result) {
+            console.log(err, result);
         });
     }
 

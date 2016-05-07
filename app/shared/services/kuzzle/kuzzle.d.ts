@@ -27,7 +27,6 @@ interface Kuzzle {
      * @param callback
      */
     login(strategy:string, credential:{username:string; password:string}, expiresIn:string, callback:(err:any, res:any) => any):Kuzzle;
-
     /**
      * Logs the user out.
      *
@@ -37,6 +36,13 @@ interface Kuzzle {
      * @param callback
      */
     logout(callback:(err:any, res:any)=>any):Kuzzle;
+    /**
+     * Return informations about the currently logged user.
+     * 
+     * @param callback
+     */
+    whoAmI(callback:(err:any, result:any)=>any):void;
+    setJwtToken(jwt:string):Kuzzle;
 }
 
 
