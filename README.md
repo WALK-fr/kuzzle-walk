@@ -6,6 +6,7 @@ This application has been built in order to participate the Kuzzle challenge pow
 
 - NodeJS > 4.0
 - NPM
+- Typings (npm install typings --global)
 
 Go to the root folder of the current repository and run `npm install` then run `npm start`.
 

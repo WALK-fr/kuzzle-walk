@@ -1,10 +1,6 @@
+
 import {Component, OnInit} from "angular2/core";
 import Map = L.Map;
-
-/**
- * This components represent the map of the travel.
- */
-declare var L:any;
 
 @Component({
     selector: 'map',
