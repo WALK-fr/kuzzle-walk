@@ -1,7 +1,6 @@
 import {Component} from "angular2/core";
 import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 
-import {KuzzleService} from "shared/kuzzle/services/KuzzleService.service.ts";
 import {HomeComponent} from "./home/index";
 import {LoginFormComponent} from "./users/index";
 import {TravelComponent} from "./travel/index";
