@@ -25,4 +25,9 @@ export class LoginFormComponent {
     login() {
         this.kuzzleService.userService.login(this._user.login,this._user.password);
     }
+
+
+    get user():User {
+        return this._user;
+    }
 }

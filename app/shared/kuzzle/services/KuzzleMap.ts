@@ -1,19 +1,20 @@
-import {Location} from "../../../map/index";
+import { TravelMarker, Poi, Location } from "../../../map/index";
 /**
  * Handle each kuzzle calls related to the chat component.
  */
 export class KuzzleMap {
-    private kuzzle:any;
+    private kuzzle:Kuzzle;
 
-    public constructor(kuzzle:any) {
+    public constructor(kuzzle:Kuzzle) {
         this.kuzzle = kuzzle;
     }
 
     /**
-     * Dispatch a marker to each people that subscribed to the given travel
+     * Persist and dipatch a marker to each people that subscribed to the given travel.
+     *
      * @returns {any}
      */
-    public publishTravelMarker(travelMarker:Location) {
+    public publishTravelMarker(travelMarker:TravelMarker) {
         return this.kuzzle.dataCollectionFactory('travel', 'markers').createDocument(travelMarker);
     }
 
@@ -24,13 +25,12 @@ export class KuzzleMap {
      * @returns {Array<TravelMarker>}
      */
     public retrieveAllMarkersForTravel(travelID:number) {
-        var markers:Array<Location> = [];
+        var markers:Array<TravelMarker> = [];
         // TODO : Kuzzle call further to replace the mock.
 
-        markers.push(new Location(51.5, -0.09));
-        markers.push(new Location(51, -0.10));
-        markers.push(new Location(50.5, -0.09));
-        markers.push(new Location(51.3, -0.09));
+        markers.push(new TravelMarker("Un marqueur", "son contenu", new Poi("Un POI", 45, new Location(51.5, -0.09))));
+        markers.push(new TravelMarker("Un autre marqueur POI", "son contenu", new Poi("Un POI", 20, new Location(45.0, 25.0))));
+        markers.push(new TravelMarker("Un troisième marqueur location", "son contenu", new Poi("Un POI", 31, new Location(44.0, 25.0))));
 
         return markers;
     }

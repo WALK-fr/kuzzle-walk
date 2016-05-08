@@ -4,9 +4,9 @@ import {ChatMessage} from "../../../chat/index";
  * Handle each kuzzle calls related to the chat component.
  */
 export class KuzzleChat {
-    private kuzzle:any;
+    private kuzzle:Kuzzle;
 
-    public constructor(kuzzle:any) {
+    public constructor(kuzzle:Kuzzle) {
         this.kuzzle = kuzzle;
     }
 

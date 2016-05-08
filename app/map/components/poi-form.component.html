@@ -2,7 +2,7 @@
     <h3> Basic informations </h3>
     <div class="row">
         <div class="input-field col s12">
-            <input [(ngModel)]="poi.name"
+            <input [(ngModel)]="travelMarker.name"
                     ngControl="name"
                     id="poi_name"
                     type="text"
@@ -12,7 +12,7 @@
     </div>
     <div class="row">
         <div class="input-field col s12">
-            <input [(ngModel)]="poi.address"
+            <input [(ngModel)]="travelMarker.address"
                     ngControl="address"
                     id="poi_address"
                     type="text"
@@ -22,7 +22,7 @@
     </div>
     <div class="row">
         <div class="input-field col s12">
-            <select [(ngModel)]="poi.type" ngControl="type">
+            <select [(ngModel)]="travelMarker.type" ngControl="type">
                 <option value="" disabled selected>Choose your option</option>
                 <option value="1">Landscape</option>
                 <option value="2">Hotel</option>
@@ -37,13 +37,13 @@
     <h3> Details </h3>
     <div class="row">
         <div class="input-field col s12">
-            <input [(ngModel)]="poi.duration" id="poi_duration" type="text" class="validate">
+            <input [(ngModel)]="travelMarker.duration" id="poi_duration" type="text" class="validate">
             <label for="poi_duration" data-error="wrong" data-success="right">Duration</label>
         </div>
     </div>
     <div class="row">
         <div class="input-field col s12">
-            <input [(ngModel)]="poi.price" id="poi_price" type="text" class="validate">
+            <input [(ngModel)]="travelMarker.price" id="poi_price" type="text" class="validate">
             <label for="poi_price" data-error="wrong" data-success="right">Price</label>
         </div>
     </div>

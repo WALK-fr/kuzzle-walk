@@ -38,13 +38,16 @@ interface Kuzzle {
     logout(callback:(err:any, res:any)=>any):Kuzzle;
     /**
      * Return informations about the currently logged user.
-     * 
+     *
      * @param callback
      */
     whoAmI(callback:(err:any, result:any)=>any):void;
     setJwtToken(jwt:string):Kuzzle;
 }
 
+interface KuzzleDataCollection {
+
+}
 
 interface kuzzleConnectOptions {
     autoQueue:boolean,
