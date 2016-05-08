@@ -1,13 +1,16 @@
-import {Component} from "angular2/core";
+import {Component, AfterViewInit} from "angular2/core";
 import {ControlGroup, FormBuilder, Validators} from "angular2/common";
 import {TravelMarker} from "../index";
 import {KuzzleService} from "../../shared/kuzzle/index";
+
+// this is used to accept jquery token at compilation time
+declare var $: any;
 
 @Component({
     selector: 'poi-form',
     templateUrl: 'app/map/components/poi-form.component.html',
 })
-export class PoiFormComponent {
+export class PoiFormComponent implements AfterViewInit {
     poiForm:ControlGroup;
     travelMarker:TravelMarker;
 
@@ -20,6 +23,15 @@ export class PoiFormComponent {
 
         // TODO : Better do it on ngOnInit()
         this.travelMarker = kuzzleService.mapService.retrieveAllMarkersForTravel(400)[0];
+    }
+
+    /**
+     * triggered after the view initialization. this is used to apply
+     * materialize js on the select
+     */
+    ngAfterViewInit () {
+        $('select').material_select();
+        $('ul.tabs').tabs();
     }
 
     /**
