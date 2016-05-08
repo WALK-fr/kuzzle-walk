@@ -7,6 +7,12 @@ export class User {
     private _email:string;
     private _password:string;
 
+
+    constructor(firstName:string, lastName:string) {
+        this._firstName = firstName;
+        this._lastName = lastName;
+    }
+
     get login():string {
         return this._email;
     }
