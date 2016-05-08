@@ -1,4 +1,6 @@
 import {Component} from "angular2/core";
+import {ChatMessage} from "../index";
+import {User} from "../../users/index";
 
 /**
  * This components represent the chatroom of the travel.
@@ -9,6 +11,7 @@ import {Component} from "angular2/core";
     templateUrl: "app/chat/components/chat.component.html"
 })
 export class ChatComponent {
+    messagesList:ChatMessage[] = [new ChatMessage(new User('Jean', 'Bon'), 'Un message déjà présent')];
     message:string;
 
     /**
@@ -23,10 +26,10 @@ export class ChatComponent {
 
         if (key === KEY_ENTER) {
             // TODO : Do kuzzle call to dispatch message
-            console.log(this.message);
-            this.message = "";
 
-            // TODO add message to the panel upon kuzzle success response
+            // TODO add message to the panel upon kuzzle success response (not immediatly)
+            this.messagesList.push(new ChatMessage(new User('Jean', 'Bon'), this.message));
+            this.message = "";
         }
     }
 }

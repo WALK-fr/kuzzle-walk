@@ -4,23 +4,8 @@
             <div class="card-content white-text">
                 <span class="card-title">Chat</span>
                 <ul>
-                    <li><img class="circle" src="http://lorempixel.com/35/35/people/?random=1">Dolore fuga ipsa magnam non, quas quidem reiciendis sed vitae voluptatem voluptates! Alias aliquid, amet
-                        eligendi expedita illum iusto labore minus quae?
-                    </li>
-                    <li><img class="circle" src="http://lorempixel.com/35/35/people/?random=2">Dolore fuga ipsa magnam non, quas quidem reiciendis sed vitae voluptatem voluptates! Alias aliquid, amet
-                        eligendi expedita illum iusto labore minus quae?
-                    </li>
-                    <li><img class="circle" src="http://lorempixel.com/35/35/people/?random=1">Dolore fuga ipsa magnam non, quas quidem reiciendis sed vitae voluptatem voluptates! Alias aliquid, amet
-                        eligendi expedita illum iusto labore minus quae?
-                    </li>
-                    <li><img class="circle" src="http://lorempixel.com/35/35/people/?random=3">Dolore fuga ipsa magnam non, quas quidem reiciendis sed vitae voluptatem voluptates! Alias aliquid, amet
-                        eligendi expedita illum iusto labore minus quae?
-                    </li>
-                    <li><img class="circle" src="http://lorempixel.com/35/35/people/?random=1">Dolore fuga ipsa magnam non, quas quidem reiciendis sed vitae voluptatem voluptates! Alias aliquid, amet
-                        eligendi expedita illum iusto labore minus quae?
-                    </li>
-                    <li><img class="circle" src="http://lorempixel.com/35/35/people/?random=6">Dolore fuga ipsa magnam non, quas quidem reiciendis sed vitae voluptatem voluptates! Alias aliquid, amet
-                        eligendi expedita illum iusto labore minus quae?
+                    <li *ngFor="#message of messagesList, #index = index">
+                        <img class="circle" src="http://lorempixel.com/35/35/people/?random={{index + 1}}"> {{ message.content }}
                     </li>
                 </ul>
             </div>
