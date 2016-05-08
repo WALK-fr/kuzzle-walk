@@ -43,10 +43,19 @@ interface Kuzzle {
      */
     whoAmI(callback:(err:any, result:any)=>any):void;
     setJwtToken(jwt:string):Kuzzle;
+    /**
+     *
+     * @param index
+     * @param collection
+     *
+     * @return KuzzleDataCollection
+     */
+    dataCollectionFactory(index?:string, collection?:string):KuzzleDataCollection; // Todo change optionnal parameters when signature will be updated
 }
 
 interface KuzzleDataCollection {
-
+    publishMessage(document:any):any;
+    createDocument(document:any):any;
 }
 
 interface kuzzleConnectOptions {
