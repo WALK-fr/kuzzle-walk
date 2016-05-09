@@ -7,7 +7,7 @@
  * Initiate a Kuzzle object (main object)
  */
 interface Kuzzle {
-    constructor(url:string, options?:kuzzleConnectOptions):any;
+    constructor(url:string, options?:kuzzleConnectOptions):Kuzzle;
 
     /**
      * Log a user according to a strategy and credentials.
@@ -56,6 +56,7 @@ interface Kuzzle {
 interface KuzzleDataCollection {
     publishMessage(document:any):any;
     createDocument(document:any):any;
+    subscribe(filters:any, options:any, callback:(err:any, result:any)=> any):any;
 }
 
 interface kuzzleConnectOptions {

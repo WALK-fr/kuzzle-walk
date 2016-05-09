@@ -14,7 +14,7 @@ export class KuzzleService {
     private _userService:KuzzleUserService;
 
     public constructor() {
-        this.kuzzle = new Kuzzle('http://walk.challenge.kuzzle.io:7512');
+        this.kuzzle = new Kuzzle('http://walk.challenge.kuzzle.io:7512', {defaultIndex: 'walk'});
         this._chatService = new KuzzleChat(this.kuzzle);
         this._mapService = new KuzzleMap(this.kuzzle);
         this._userService = new KuzzleUserService(this.kuzzle);
