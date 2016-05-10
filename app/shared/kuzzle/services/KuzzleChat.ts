@@ -1,17 +1,17 @@
 import {Observable} from "rxjs/Observable";
+import {ChatMessage} from "../../../chat/index";
+import {User} from "../../../users/models/user";
 
 //test michel
 //import 'rxjs/add/observable/fromArray';
-import {ChatMessage} from "../../../chat/index";
-import {User} from "../../../users/models/user";
 
 /**
  * Handle each kuzzle calls related to the chat component.
  */
 export class KuzzleChat {
     private kuzzle:Kuzzle;
-    messages: ChatMessage[] = [];
-    messagesObs: Observable<ChatMessage[]>;
+    messages:ChatMessage[] = [];
+    messagesObs:Observable<ChatMessage[]>;
 
     public constructor(kuzzle:Kuzzle) {
         this.kuzzle = kuzzle;
@@ -25,18 +25,18 @@ export class KuzzleChat {
         var options = {};
 
         // create the observable to return
-        this.messagesObs = Observable.create( (observer:any) => {
+        this.messagesObs = Observable.create((observer:any) => {
             // subscribe to kuzzle service in order to get the data
             this.kuzzle
-                    .dataCollectionFactory('message')
-                    .subscribe({}, options, (error:any , result:any) => {
-                        // each time you get a message, you push it
-                        var content = result.result._source._content;
-                        this.messages.push(new ChatMessage(new User(), content));
+                .dataCollectionFactory('message')
+                .subscribe({}, options, (error:any, result:any) => {
+                    // each time you get a message, you push it
+                    var content = result.result._source._content;
+                    this.messages.push(new ChatMessage(new User(), content));
 
-                        // and then you notify the observer
-                        observer.next(this.messages);
-                    });
+                    // and then you notify the observer
+                    observer.next(this.messages);
+                });
         });
 
         return this.messagesObs;
