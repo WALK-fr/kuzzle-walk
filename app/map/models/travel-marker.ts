@@ -1,4 +1,5 @@
 import {Poi} from "./poi";
+import {Location} from "./location";
 
 /**
  * Represent an interest pinned to the map by a user.
@@ -16,6 +17,14 @@ export class TravelMarker {
         this._name = name;
         this._content = content;
         this._interest = interest;
+    }
+
+    get name():string {
+        return this._name;
+    }
+
+    get content():string {
+        return this._content;
     }
 
     public isPoi():boolean {

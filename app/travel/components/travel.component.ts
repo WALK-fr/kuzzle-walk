@@ -1,6 +1,6 @@
 import {Component, AfterViewInit} from 'angular2/core';
 
-import {MapComponent, PoiFormComponent, PoiListComponent} from '../../map/index';
+import {MapComponent, PoiFormComponent, MarkerListComponent} from '../../map/index';
 import {NavbarComponent} from './navbar.component';
 
 // this is used to accept jquery token at compilation time
@@ -8,7 +8,7 @@ declare var $: any;
 
 @Component({
     templateUrl: 'app/travel/components/travel.component.html',
-    directives: [MapComponent, PoiFormComponent, PoiListComponent, NavbarComponent]
+    directives: [MapComponent, PoiFormComponent, MarkerListComponent, NavbarComponent]
 })
 export class TravelComponent implements AfterViewInit {
 
