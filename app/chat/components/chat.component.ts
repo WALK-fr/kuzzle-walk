@@ -1,13 +1,12 @@
-import {Component, AfterViewInit} from "angular2/core";
-
-//test michel : import 'rxjs/add/operator/map';
-
+import {Component} from "angular2/core";
 import {ChatMessage} from "../index";
 import {User} from "../../users/index";
 import {KuzzleService} from "../../shared/kuzzle/services/KuzzleService.service";
 
+//test michel : import 'rxjs/add/operator/map';
+
 // this is used to accept jquery token at compilation time
-declare var $: any;
+declare var $:any;
 
 /**
  * This components represent the chatroom of the travel.
@@ -18,12 +17,14 @@ declare var $: any;
     templateUrl: "app/chat/components/chat.component.html"
 })
 export class ChatComponent {
+    user:User;
     messagesList:ChatMessage[];
     message:string;
     inputLabel = "Message";
 
 
     constructor(private kuzzleService:KuzzleService) {
+        this.user = new User();
         this.messagesList = [];
         // subscribe to the observable and replace the messagesList by the new one
         // each time you get notified
@@ -36,7 +37,7 @@ export class ChatComponent {
      * materialize js on the select
      */
     ngAfterViewInit() {
-        $(document).ready(function(){
+        $(document).ready(function () {
             $('.tooltipped').tooltip({delay: 50});
         });
     }
@@ -52,15 +53,15 @@ export class ChatComponent {
         var key = event.which || event.keyCode;
 
         if (this.message && key === KEY_ENTER) {
-            var chatMessage = new ChatMessage(new User('Jean', 'Bon'), this.message);
+            var chatMessage = new ChatMessage(new User(), this.message);
             this.kuzzleService.chatService.sendMessage(chatMessage);
 
             this.message = "";
         }
     }
 
-    changeInputLabel(event:FocusEvent){
+    changeInputLabel(event:FocusEvent) {
         //TODO - replace with user Name
-        event.type === "focus" ? this.inputLabel = "Jean Bon" : this.inputLabel = "Message";
+        event.type === "focus" ? this.inputLabel = this.user.humanName() : this.inputLabel = "Message";
     }
 }

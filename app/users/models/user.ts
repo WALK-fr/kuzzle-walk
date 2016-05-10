@@ -8,9 +8,15 @@ export class User {
     private _password:string;
 
 
-    constructor(firstName:string, lastName:string) {
-        this._firstName = firstName;
-        this._lastName = lastName;
+    constructor() {
+        this._firstName = "John";
+        this._lastName = "Snow";
+        this._email = "johnsnow@gmail.com";
+        this._password = "nightwatch";
+    }
+
+    humanName():string {
+        return this._firstName + " " + this._lastName;
     }
 
     get login():string {
@@ -19,22 +25,5 @@ export class User {
 
     get password():string {
         return this._password;
-    }
-
-
-    set firstName(value:string) {
-        this._firstName = value;
-    }
-
-    set lastName(value:string) {
-        this._lastName = value;
-    }
-
-    set email(value:string) {
-        this._email = value;
-    }
-
-    set password(value:string) {
-        this._password = value;
     }
 }

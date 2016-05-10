@@ -34,7 +34,7 @@ export class KuzzleChat {
                         var firstName = result.result._source.author._firstName;
                         var lastName = result.result._source.author._lastName;
                         var content = result.result._source._content;
-                        this.messages.push(new ChatMessage(new User(firstName,lastName), content));
+                        this.messages.push(new ChatMessage(new User(), content));
 
                         // and then you notify the observer
                         observer.next(this.messages);
