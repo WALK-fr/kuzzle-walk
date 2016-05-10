@@ -53,10 +53,8 @@ export class ChatComponent {
 
         if (this.message && key === KEY_ENTER) {
             var chatMessage = new ChatMessage(new User('Jean', 'Bon'), this.message);
-            // TODO : Do kuzzle call to dispatch message
             this.kuzzleService.chatService.sendMessage(chatMessage);
 
-            // TODO add message to the panel upon kuzzle success response (not immediatly)
             this.message = "";
         }
     }
