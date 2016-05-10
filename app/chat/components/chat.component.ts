@@ -1,4 +1,4 @@
-import {Component} from "angular2/core";
+import {Component, Input} from "angular2/core";
 import {ChatMessage} from "../index";
 import {User} from "../../users/index";
 import {KuzzleService} from "../../shared/kuzzle/services/KuzzleService.service";
@@ -21,7 +21,7 @@ export class ChatComponent {
     messagesList:ChatMessage[];
     message:string;
     inputLabel = "Message";
-
+    @Input() isOpened = false;
 
     constructor(private kuzzleService:KuzzleService) {
         this.user = new User();

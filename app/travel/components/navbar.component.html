@@ -6,7 +6,7 @@
     <div class="col s12 m12 l6">
         <div class="row" id="tp-chat">
             <div class="col s3 m2 l2 right">
-                <a id="tp-chat-all" class="btn-floating btn-large waves-effect waves-light orange">All</a>
+                <a (click)="toggleChat()" id="tp-chat-all" class="btn-floating btn-large waves-effect waves-light orange"><i class="material-icons">chat</i></a>
             </div>
             <div class="col s3 m2 l2 right">
                 <img src="http://lorempixel.com/100/100/people/?random=1" alt="" class="circle">
@@ -27,4 +27,4 @@
     </div>
 </div>
 
-<chat></chat>
+<chat [isOpened]="isChatOpened"></chat>

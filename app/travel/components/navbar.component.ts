@@ -8,4 +8,10 @@ import {ChatComponent} from "../../chat/components/chat.component";
 })
 export class NavbarComponent {
 
+    isChatOpened = false;
+
+    toggleChat(){
+        this.isChatOpened = !this.isChatOpened;
+    }
+    
 }
