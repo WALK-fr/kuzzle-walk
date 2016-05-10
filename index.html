@@ -46,7 +46,7 @@
 
     <script>
         System.config({
-            packages: {app: {format: 'register', defaultExtension: 'js'}},
+            packages: {compiled: {format: 'register', defaultExtension: 'js'}},
             meta: {
                 'node_modules/kuzzle-sdk/dist/kuzzle.js': {
                     format: 'global',
@@ -54,7 +54,7 @@
                 }
             }
         });
-        System.import('app/main')
+        System.import('compiled/main')
                 .then(null, console.error.bind(console));
     </script>
 </head>
