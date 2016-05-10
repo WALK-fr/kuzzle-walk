@@ -31,10 +31,8 @@ export class KuzzleChat {
                     .dataCollectionFactory('message')
                     .subscribe({}, options, (error:any , result:any) => {
                         // each time you get a message, you push it
-                        var firstName = result.result._source.author._firstName;
-                        var lastName = result.result._source.author._lastName;
                         var content = result.result._source._content;
-                        this.messages.push(new ChatMessage(new User(firstName,lastName), content));
+                        this.messages.push(new ChatMessage(new User(), content));
 
                         // and then you notify the observer
                         observer.next(this.messages);
