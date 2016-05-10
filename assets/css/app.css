@@ -41,6 +41,11 @@ html, body, #tp-content, #tp-content .row, #mapid{
   margin-top: -20px;
 }
 
+/* NAVBAR */
+#navbar-container{
+  position: relative;
+}
+
 
 /* TCHAT */
 
@@ -54,9 +59,8 @@ chat{
 
 #tp-chat-window{
   position: absolute;
-  left: 0px;
+  right: 0px;
   top: 200px;
-  width: inherit;
   z-index: 1;
 }
 
@@ -104,7 +108,7 @@ chat{
   position: absolute;
   top:0;
   left:0;
-  bottom: 60px;
+  bottom: 75px;
   width:100%;
 }
 
@@ -141,7 +145,7 @@ chat{
   padding: 0;
 }
 #mapid{
-  z-index: -1;
+  z-index: 0;
 }
 
 #tp-step-select{

@@ -1,22 +1,27 @@
-<div id="tp-chat-window" class="row">
-    <div class="col s8 m7 l4 push-l8 push-m5 push-s4">
-        <div id="tp-chat-window-triangle"></div>
-        <div id="tp-chat-window-container" class="row white z-depth-2">
-            <div id="tp-chat-window-messages" class="input-field col s12">
-                <ul>
-                    <li *ngFor="#message of messagesList, #index = index" class="clearfix">
+<div id="tp-chat-window" class="col s8 m7 l4 push-l8 push-m5 push-s4">
+    <div id="tp-chat-window-triangle"></div>
+    <div id="tp-chat-window-container" class="row white z-depth-2">
+        <div id="tp-chat-window-messages" class="input-field col s12">
+            <ul id="tp-chat-window-message-list">
+                <li *ngFor="#message of messagesList, #index = index" class="clearfix">
+                    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="I am tooltip">
                         <img src="http://lorempixel.com/35/35/people/?random={{index + 1}}" class="circle">
-                        <div class="tp-chat-window-message-content left-align">
-                            {{ message.content }}
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div id="tp-chat-window-input" class="input-field col s12">
-                <i class="material-icons prefix">chat</i>
-                <input [(ngModel)]="message" (keypress)="publishMessage($event)" id="icon_prefix" type="text" class="validate">
-                <label for="icon_prefix">First Name</label>
-            </div>
+                    </a>
+                    <div class="tp-chat-window-message-content left-align">
+                        {{ message.content }}
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div id="tp-chat-window-input" class="input-field col s12">
+            <i class="material-icons prefix">chat</i>
+            <input [(ngModel)]="message"
+                   (focus)="changeInputLabel($event)"
+                   (blur)="changeInputLabel($event)"
+                   (keypress)="publishMessage($event)"
+                   id="icon_prefix" type="text"
+                   class="validate">
+            <label for="icon_prefix">{{ inputLabel }}</label>
         </div>
     </div>
 </div>

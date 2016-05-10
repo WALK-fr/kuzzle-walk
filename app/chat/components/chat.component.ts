@@ -1,7 +1,13 @@
-import {Component} from "angular2/core";
+import {Component, AfterViewInit} from "angular2/core";
+
+//test michel : import 'rxjs/add/operator/map';
+
 import {ChatMessage} from "../index";
 import {User} from "../../users/index";
 import {KuzzleService} from "../../shared/kuzzle/services/KuzzleService.service";
+
+// this is used to accept jquery token at compilation time
+declare var $: any;
 
 /**
  * This components represent the chatroom of the travel.
@@ -14,11 +20,38 @@ import {KuzzleService} from "../../shared/kuzzle/services/KuzzleService.service"
 export class ChatComponent {
     messagesList:ChatMessage[];
     message:string;
+    inputLabel = "Message";
 
+    /*
+    TEST MICHEL
+     messagesList:Observable<ChatMessage>;
+
+     constructor(private kuzzleService:KuzzleService) {
+     // this.messagesList = Observable.fromArray([new ChatMessage(new User('Jean', 'Bon'), 'Un message déjà présent')]);
+     this.messagesList = this.kuzzleService.chatService.subscribeToChat();
+     this.messagesList.map( obs => obs.content).subscribe(obs => console.log(obs));
+     // .subscribe( message => {
+     //         console.log(message);
+     //         $('.tooltipped').tooltip({delay: 50});
+     //         $('#tp-chats-window-message-list').animate({scrollTop: $('#tp-chat-window-message-list').prop("scrollHeight")}, 500);
+     //     })
+     }
+     */
 
     constructor(private kuzzleService:KuzzleService) {
         this.messagesList = [new ChatMessage(new User('Jean', 'Bon'), 'Un message déjà présent')];
         this.kuzzleService.chatService.subscribeToChat(this.messagesList);
+
+    }
+
+    /**
+     * triggered after the view initialization. this is used to apply
+     * materialize js on the select
+     */
+    ngAfterViewInit() {
+        $(document).ready(function(){
+            $('.tooltipped').tooltip({delay: 50});
+        });
     }
 
     /**
@@ -39,5 +72,10 @@ export class ChatComponent {
             // TODO add message to the panel upon kuzzle success response (not immediatly)
             this.message = "";
         }
+    }
+
+    changeInputLabel(event:FocusEvent){
+        //TODO - replace with user Name
+        event.type === "focus" ? this.inputLabel = "Jean Bon" : this.inputLabel = "Message";
     }
 }
