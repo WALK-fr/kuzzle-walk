@@ -22,26 +22,13 @@ export class ChatComponent {
     message:string;
     inputLabel = "Message";
 
-    /*
-    TEST MICHEL
-     messagesList:Observable<ChatMessage>;
-
-     constructor(private kuzzleService:KuzzleService) {
-     // this.messagesList = Observable.fromArray([new ChatMessage(new User('Jean', 'Bon'), 'Un message déjà présent')]);
-     this.messagesList = this.kuzzleService.chatService.subscribeToChat();
-     this.messagesList.map( obs => obs.content).subscribe(obs => console.log(obs));
-     // .subscribe( message => {
-     //         console.log(message);
-     //         $('.tooltipped').tooltip({delay: 50});
-     //         $('#tp-chats-window-message-list').animate({scrollTop: $('#tp-chat-window-message-list').prop("scrollHeight")}, 500);
-     //     })
-     }
-     */
 
     constructor(private kuzzleService:KuzzleService) {
-        this.messagesList = [new ChatMessage(new User('Jean', 'Bon'), 'Un message déjà présent')];
-        this.kuzzleService.chatService.subscribeToChat(this.messagesList);
-
+        this.messagesList = [];
+        // subscribe to the observable and replace the messagesList by the new one
+        // each time you get notified
+        this.kuzzleService.chatService.subscribeToChat()
+            .subscribe(x => this.messagesList = x);
     }
 
     /**

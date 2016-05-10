@@ -2,7 +2,6 @@ import {Observable} from "rxjs/Observable";
 
 //test michel
 //import 'rxjs/add/observable/fromArray';
-
 import {ChatMessage} from "../../../chat/index";
 import {User} from "../../../users/models/user";
 
@@ -11,6 +10,8 @@ import {User} from "../../../users/models/user";
  */
 export class KuzzleChat {
     private kuzzle:Kuzzle;
+    messages: ChatMessage[] = [];
+    messagesObs: Observable<ChatMessage[]>;
 
     public constructor(kuzzle:Kuzzle) {
         this.kuzzle = kuzzle;
@@ -18,46 +19,30 @@ export class KuzzleChat {
 
     /**
      * The collection of message where the incoming message must be imported.
-     * @param chatMessageCollection
+     * @return {Observable} the observable to which you need to subscribe
      */
-    public subscribeToChat(chatMessageCollection: ChatMessage[]) {
-        var options = {};
-
-        this.kuzzle.dataCollectionFactory('message').subscribe({}, options, (error:any, result:any) => {
-            if (error) {
-                console.error(error);
-            }
-            var firstName = result.result._source.author._firstName;
-            var lastName = result.result._source.author._lastName;
-            var content = result.result._source._content;
-
-            chatMessageCollection.push(new ChatMessage(new User(firstName,lastName), content));
-        });
-    }
-
-    /**
-     TEST MICHEL
-
     public subscribeToChat() {
         var options = {};
-        var listeMessageObservable: Observable<ChatMessage>;
-        var listeMessage: ChatMessage[] = [new ChatMessage(new User('Jean', 'Bon'), 'Un message déjà présent')];
-        listeMessageObservable = Observable.fromArray(listeMessage);
 
-        this.kuzzle.dataCollectionFactory('message').subscribe({}, options, (error:any, result:any) => {
-            if (error) {
-                console.error(error);
-            }
-            var firstName = result.result._source.author._firstName;
-            var lastName = result.result._source.author._lastName;
-            var content = result.result._source._content;
+        // create the observable to return
+        this.messagesObs = Observable.create( (observer:any) => {
+            // subscribe to kuzzle service in order to get the data
+            this.kuzzle
+                    .dataCollectionFactory('message')
+                    .subscribe({}, options, (error:any , result:any) => {
+                        // each time you get a message, you push it
+                        var firstName = result.result._source.author._firstName;
+                        var lastName = result.result._source.author._lastName;
+                        var content = result.result._source._content;
+                        this.messages.push(new ChatMessage(new User(firstName,lastName), content));
 
-            listeMessage.push(new ChatMessage(new User(firstName,lastName), content));
+                        // and then you notify the observer
+                        observer.next(this.messages);
+                    });
         });
 
-        return listeMessageObservable;
+        return this.messagesObs;
     }
-     */
 
     /**
      * Dispatch a message to the subscribers of the room.
