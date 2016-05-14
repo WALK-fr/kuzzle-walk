@@ -1,4 +1,5 @@
-import {Component, Input} from "angular2/core";
+import {Component, OnInit, OnChanges, Input, AfterViewInit} from "angular2/core";
+
 import {ChatMessage} from "../index";
 import {User} from "../../users/index";
 import {KuzzleService} from "../../shared/kuzzle/services/KuzzleService.service";
@@ -13,10 +14,10 @@ declare var $:any;
  */
 @Component({
     selector: 'chat',
-    styles: [``],
-    templateUrl: "app/chat/components/chat.component.html"
+    templateUrl: "app/chat/components/chat.component.html",
+    styleUrls: ['app/chat/components/chat.component.css']
 })
-export class ChatComponent {
+export class ChatComponent implements OnInit, AfterViewInit{
     user:User;
     messagesList:ChatMessage[];
     message:string;
@@ -25,22 +26,31 @@ export class ChatComponent {
 
     constructor(private kuzzleService:KuzzleService) {
         this.user = new User();
+    }
+
+    /**
+     * triggered after constructor - handles business logic
+     */
+    ngOnInit() {
         this.messagesList = [];
         // subscribe to the observable and replace the messagesList by the new one
         // each time you get notified
         this.kuzzleService.chatService.subscribeToChat()
-            .subscribe(x => this.messagesList = x);
+            .subscribe(x => {
+                this.messagesList = x;
+            });
     }
+
 
     /**
      * triggered after the view initialization. this is used to apply
      * materialize js on the select
      */
     ngAfterViewInit() {
-        $(document).ready(function () {
-            $('.tooltipped').tooltip({delay: 50});
-        });
+        $('.tooltipped:last').tooltip({delay: 50});
+        $('#tp-chats-window-message-list').animate({scrollTop: $('#tp-chat-window-message-list').prop("scrollHeight")}, 500);
     }
+
 
     /**
      * When an user hit ENTER, the message is propagated.

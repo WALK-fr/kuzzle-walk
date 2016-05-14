@@ -12,12 +12,9 @@ import {TravelComponent} from "./travel/index";
     { path: '/travel', name: 'Travel', component: TravelComponent}
 ])
 @Component({
-    selector: 'tp-app',
-    template: `
-        <router-outlet></router-outlet>
-    `,
+    selector: 'body',
+    template: `<router-outlet></router-outlet>`,
     directives: [ROUTER_DIRECTIVES]
 })
 export class AppComponent {
-
 }

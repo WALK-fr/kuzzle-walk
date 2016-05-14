@@ -1,14 +1,12 @@
 import {Component} from 'angular2/core';
 import {ROUTER_DIRECTIVES} from 'angular2/router';
+import {TravelFormComponent} from "./travel-form.component";
+import {NavbarComponent} from "../../travel/components/navbar.component";
 
 @Component({
-    template: `
-      <h1>Kuzzle Walk Initialization</h1>
-      <p>Plug component next to me to realize the interface</p>
-      <a [routerLink]="['Travel']">Travel</a>
-    `,
-    directives: [ROUTER_DIRECTIVES]
+    templateUrl: 'app/home/components/home.component.html',
+    styleUrls: ['app/home/components/home.component.css'],
+    directives: [ROUTER_DIRECTIVES, TravelFormComponent, NavbarComponent]
 })
 export class HomeComponent {
-
 }

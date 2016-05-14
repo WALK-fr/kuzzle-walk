@@ -1,0 +1,81 @@
+/* TCHAT */
+
+chat{
+    width: inherit;
+}
+
+#tp-chat-window{
+    position: absolute;
+    right: 0px;
+    top: 200px;
+    z-index: 1;
+}
+
+#tp-chat-window-triangle{
+    width: 0px;
+    height: 0px;
+    margin-left: 66%;
+    border-style: solid;
+    border-width: 0 15px 26.0px 15px;
+    border-color: transparent transparent #FF9800 transparent;
+}
+
+@media only screen and (min-width: 601px) {
+    #tp-chat-window-triangle{
+        width: 0px;
+        height: 0px;
+        margin-left: 79%;
+    }
+    #tp-chat-window{
+        top: 180px;
+    }
+}
+
+@media only screen and (min-width: 993px) {
+    #tp-chat-window{
+        top: 110px;
+    }
+}
+
+#tp-chat-window #tp-chat-window-container{
+    display: block;
+    position: relative;
+    min-height: 450px;
+    padding: 10px;
+}
+
+#tp-chat-window-input{
+    position: absolute;
+    bottom:0px;
+    left: 0px;
+    width: 100%;
+}
+
+#tp-chat-window-messages{
+    position: absolute;
+    top:0;
+    left:0;
+    bottom: 75px;
+    width:100%;
+}
+
+#tp-chat-window-messages ul{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+#tp-chat-window-messages ul li{
+    margin-bottom: 5px;
+}
+
+#tp-chat-window-messages ul li img, #tp-chat-window-messages ul li .tp-chat-window-message-content{
+    display: table-cell;
+}
+
+#tp-chat-window-messages ul li img{
+    margin-right: 10px;
+    float: left;
+}
+
