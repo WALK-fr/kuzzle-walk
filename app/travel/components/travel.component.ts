@@ -8,6 +8,7 @@ import {TravelSelectorComponent} from './travel-selector.component'
 declare var $: any;
 
 @Component({
+    selector: "travel",
     templateUrl: 'app/travel/components/travel.component.html',
     directives: [
         MapComponent, PoiFormComponent, MarkerListComponent, NavbarComponent,

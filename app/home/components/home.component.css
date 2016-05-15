@@ -1,5 +1,9 @@
 
-
+.home {
+    background: #FFF url('../../assets/img/background4.jpg') top center no-repeat;
+    background-size: cover;
+    min-height: 100%;
+}
 
 #tp-header{
     width:100%;

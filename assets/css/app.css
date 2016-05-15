@@ -3,12 +3,6 @@ html, body, #tp-content, #tp-content .row, #mapid{
   height:100%;
 }
 
-/*TODO see if we can move this to home component*/
-body{
-   background: #FFF url('../../assets/img/background4.jpg') top center no-repeat;
-   background-size: cover;
- }
-
 .tabs .tab a, .tabs .tab a.active {
   color: #FF9800;
 }
