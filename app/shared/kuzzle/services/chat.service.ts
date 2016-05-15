@@ -8,7 +8,7 @@ import {User} from "../../../users/models/user";
 /**
  * Handle each kuzzle calls related to the chat component.
  */
-export class KuzzleChat {
+export class ChatService {
     private kuzzle:Kuzzle;
     messages:ChatMessage[] = [];
     messagesObs:Observable<ChatMessage[]>;

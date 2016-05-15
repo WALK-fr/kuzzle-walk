@@ -1,5 +1,5 @@
 import {Injectable} from "angular2/core";
-import {KuzzleChat, KuzzleMap, KuzzleUserService} from "../index";
+import {ChatService, MapService, UserService} from "../index";
 
 declare let Kuzzle:any;
 
@@ -9,22 +9,22 @@ declare let Kuzzle:any;
 @Injectable()
 export class KuzzleService {
     private kuzzle:Kuzzle;
-    private _chatService:KuzzleChat;
-    private _mapService:KuzzleMap;
-    private _userService:KuzzleUserService;
+    private _chatService:ChatService;
+    private _mapService:MapService;
+    private _userService:UserService;
 
     public constructor() {
         this.kuzzle = new Kuzzle('http://walk.challenge.kuzzle.io:7512', {defaultIndex: 'walk'});
-        this._chatService = new KuzzleChat(this.kuzzle);
-        this._mapService = new KuzzleMap(this.kuzzle);
-        this._userService = new KuzzleUserService(this.kuzzle);
+        this._chatService = new ChatService(this.kuzzle);
+        this._mapService = new MapService(this.kuzzle);
+        this._userService = new UserService(this.kuzzle);
     }
 
-    get chatService():KuzzleChat {
+    get chatService():ChatService {
         return this._chatService;
     }
 
-    get mapService():KuzzleMap {
+    get mapService():MapService {
         return this._mapService;
     }
 
@@ -33,7 +33,7 @@ export class KuzzleService {
      *
      * @returns {KuzzleUserService}
      */
-    get userService():KuzzleUserService {
+    get userService():UserService {
         return this._userService;
     }
 }

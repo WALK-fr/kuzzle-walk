@@ -2,7 +2,7 @@ import {Component, OnInit, OnChanges, AfterViewInit} from "angular2/core";
 
 import {ChatMessage} from "../index";
 import {User} from "../../users/index";
-import {KuzzleService} from "../../shared/kuzzle/services/KuzzleService.service";
+import {KuzzleService} from "../../shared/kuzzle/services/kuzzle.service";
 
 //test michel : import 'rxjs/add/operator/map';
 
