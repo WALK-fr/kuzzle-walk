@@ -1,23 +1,22 @@
-
 <div class="row">
     <div class="col s12 m12 l6">
         <h3 id="tp-app-title">Travel Planner</h3>
     </div>
     <div class="col s12 m12 l6">
-        <div class="row" id="tp-friends-online">
-            <div *ngIf="isChatActivated" class="col s3 m2 l2 right">
-                <a (click)="toggleChat()" id="tp-chat-all" class="btn-floating btn-large waves-effect waves-light orange"><i class="material-icons">chat</i></a>
+        <div class="row" id="tp-navbar">
+            <div *ngIf="isChatActivated" class="col right right-align">
+                <a (click)="toggleChat()" id="tp-chat-all"
+                   class="btn-floating btn-large waves-effect waves-light orange"><i class="material-icons">chat</i></a>
             </div>
 
-            <div *ngIf="isNotesActivated" class="col s3 m2 l2 right">
-                <a (click)="toggleNotes()" id="tp-todo-list" class="btn-floating btn-large waves-effect waves-light #26c6da cyan lighten-1"><i class="material-icons">note_add</i></a>
+            <div *ngIf="isNotesActivated" class="col right right-align">
+                <a (click)="toggleNotes()" id="tp-todo-list"
+                   class="btn-floating btn-large waves-effect waves-light #26c6da cyan lighten-1"><i
+                        class="material-icons">note_add</i></a>
             </div>
 
-            <div class="col s3 m2 l2 right">
-                <img src="http://lorempixel.com/100/100/people/?random=1" alt="" class="circle">
-            </div>
-            <div class="col s3 m2 l2 right">
-                <img src="http://lorempixel.com/100/100/people/?random=2" alt="" class="circle">
+            <div class="col right right-align" id="tp-team-container">
+                <team *ngIf="isTeamActivated"></team>
             </div>
         </div>
     </div>

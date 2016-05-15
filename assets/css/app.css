@@ -47,16 +47,8 @@ html, body, #tp-content, #tp-content .row, #mapid{
 }
 
 
-
-#tp-friends-online{
+#tp-navbar{
   margin: 1.46rem 0 0 0;
-}
-
-#tp-friends-online img{
-  max-width: 50px;
-  width: 100%;
-  height: auto;
-  margin: 0 auto;
 }
 
 #map-container{
