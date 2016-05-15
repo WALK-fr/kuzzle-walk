@@ -1,5 +1,5 @@
 import {Component, AfterViewInit} from 'angular2/core';
-import {Router, CanDeactivate} from "angular2/router";
+import {Router} from "angular2/router";
 import {ControlGroup, FormBuilder, Validators} from "angular2/common";
 import {BasicValidators} from "../../shared/validators/basicValidators";
 
@@ -12,7 +12,7 @@ declare var $:any;
     templateUrl: 'app/home/components/travel-form.component.html',
     styleUrls: ['app/home/components/travel-form.component.css']
 })
-export class TravelFormComponent implements AfterViewInit, CanDeactivate{
+export class TravelFormComponent implements AfterViewInit {
 
     destinationForm: ControlGroup;
     loginForm: ControlGroup;
@@ -55,21 +55,17 @@ export class TravelFormComponent implements AfterViewInit, CanDeactivate{
         });
     }
 
-    routerCanDeactivate(){
-        if (this.form.dirty)
-            return confirm('You have unsaved changes. Are you sure you want to navigate away?');
-
-        return true;
-    }
-
     changeStep(){
         this.step++;
         switch (this.step){
-            case 2: this.submitButton = "Login and start now !"
+            case 2:
+                this.submitButton = "Login and start now !"
                 break;
-            case 3: this.submitButton = "Let's organize !"
+            case 3:
+                this.submitButton = "Let's organize !"
                 break;
-            default: this._router.navigate(['Travel']);
+            default:
+                this._router.navigate(['Travel']);
                 break;
         }
     }

@@ -1,7 +1,7 @@
 <div id="tp-travel-form" class="col s12 m4 l4 push-m4 push-l4">
-    <div class="card">
+    <div [ngSwitch]="step" class="card">
 
-        <div *ngIf="step == 1" id="tp-form-card1" class="card-content">
+        <div *ngSwitchWhen="1" id="tp-form-card1" class="card-content">
             <a href="#tp-steps-describer" class="card-title modal-trigger grey-text text-darken-4">
                 Where are you going ?<i class="material-icons right">more_vert</i>
             </a>
@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <div *ngIf="step == 2" id="tp-form-card2" class="card-content">
+        <div *ngSwitchWhen="2" id="tp-form-card2" class="card-content">
             <a href="#tp-steps-describer" class="modal-trigger">
                 <i class="material-icons right">more_vert</i>
             </a>
@@ -77,12 +77,13 @@
             </div>
         </div>
 
-        <div *ngIf="step == 3" id="tp-form-card3" class="card-content">
+        <div *ngSwitchWhen="3" id="tp-form-card3" class="card-content">
             <a href="#tp-steps-describer" class="modal-trigger">
                 <i class="material-icons right">more_vert</i>
             </a>
-            <h4 class="center-align clearfix"> Let's build the perfect trip to <strong> {{ UserDestination
-                }} </strong></h4>
+            <h4 class="center-align clearfix">
+                Let's build the perfect trip to <strong> Tokyo </strong>
+            </h4>
             <p class="card-title grey-text text-darken-4 center-align">
                 Welcome {{ userName }} ! Now it's time to involve everyone !
             </p>
