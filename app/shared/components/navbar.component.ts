@@ -1,18 +1,14 @@
-import {Component, Input} from 'angular2/core';
-
-import {ChatComponent} from "../../chat/components/chat.component";
+import {Component, Input, Output, EventEmitter} from 'angular2/core';
 
 @Component({
     selector: 'navbar',
-    templateUrl: 'app/shared/components/navbar.component.html',
-    directives: [ChatComponent]
+    templateUrl: 'app/shared/components/navbar.component.html'
 })
 export class NavbarComponent {
     @Input() isChatActivated = false;
-    isChatOpened = false;
+    @Output('toggle-chat') toggle = new EventEmitter();
 
-    toggleChat(){
-        this.isChatOpened = !this.isChatOpened;
+    toggleChat() {
+        this.toggle.emit({});
     }
-
 }

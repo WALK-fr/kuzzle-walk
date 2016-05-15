@@ -1,8 +1,9 @@
 import {Component, AfterViewInit} from 'angular2/core';
 
+import {TravelSelectorComponent} from './travel-selector.component';
 import {MapComponent, PoiFormComponent, MarkerListComponent} from '../../map/index';
 import {NavbarComponent} from '../../shared/index';
-import {TravelSelectorComponent} from './travel-selector.component'
+import {ChatComponent} from "../../chat/index";
 
 // this is used to accept jquery token at compilation time
 declare var $: any;
@@ -12,10 +13,12 @@ declare var $: any;
     templateUrl: 'app/travel/components/travel.component.html',
     directives: [
         MapComponent, PoiFormComponent, MarkerListComponent, NavbarComponent,
-        TravelSelectorComponent
+        TravelSelectorComponent, ChatComponent
     ]
 })
 export class TravelComponent implements AfterViewInit {
+
+    isChatOpened = false;
 
     /**
      * triggered after the view initialization. this is used to apply
@@ -32,5 +35,9 @@ export class TravelComponent implements AfterViewInit {
                     alignment: 'left' // Displays dropdown with edge aligned to the left of button
                 }
         );
+    }
+
+    toggleChat() {
+        this.isChatOpened = !this.isChatOpened;
     }
 }
