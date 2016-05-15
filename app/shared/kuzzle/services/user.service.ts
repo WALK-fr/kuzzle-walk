@@ -1,7 +1,7 @@
 /**
  * Handle each kuzzle calls related to the user.
  */
-export class KuzzleUserService {
+export class UserService {
     private kuzzle:Kuzzle;
 
     public constructor(kuzzle:Kuzzle) {
