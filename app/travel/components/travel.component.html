@@ -1,6 +1,9 @@
 <div class="row z-depth-2 orange">
     <div id="navbar-container" class="col s12 m7 l8 white">
-        <navbar (toggle-chat)="toggleChat()" [isChatActivated]="true"></navbar>
+        <navbar (toggle-chat)="toggleChat()"
+                (toggle-notes)="notes.displayModal()"
+                [isChatActivated]="true"
+                [isNotesActivated]="true"></navbar>
         <chat [isOpened]="isChatOpened"></chat>
     </div>
     <div class="col s12 m5 l4">
@@ -37,3 +40,6 @@
         </div>
     </div>
 </section>
+
+<!-- modal footer todo-list, reminders, notes etc -->
+<notes #notes></notes>

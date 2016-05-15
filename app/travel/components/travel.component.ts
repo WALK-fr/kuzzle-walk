@@ -4,6 +4,7 @@ import {TravelSelectorComponent} from './travel-selector.component';
 import {MapComponent, PoiFormComponent, MarkerListComponent} from '../../map/index';
 import {NavbarComponent} from '../../shared/index';
 import {ChatComponent} from "../../chat/index";
+import {NotesComponent} from "../../notes/index";
 
 // this is used to accept jquery token at compilation time
 declare var $: any;
@@ -13,7 +14,7 @@ declare var $: any;
     templateUrl: 'app/travel/components/travel.component.html',
     directives: [
         MapComponent, PoiFormComponent, MarkerListComponent, NavbarComponent,
-        TravelSelectorComponent, ChatComponent
+        TravelSelectorComponent, ChatComponent, NotesComponent
     ]
 })
 export class TravelComponent implements AfterViewInit {

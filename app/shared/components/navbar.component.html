@@ -3,25 +3,21 @@
     <div class="col s12 m12 l6">
         <h3 id="tp-app-title">Travel Planner</h3>
     </div>
-    <div *ngIf="isChatActivated" class="col s12 m12 l6">
+    <div class="col s12 m12 l6">
         <div class="row" id="tp-friends-online">
-            <div class="col s3 m2 l2 right">
+            <div *ngIf="isChatActivated" class="col s3 m2 l2 right">
                 <a (click)="toggleChat()" id="tp-chat-all" class="btn-floating btn-large waves-effect waves-light orange"><i class="material-icons">chat</i></a>
             </div>
+
+            <div *ngIf="isNotesActivated" class="col s3 m2 l2 right">
+                <a (click)="toggleNotes()" id="tp-todo-list" class="btn-floating btn-large waves-effect waves-light #26c6da cyan lighten-1"><i class="material-icons">note_add</i></a>
+            </div>
+
             <div class="col s3 m2 l2 right">
                 <img src="http://lorempixel.com/100/100/people/?random=1" alt="" class="circle">
             </div>
             <div class="col s3 m2 l2 right">
                 <img src="http://lorempixel.com/100/100/people/?random=2" alt="" class="circle">
-            </div>
-            <div class="col s3 m2 l2 right">
-                <img src="http://lorempixel.com/100/100/people/?random=3" alt="" class="circle">
-            </div>
-            <div class="col s3 m2 l2 right">
-                <img src="http://lorempixel.com/100/100/people/?random=4" alt="" class="circle">
-            </div>
-            <div class="col s3 m2 l2 right">
-                <img src="http://lorempixel.com/100/100/people/?random=5" alt="" class="circle">
             </div>
         </div>
     </div>

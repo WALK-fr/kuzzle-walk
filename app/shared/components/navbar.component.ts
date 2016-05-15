@@ -6,9 +6,15 @@ import {Component, Input, Output, EventEmitter} from 'angular2/core';
 })
 export class NavbarComponent {
     @Input() isChatActivated = false;
-    @Output('toggle-chat') toggle = new EventEmitter();
+    @Input() isNotesActivated = false;
+    @Output('toggle-chat') chatOuput = new EventEmitter();
+    @Output('toggle-notes') notesOutput = new EventEmitter();
 
     toggleChat() {
-        this.toggle.emit({});
+        this.chatOuput.emit({});
+    }
+
+    toggleNotes(){
+        this.notesOutput.emit({});
     }
 }
