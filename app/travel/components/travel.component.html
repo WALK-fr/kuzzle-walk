@@ -1,7 +1,7 @@
 <div class="row z-depth-2 orange">
     <div id="navbar-container" class="col s12 m7 l8 white">
         <navbar (toggle-chat)="toggleChat()" [isChatActivated]="true"></navbar>
-        <chat [isOpened]="isChatOpened"></chat>
+        <chat *ngIf="isChatOpened"></chat>
     </div>
     <div class="col s12 m5 l4">
         <travel-selector></travel-selector>
