@@ -1,7 +1,8 @@
 import {Component} from 'angular2/core';
 import {ROUTER_DIRECTIVES} from 'angular2/router';
+
 import {TravelFormComponent} from "./travel-form.component";
-import {NavbarComponent} from "../../travel/components/navbar.component";
+import {NavbarComponent} from '../../shared/index';
 
 @Component({
     selector: "home",

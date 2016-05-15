@@ -1,7 +1,7 @@
 import {Component, AfterViewInit} from 'angular2/core';
 
 import {MapComponent, PoiFormComponent, MarkerListComponent} from '../../map/index';
-import {NavbarComponent} from './navbar.component';
+import {NavbarComponent} from '../../shared/index';
 import {TravelSelectorComponent} from './travel-selector.component'
 
 // this is used to accept jquery token at compilation time
