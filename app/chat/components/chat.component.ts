@@ -1,4 +1,4 @@
-import {Component, OnInit, OnChanges, Input, AfterViewInit} from "angular2/core";
+import {Component, OnInit, OnChanges, AfterViewInit} from "angular2/core";
 
 import {ChatMessage} from "../index";
 import {User} from "../../users/index";
@@ -22,7 +22,6 @@ export class ChatComponent implements OnInit, AfterViewInit{
     messagesList:ChatMessage[];
     message:string;
     inputLabel = "Message";
-    @Input() isOpened = false;
 
     constructor(private kuzzleService:KuzzleService) {
         this.user = new User();
