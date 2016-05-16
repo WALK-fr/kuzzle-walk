@@ -30,9 +30,11 @@ export class ChatService {
             this.kuzzle
                 .dataCollectionFactory('message')
                 .subscribe({}, options, (error:any, result:any) => {
+
+                    var chatMessage:ChatMessage = result.result._source;
+
                     // each time you get a message, you push it
-                    var content = result.result._source._content;
-                    this.messages.push(new ChatMessage(new User(), content));
+                    this.messages.push(chatMessage);
 
                     // and then you notify the observer
                     observer.next(this.messages);
