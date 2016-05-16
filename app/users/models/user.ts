@@ -1,3 +1,4 @@
+import {Travel} from "../../travel/models/travel.model";
 /**
  * Represent one user of the application.
  */
@@ -6,7 +7,7 @@ export class User {
     private _lastName:string;
     private _email:string;
     private _password:string;
-
+    private _travels:Travel[];
 
     constructor() {
         this._firstName = "John";
@@ -25,5 +26,9 @@ export class User {
 
     get password():string {
         return this._password;
+    }
+
+    addTravel(travel:Travel) {
+        this._travels.push(travel);
     }
 }

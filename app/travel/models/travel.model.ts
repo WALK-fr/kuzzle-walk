@@ -8,12 +8,14 @@ import {ChatMessage} from "../../chat";
  * It includes chat messages, members of the travel, locations...
  */
 export class Travel {
-    private _name:string;
-    private _defaultLocation:Location;
-    private _defaultZoom:number;
-    private _members:User[];
-    private _travelMarkers:TravelMarker[];
-    private _chatMessages:ChatMessage[];
+    /** The travel unique ID in kuzzle */
+    id:string;
+    name:string;
+    defaultLocation:Location;
+    defaultZoom:number;
+    members:User[];
+    travelMarkers:TravelMarker[];
+    chatMessages:ChatMessage[];
 
     /**
      * Instantiate a new Travel.
@@ -23,18 +25,9 @@ export class Travel {
      * @param members people
      */
     constructor(name:string, defaultLocation:{location:Location, zoom:number}, members:User[]) {
-        this._name = name;
-        this._defaultLocation = defaultLocation.location;
-        this._defaultZoom = defaultLocation.zoom;
-        this._members = members;
-    }
-
-    /**
-     * The travel name.
-     * 
-     * @returns {string}
-     */
-    get name():string {
-        return this._name;
+        this.name = name;
+        this.defaultLocation = defaultLocation.location;
+        this.defaultZoom = defaultLocation.zoom;
+        this.members = members;
     }
 }

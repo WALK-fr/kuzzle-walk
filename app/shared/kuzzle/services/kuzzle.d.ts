@@ -55,8 +55,9 @@ interface Kuzzle {
 
 interface KuzzleDataCollection {
     publishMessage(document:any):any;
-    createDocument(document:any):any;
+    createDocument(document:any, callback?:(err:any, res:any) => any):any;
     subscribe(filters:any, options:any, callback:(err:any, result:any)=> any):any;
+    fetchDocument(documentID:string,callback?:(err:any, res:any) => any):any
 }
 
 interface kuzzleConnectOptions {

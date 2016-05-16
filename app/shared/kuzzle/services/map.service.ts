@@ -1,5 +1,6 @@
 import {TravelMarker, Poi, Location} from "../../../map/index";
 import {Observable} from "rxjs/Observable";
+import {User} from "../../../users/index";
 /**
  * Handle each kuzzle calls related to the chat component.
  */
@@ -38,22 +39,24 @@ export class MapService {
 
     public subsribeToTravelMarkers() {
         var options = {};
+
+        var travelMarkers:TravelMarker[] = [];
+
         //
-        // // create the observable to return
-        // this.markerObs = Observable.create((observer:any) => {
-        //     // subscribe to kuzzle service in order to get the data
-        //     this.kuzzle
-        //         .dataCollectionFactory('travelMarkers')
-        //         .subscribe({}, options, (error:any, result:any) => {
-        //             // each time you get a message, you push it
-        //             var content = result.result._source._content;
-        //             this.travelMarkers.push(new TravelMarker(new User(), content));
-        //
-        //             // and then you notify the observer
-        //             observer.next(this.messages);
-        //         });
-        // });
-        //
-        // return this.messagesObs;
+        // create the observable to return
+        return Observable.create((observer:any) => {
+            // subscribe to kuzzle service in order to get the data
+            this.kuzzle
+                .dataCollectionFactory('travelMarkers')
+                .subscribe({}, options, (error:any, result:any) => {
+                    // each time you get a message, you push it
+                    var content = result.result._source._content;
+                    var content = result.result._source._content;
+                    travelMarkers.push(new TravelMarker('aa', content, new Poi('dqdqd',15, new Location(15,20))));
+
+                    // and then you notify the observer
+                    observer.next(travelMarkers);
+                });
+        });
     }
 }
