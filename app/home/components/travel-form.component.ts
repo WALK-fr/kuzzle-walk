@@ -24,7 +24,6 @@ export class TravelFormComponent implements AfterViewInit {
     subscribeForm:ControlGroup;
     inviteFriendsForm:ControlGroup;
     step:number = 1;
-    submitButton:string = "Let's go !";
     userName:string = "Michel";
 
     constructor(formBuilder:FormBuilder, private _router:Router, private kuzzleService:KuzzleService) {
@@ -60,20 +59,32 @@ export class TravelFormComponent implements AfterViewInit {
         });
     }
 
-    changeStep() {
+    /**
+     * triggered when the destination from is submitted
+     */
+    saveDestination() {
+        // TODO: keep the destination for the next step
+
+        // navigate to the next step
         this.step++;
-        switch (this.step) {
-            case 2:
-                this.submitButton = "Login and start now !";
-                this.kuzzleService.createTravel(new Travel('Un voyage', {location: new Location(15, 20), zoom: 3}, [new User()]));
-                break;
-            case 3:
-                this.submitButton = "Let's organize !";
-                console.log(this.subscribeForm.value);
-                break;
-            default:
-                this._router.navigate(['Travel']);
-                break;
-        }
+        // this.kuzzleService.createTravel(new Travel('Un voyage', {location: new Location(15, 20), zoom: 3}, [new User()]));
+    }
+
+    /**
+     * triggered when the login form is submitted
+     */
+    login() {
+        // TODO: Handle login here
+        // TODO: Persist the travel ONLY here because we need to wait he is logged in
+
+        // navigate to the next step
+        this.step++;
+    }
+
+    inviteFriends() {
+        // TODO: Handle invite friends here
+
+        // redirect to the travel
+        this._router.navigate(['Travel']);
     }
 }
