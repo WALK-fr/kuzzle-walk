@@ -9,7 +9,6 @@ import {TeamWidgetComponent} from "../../team/components/team-widget.component";
 export class NavbarComponent {
     @Input() isChatActivated = false;
     @Input() isNotesActivated = false;
-    @Input() isTeamActivated = false;
     @Output('toggle-chat') chatOuput = new EventEmitter();
     @Output('toggle-notes') notesOutput = new EventEmitter();
 

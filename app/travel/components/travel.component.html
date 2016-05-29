@@ -4,8 +4,7 @@
         <navbar (toggle-chat)="toggleChat()"
                 (toggle-notes)="notes.displayModal()"
                 [isChatActivated]="true"
-                [isNotesActivated]="true"
-                [isTeamActivated]="true"></navbar>
+                [isNotesActivated]="true"></navbar>
 
         <chat *ngIf="isChatOpened"></chat>
     </div>
@@ -17,6 +16,7 @@
     <div class="row">
         <div id="map-container" class="col s12 m7 l8">
             <map></map>
+            <team></team>
         </div>
         <div class="col s12 m5 l4">
             <div class="row">

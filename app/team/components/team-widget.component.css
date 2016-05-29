@@ -1,61 +1,33 @@
 
-#tp-team-window{
+#tp-team-opener, #tp-team-window{
     position: absolute;
-    right: 0px;
-    top: 200px;
+    left: 0px;
+    top: 120px;
     z-index: 1;
 }
 
-#tp-team-window-triangle{
-    width: 0px;
-    height: 0px;
-    margin-left: 66%;
-    border-style: solid;
-    border-width: 0 15px 26.0px 15px;
-    border-color: transparent transparent #ef5350 transparent;
-}
-
-#tp-team-window #tp-team-window-container{
-    display: block;
-    position: relative;
-    min-height: 450px;
-    padding: 10px;
-}
-
-#tp-team-people {
-    position: absolute;
-    top: 80px;
-    left: 5px;
-    width: 150px;
-    height: auto;
-    max-height: 300px;
-    z-index: 10;
-    background: #FFF;
+#tp-team-opener{
+    color: #FFF;
+    text-align: center;
     padding: 12px;
-    overflow-y: scroll;
-    border: 1px solid #ef5350;
-    border-top: none;
 }
 
-#tp-team-people .chip{
-    display:block;
-    clear:both;
-    margin-top: 10px;
+#tp-team-opener.righten{
+    left:200px;
 }
 
-@media only screen and (min-width: 601px) {
-    #tp-team-window-triangle{
-        width: 0px;
-        height: 0px;
-        margin-left: 79%;
-    }
-    #tp-team-window{
-        top: 180px;
-    }
+#tp-team-window{
+    width: 200px;
+    display: block;
+    max-height: 500px;
+    overflow-y: auto;
 }
 
-@media only screen and (min-width: 993px) {
-    #tp-team-window{
-        top: 110px;
-    }
+#tp-team-window ul.collection{
+    border:none;
+    margin: 0 auto;
+}
+
+#tp-team-window ul li.avatar{
+    min-height: 60px;
 }

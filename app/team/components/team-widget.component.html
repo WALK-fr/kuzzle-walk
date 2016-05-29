@@ -1,22 +1,15 @@
 <a (click)="toggleTeam()"
-   id="tp-team"
-   class="btn-floating btn-large waves-effect waves-light #26c6da red lighten-1">
+   id="tp-team-opener"
+   [class.righten]="isTeamOpened"
+   class="waves-effect waves-light #26c6da red lighten-1">
     <i class="material-icons">people</i>
 </a>
-
-<div *ngIf="isTeamOpened" id="tp-team-window" class="col s5 m5 l3">
-    <div id="tp-team-window-triangle"></div>
-    <div id="tp-team-window-container" class="row white z-depth-2">
-        <div id="tp-chat-window-messages" class="input-field col s12">
-            <h4> Who is here ?</h4>
-            <ul id="tp-chat-window-message-list">
-                <li *ngFor="#people of team; #i = index" class="clearfix">
-                    <div class="chip">
-                        <img src="http://lorempixel.com/100/100/people/?random={{ i }}" alt="Contact Person">
-                        Jane Doe
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
+<section *ngIf="isTeamOpened" id="tp-team-window" class="red lighten-1">
+    <ul class="collection" id="tp-chat-window-message-list">
+        <li *ngFor="#people of team; #i = index" class="collection-item avatar">
+            <img class="circle" src="http://lorempixel.com/100/100/people/?random={{ i }}"
+                 alt="Contact Person">
+            <span class="title">Jane Doe</span>
+        </li>
+    </ul>
+</section>

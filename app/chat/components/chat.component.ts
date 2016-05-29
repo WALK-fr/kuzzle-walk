@@ -1,15 +1,10 @@
-import {Component, OnInit, OnChanges, AfterViewInit} from "angular2/core";
+import {Component, OnInit} from "angular2/core";
 
 import {ChatMessage} from "../index";
 import {User} from "../../users/index";
 import {KuzzleService} from "../../shared/kuzzle/services/kuzzle.service";
 import {AutoScrollDirective} from "../../shared/directives/autoscroll/autoscroll.directive";
 import {ToolTipsDirective} from "../../shared/directives/tooltips/tooltips.directive";
-
-//test michel : import 'rxjs/add/operator/map';
-
-// this is used to accept jquery token at compilation time
-declare var $:any;
 
 /**
  * This components represent the chatroom of the travel.

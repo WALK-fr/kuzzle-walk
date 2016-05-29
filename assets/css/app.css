@@ -55,6 +55,7 @@ html, body, #tp-content, #tp-content .row, #mapid{
   height: 100%;
   margin: 0;
   padding: 0;
+  position:relative;
 }
 #mapid{
   z-index: 0;
