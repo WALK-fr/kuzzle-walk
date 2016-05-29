@@ -1,7 +1,7 @@
 <div id="tp-travel-form" class="col s12 m4 l4 push-m4 push-l4">
     <div [ngSwitch]="step">
 
-        <div *ngSwitchWhen="1" class="card">
+        <div fadeToggle *ngSwitchWhen="1" class="card">
             <form [ngFormModel]="destinationForm" (ngSubmit)="saveDestination(destinationForm.value)">
                 <div  id="tp-form-card1" class="card-content">
                     <a href="#tp-steps-describer" class="card-title modal-trigger grey-text text-darken-4">
@@ -23,7 +23,7 @@
             </form>
         </div>
 
-        <div *ngSwitchWhen="2" class="card">
+        <div fadeToggle *ngSwitchWhen="2" class="card">
             <form [ngFormModel]="loginForm"  (ngSubmit)="login(loginForm.value)">
                 <div id="tp-form-card2" class="card-content">
                     <a href="#tp-steps-describer" class="modal-trigger">
@@ -79,7 +79,7 @@
             </form>
         </div>
 
-        <div *ngSwitchWhen="3" class="card">
+        <div fadeToggle *ngSwitchWhen="3" class="card">
             <form [ngFormModel]="inviteFriendsForm" (ngSubmit)="inviteFriends(inviteFriendsForm.value)">
                 <div id="tp-form-card3" class="card-content">
                     <a href="#tp-steps-describer" class="modal-trigger">
