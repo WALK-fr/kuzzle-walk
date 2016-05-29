@@ -62,9 +62,9 @@ export class TravelFormComponent implements AfterViewInit {
     /**
      * triggered when the destination from is submitted
      */
-    saveDestination() {
+    saveDestination(form: any) {
         // TODO: keep the destination for the next step
-
+        console.log("destination: " + form.destination);
         // navigate to the next step
         this.step++;
         // this.kuzzleService.createTravel(new Travel('Un voyage', {location: new Location(15, 20), zoom: 3}, [new User()]));
@@ -73,17 +73,19 @@ export class TravelFormComponent implements AfterViewInit {
     /**
      * triggered when the login form is submitted
      */
-    login() {
+    login(form: any) {
         // TODO: Handle login here
         // TODO: Persist the travel ONLY here because we need to wait he is logged in
-
+        console.log("username: " + form.username);
+        console.log("password: " + form.password);
         // navigate to the next step
         this.step++;
     }
 
-    inviteFriends() {
+    inviteFriends(form: any) {
         // TODO: Handle invite friends here
-
+        console.log("friends: " + form.friends);
+        console.log("message: " + form.message);
         // redirect to the travel
         this._router.navigate(['Travel']);
     }

@@ -2,14 +2,15 @@
     <div [ngSwitch]="step">
 
         <div *ngSwitchWhen="1" class="card">
-            <form [ngFormModel]="destinationForm" (ngSubmit)="saveDestination()">
+            <form [ngFormModel]="destinationForm" (ngSubmit)="saveDestination(destinationForm.value)">
                 <div  id="tp-form-card1" class="card-content">
                     <a href="#tp-steps-describer" class="card-title modal-trigger grey-text text-darken-4">
                         Where are you going ?<i class="material-icons right">more_vert</i>
                     </a>
                     <div id="tp-app-destination" class="row">
                         <div class="input-field col s12">
-                            <input value="" id="destination" type="text" class="validate">
+                            <input [ngFormControl]="destinationForm.controls['destination']"
+                                value="" id="destination" type="text" class="validate">
                             <label for="destination">Destination</label>
                         </div>
                     </div>
@@ -23,7 +24,7 @@
         </div>
 
         <div *ngSwitchWhen="2" class="card">
-            <form [ngFormModel]="loginForm"  (ngSubmit)="login()">
+            <form [ngFormModel]="loginForm"  (ngSubmit)="login(loginForm.value)">
                 <div id="tp-form-card2" class="card-content">
                     <a href="#tp-steps-describer" class="modal-trigger">
                         <i class="material-icons right">more_vert</i>
@@ -35,11 +36,15 @@
                     </p>
                     <div id="tp-app-login" class="row">
                         <div class="input-field col s12">
-                            <input value="" id="login_username" type="text" class="validate" autocomplete="off">
+                            <input [ngFormControl]="loginForm.controls['username']"
+                                value="" id="login_username" type="text" class="validate"
+                                autocomplete="off">
                             <label for="username">Username</label>
                         </div>
                         <div class="input-field col s12">
-                            <input value="" id="login_password" type="password" class="validate" autocomplete="off">
+                            <input [ngFormControl]="loginForm.controls['password']"
+                            value="" id="login_password" type="password" class="validate"
+                            autocomplete="off">
                             <label for="password">Password</label>
                         </div>
                     </div>
@@ -75,7 +80,7 @@
         </div>
 
         <div *ngSwitchWhen="3" class="card">
-            <form [ngFormModel]="inviteFriendsForm" (ngSubmit)="inviteFriends()">
+            <form [ngFormModel]="inviteFriendsForm" (ngSubmit)="inviteFriends(inviteFriendsForm.value)">
                 <div id="tp-form-card3" class="card-content">
                     <a href="#tp-steps-describer" class="modal-trigger">
                         <i class="material-icons right">more_vert</i>
@@ -89,10 +94,14 @@
 
                     <div id="tp-app-invite" class="row">
                             <div class="input-field col s12">
-                                <textarea name="emails" placeholder="One mail address per line..."></textarea>
+                                <textarea [ngFormControl]="inviteFriendsForm.controls['friends']"
+                                    name="emails" placeholder="One mail address per line...">
+                                </textarea>
                             </div>
                             <div class="input-field col s12">
-                                <textarea name="message" placeholder="Add a message to tell everyone..."></textarea>
+                                <textarea [ngFormControl]="inviteFriendsForm.controls['message']"
+                                    name="message" placeholder="Add a message to tell everyone...">
+                                </textarea>
                             </div>
                     </div>
                 </div>
