@@ -10,10 +10,24 @@
     color: #FFF;
     text-align: center;
     padding: 12px;
+    overflow: visible;
+    cursor:pointer
 }
 
 #tp-team-opener.righten{
     left:200px;
+}
+
+#tp-team-opener .badge-nb-connected{
+    display: block;
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    border-radius: 30px;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
 }
 
 #tp-team-window{
