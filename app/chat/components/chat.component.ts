@@ -3,6 +3,7 @@ import {Component, OnInit, OnChanges, AfterViewInit} from "angular2/core";
 import {ChatMessage} from "../index";
 import {User} from "../../users/index";
 import {KuzzleService} from "../../shared/kuzzle/services/kuzzle.service";
+import {AutoScrollDirective} from "../../shared/directives/autoscroll/autoscroll.directive";
 
 //test michel : import 'rxjs/add/operator/map';
 
@@ -15,7 +16,8 @@ declare var $:any;
 @Component({
     selector: 'chat',
     templateUrl: "app/chat/components/chat.component.html",
-    styleUrls: ['app/chat/components/chat.component.css']
+    styleUrls: ['app/chat/components/chat.component.css'],
+    directives: [AutoScrollDirective]
 })
 export class ChatComponent implements OnInit, AfterViewInit{
     user:User;

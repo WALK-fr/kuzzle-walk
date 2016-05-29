@@ -2,7 +2,7 @@
     <div id="tp-chat-window-triangle"></div>
     <div id="tp-chat-window-container" class="row white z-depth-2">
         <div id="tp-chat-window-messages" class="input-field col s12">
-            <ul id="tp-chat-window-message-list">
+            <ul autoScroll id="tp-chat-window-message-list">
                 <li *ngFor="#message of messagesList, #index = index" class="clearfix">
                     <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="I am tooltip">
                         <img src="http://lorempixel.com/35/35/people/?random={{index + 1}}" class="circle">
