@@ -1,0 +1,32 @@
+#tp-content{
+    margin-top: -20px;
+}
+
+#tp-content > .row{
+    margin-bottom: 0px;
+}
+
+#navbar-container{
+    position: relative;
+}
+
+#map-container{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    position:relative;
+}
+
+
+/* TABS */
+#tp-tabs{
+    margin-top: 20px;
+}
+
+
+.tabs .tab a, .tabs .tab a.active {
+    color: #FF9800;
+}
+.tabs .indicator {
+    background-color: #FF9800;
+}

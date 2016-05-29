@@ -3,23 +3,6 @@ html, body, #tp-content, #tp-content .row, #mapid{
   height:100%;
 }
 
-.tabs .tab a, .tabs .tab a.active {
-  color: #FF9800;
-}
-.tabs .indicator {
-  background-color: #FF9800;
-}
-
-.collection .collection-item.avatar .secondary-content {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-}
-
-.dropdown-content li > a, .dropdown-content li > span {
-  color: #FF9800;
-}
-
 .clearfix:before,
 .clearfix:after {
   content: " ";
@@ -30,37 +13,6 @@ html, body, #tp-content, #tp-content .row, #mapid{
   clear: both;
 }
 
-
-/* app */
-#tp-app-title{
-	font-style:italic;
-	font-weight: 200;
-}
-
-#tp-content{
-  margin-top: -20px;
-}
-
-/* NAVBAR */
-#navbar-container{
-  position: relative;
-}
-
-
-#tp-navbar{
-  margin: 1.46rem 0 0 0;
-}
-
-#map-container{
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  position:relative;
-}
 #mapid{
   z-index: 0;
-}
-
-#tp-tabs{
-  margin-top: 20px;
 }

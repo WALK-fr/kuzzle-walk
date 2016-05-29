@@ -4,6 +4,7 @@ import {TeamWidgetComponent} from "../../team/components/team-widget.component";
 @Component({
     selector: 'navbar',
     templateUrl: 'app/shared/components/navbar.component.html',
+    styleUrls: ['app/shared/components/navbar.component.css'],
     directives: [TeamWidgetComponent]
 })
 export class NavbarComponent {
