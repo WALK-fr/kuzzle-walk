@@ -15,13 +15,12 @@ export class AutoScrollDirective{
 
         //create a DOM Observer and declaring it's callback function
         this.mutationObserver = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                console.log(mutation.target);
+            mutations.forEach(() => {
                 //we set the ul scroll to it's total height after each li element is appended to the DOM
-                mutation.target.scrollTop = mutation.target.scrollTopMax;
+                this._el.nativeElement.scrollTop = this._el.nativeElement.scrollHeight;
             });
         });
-        var config = { attributes: true, childList: true, characterData: true };
+        var config = {childList: true};
 
         //suscribe to the observer
         this.mutationObserver.observe(this._el.nativeElement, config);
