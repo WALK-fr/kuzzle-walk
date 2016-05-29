@@ -6,7 +6,6 @@ import {Directive, ElementRef, Renderer, AfterContentInit} from "angular2/core";
 export class AutoScrollDirective{
 
     private _isLocked = true;
-    private _oldScrollHeight = 0;
 
     private mutationObserver:MutationObserver;
 
@@ -17,9 +16,9 @@ export class AutoScrollDirective{
         //create a DOM Observer and declaring it's callback function
         this.mutationObserver = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
-
-                //we set the ul scroll to it's height at each li element appended on the DOM
-                this._el.nativeElement.scrollTop = this._el.nativeElement.scrollHeight;
+                console.log(mutation.target);
+                //we set the ul scroll to it's total height after each li element is appended to the DOM
+                mutation.target.scrollTop = mutation.target.scrollTopMax;
             });
         });
         var config = { attributes: true, childList: true, characterData: true };

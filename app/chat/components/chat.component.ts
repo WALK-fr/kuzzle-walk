@@ -4,6 +4,7 @@ import {ChatMessage} from "../index";
 import {User} from "../../users/index";
 import {KuzzleService} from "../../shared/kuzzle/services/kuzzle.service";
 import {AutoScrollDirective} from "../../shared/directives/autoscroll/autoscroll.directive";
+import {ToolTipsDirective} from "../../shared/directives/tooltips/tooltips.directive";
 
 //test michel : import 'rxjs/add/operator/map';
 
@@ -17,9 +18,9 @@ declare var $:any;
     selector: 'chat',
     templateUrl: "app/chat/components/chat.component.html",
     styleUrls: ['app/chat/components/chat.component.css'],
-    directives: [AutoScrollDirective]
+    directives: [AutoScrollDirective, ToolTipsDirective]
 })
-export class ChatComponent implements OnInit, AfterViewInit{
+export class ChatComponent implements OnInit{
     user:User;
     messagesList:ChatMessage[];
     message:string;
@@ -40,16 +41,6 @@ export class ChatComponent implements OnInit, AfterViewInit{
             .subscribe(x => {
                 this.messagesList = x;
             });
-    }
-
-
-    /**
-     * triggered after the view initialization. this is used to apply
-     * materialize js on the select
-     */
-    ngAfterViewInit() {
-        $('.tooltipped:last').tooltip({delay: 50});
-        $('#tp-chats-window-message-list').animate({scrollTop: $('#tp-chat-window-message-list').prop("scrollHeight")}, 500);
     }
 
 

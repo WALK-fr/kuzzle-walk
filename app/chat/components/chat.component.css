@@ -68,6 +68,7 @@ chat{
 
 #tp-chat-window-messages ul li{
     margin-bottom: 5px;
+    min-height: 35px;
 }
 
 #tp-chat-window-messages ul li img, #tp-chat-window-messages ul li .tp-chat-window-message-content{
