@@ -6,6 +6,7 @@ import {Travel} from "../../travel/index";
 import {KuzzleService} from "../../shared/kuzzle/index";
 import {User} from "../../users/index";
 import {Location} from "../../map/index";
+import {FadeToggleDirective} from "../../shared/directives/fadeToggle/fadetoggle.directive";
 
 
 // this is used to accept jquery token at compilation time
@@ -15,7 +16,8 @@ declare var L:any;
 @Component({
     selector: 'travel-form',
     templateUrl: 'app/home/components/travel-form.component.html',
-    styleUrls: ['app/home/components/travel-form.component.css']
+    styleUrls: ['app/home/components/travel-form.component.css'],
+    directives: [FadeToggleDirective]
 })
 export class TravelFormComponent implements AfterViewInit {
 

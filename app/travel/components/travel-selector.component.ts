@@ -2,7 +2,8 @@ import {Component, Input} from 'angular2/core';
 
 @Component({
     selector: 'travel-selector',
-    templateUrl: 'app/travel/components/travel-selector.component.html'
+    templateUrl: 'app/travel/components/travel-selector.component.html',
+    styleUrls: ['app/travel/components/travel-selector.component.css']
 })
 export class TravelSelectorComponent {
     @Input() mainLocationName: string;

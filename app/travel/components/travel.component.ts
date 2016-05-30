@@ -13,6 +13,7 @@ declare var $: any;
 @Component({
     selector: "travel",
     templateUrl: 'app/travel/components/travel.component.html',
+    styleUrls: ['app/travel/components/travel.component.css'],
     directives: [
         MapComponent, PoiFormComponent, MarkerListComponent, NavbarComponent,
         TravelSelectorComponent, ChatComponent, NotesComponent, TeamWidgetComponent
@@ -37,6 +38,9 @@ export class TravelComponent implements AfterViewInit {
                     alignment: 'left' // Displays dropdown with edge aligned to the left of button
                 }
         );
+
+        //set the map to fit the window height
+        $('#tp-content').height($(window).height() - $('#tp-top-bar').height());
     }
 
     toggleChat() {
