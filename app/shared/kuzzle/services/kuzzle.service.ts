@@ -30,7 +30,7 @@ export class KuzzleService {
     public createTravel(travel:Travel) {
         var hasBeenUpdated:boolean = false;
 
-        this.kuzzle.dataCollectionFactory('travel').createDocument(travel, (err:any, document:any) => {
+        this.kuzzle.dataCollectionFactory('travel','travel').createDocument(travel, (err:any, document:any) => {
             console.log(document);
             hasBeenUpdated = true;
 

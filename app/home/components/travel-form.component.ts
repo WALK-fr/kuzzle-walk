@@ -76,6 +76,7 @@ export class TravelFormComponent implements AfterViewInit {
         //});
 
         this.travel = new Travel(form.destination, {location: new Location(45.0, 1.5), zoom: 13}, []);
+        //this.kuzzleService.createTravel(this.travel);
 
         // navigate to the next step
         this.step++;
@@ -86,7 +87,7 @@ export class TravelFormComponent implements AfterViewInit {
      */
     login(form:any) {
         // TODO : Async call, add marker on component to mark as loading
-        this.kuzzleService.userService.login(form.login, form.password);
+        this.kuzzleService.userService.login(form.username, form.password);
 
         // The callback must update steps or display error message
         // TODO : On success add user to travel and travel to user
