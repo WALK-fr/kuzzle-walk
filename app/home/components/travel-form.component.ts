@@ -10,6 +10,7 @@ import {Location} from "../../map/index";
 
 // this is used to accept jquery token at compilation time
 declare var $:any;
+declare var L:any;
 
 @Component({
     selector: 'travel-form',
@@ -62,30 +63,47 @@ export class TravelFormComponent implements AfterViewInit {
     /**
      * triggered when the destination from is submitted
      */
-    saveDestination(form: any) {
+    saveDestination(form:any) {
         // TODO: keep the destination for the next step
-        console.log("destination: " + form.destination);
+        //console.log("destination: " + form.destination);
+
+        //var googleGeocodeProvider = new L.GeoSearch.Provider.OpenStreetMap();
+        //console.log(googleGeocodeProvider);
+        //googleGeocodeProvider.GetLocations(form.destination, (data:any) => {
+        //    console.log(data);
+        //});
+
+        this.travel = new Travel(form.destination, {location: new Location(45.0, 1.5), zoom: 13}, []);
+
         // navigate to the next step
         this.step++;
-        // this.kuzzleService.createTravel(new Travel('Un voyage', {location: new Location(15, 20), zoom: 3}, [new User()]));
     }
 
     /**
      * triggered when the login form is submitted
      */
-    login(form: any) {
-        // TODO: Handle login here
-        // TODO: Persist the travel ONLY here because we need to wait he is logged in
-        console.log("username: " + form.username);
-        console.log("password: " + form.password);
+    login(form:any) {
+        // TODO : Async call, add marker on component to mark as loading
+        this.kuzzleService.userService.login(form.login, form.password);
+
+        // The callback must update steps or display error message
+        // TODO : On success add user to travel and travel to user
+
         // navigate to the next step
         this.step++;
     }
 
-    inviteFriends(form: any) {
+    inviteFriends(form:any) {
         // TODO: Handle invite friends here
         console.log("friends: " + form.friends);
         console.log("message: " + form.message);
+
+        this.travel.members.push();
+
+        // TODO : Call webAPI to send mail (Kuzzle module per example)
+
+        // Generate a kuzzle invitation, on validation add the user to the travel object
+
         // redirect to the travel
         this._router.navigate(['Travel']);
     }

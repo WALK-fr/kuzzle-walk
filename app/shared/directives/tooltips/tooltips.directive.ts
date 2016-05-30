@@ -1,5 +1,7 @@
 import {Directive, AfterViewInit, Renderer, ElementRef} from "angular2/core";
 
+declare var $:any;
+
 @Directive({
     selector: '[tooltip]',
     host: {

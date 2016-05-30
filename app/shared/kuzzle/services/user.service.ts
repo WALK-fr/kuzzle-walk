@@ -16,6 +16,8 @@ export class UserService {
      */
     public login(login:string, password:string) {
 
+        console.log(login);
+        console.log(password);
         var expiresIn = "1h";
 
         this.kuzzle.login("local", {username: login, password: password}, expiresIn, (err, res) => {
