@@ -1,8 +1,26 @@
 <!-- Modal Structure -->
 <div id="tp-notes" class="modal bottom-sheet">
     <div class="modal-content">
-        <h4>Modal Header</h4>
-        <p>A bunch of text</p>
+        <h4>Notes and reminders <i (click)="addNewNote()" class="secondary-content material-icons cyan-text lighten-1">playlist_add</i></h4>
+        <section class="row">
+            <div *ngFor="#note of allNotes; #index = index" class="col s12 m4 l4">
+                <ul class="collection">
+                    <li class="collapsible-header">
+                        <h5>
+                            {{note.name}}
+                            <i (click)="addNewItem($event, note)" class="material-icons cyan-text lighten-1">note_add</i>
+                        </h5>
+                    </li>
+                    <li *ngFor="#item of note.items" class="collection-item dismissable">
+                        {{item.name}}
+                        <div class="actions secondary-content">
+                            <i (click)="markAsDone($event, note,item)" class="material-icons green-text">done</i>
+                            <i (click)="cancelItem(note,item)" class="material-icons red-text">cancel</i>
+                        </div>
+                    </li>
+                </ul>
+            </div><br *ngIf="index % 3 == 0" class="clearfix"/>
+        </section>
     </div>
     <div class="modal-footer">
         <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
