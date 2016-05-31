@@ -2,6 +2,8 @@ import {Component, AfterViewInit} from "angular2/core";
 import {ControlGroup, FormBuilder, Validators} from "angular2/common";
 import {TravelMarker} from "../index";
 import {KuzzleService} from "../../shared/kuzzle/index";
+import {Poi} from "../models/poi";
+import {Location} from "../models/location";
 
 // this is used to accept jquery token at compilation time
 declare var $: any;
@@ -22,7 +24,7 @@ export class PoiFormComponent implements AfterViewInit {
         });
 
         // TODO : Better do it on ngOnInit()
-        this.travelMarker = kuzzleService.mapService.retrieveAllMarkersForTravel(400)[0];
+        this.travelMarker = new TravelMarker("Exemple de marqueur prérempli", "son contenu", new Poi("Un POI", 31, new Location(44.0, 25.0)));
     }
 
     /**

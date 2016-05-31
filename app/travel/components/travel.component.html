@@ -6,7 +6,7 @@
                 [isChatActivated]="true"
                 [isNotesActivated]="true"></navbar>
 
-        <chat *ngIf="isChatOpened"></chat>
+        <chat [hidden]="isChatOpened"></chat>
     </div>
     <div class="col s12 m5 l4">
         <travel-selector></travel-selector>

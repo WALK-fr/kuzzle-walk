@@ -1,4 +1,9 @@
 import {Component, OnInit} from "angular2/core";
+import {Travel} from "../../travel/models/travel.model";
+import {KuzzleService} from "../../shared/kuzzle/index";
+import {User} from "../../users/index";
+import {Subject} from "rxjs/Rx";
+import {TravelMarker} from "../models/travel-marker";
 
 @Component({
     selector: 'map',
@@ -9,9 +14,23 @@ import {Component, OnInit} from "angular2/core";
 export class MapComponent implements OnInit {
 
     map:L.Map;
+    travel:Travel;
+    user:User;
 
+    constructor(private kuzzleService:KuzzleService) {
+        var stream:Subject<Travel> = kuzzleService.mapService.getTravel();
+        // TODO : Stop stream
+        stream.subscribe(x => {
+            this.travel = x;
+         // Get POI
+            var poiStream = kuzzleService.mapService.getAllMarkersForTravel(this.travel.id);
+            poiStream.subscribe((x:TravelMarker[]) => {
+                x.forEach((x) => {
+                    this.addMarker(x.getLatitude(), x.getLongitude(),x.name);
+                });
+            })
+        });
 
-    constructor() {
 
     }
 
@@ -26,7 +45,8 @@ export class MapComponent implements OnInit {
             .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
             .openPopup();
 
-        this.addMarker(51.5, -0.09, "A pretty CSS3 popup.<br> Easily customizable.");
+
+
         this.addMarker(48.85401, 2.35279, "<p>test</p>");
     }
 
