@@ -1,6 +1,5 @@
 /* Travel FORM */
 #tp-travel-form {
-    background-color: rgba(255,255,255,0.4) ;
 }
 
 .card {
@@ -13,7 +12,7 @@
 
 input#destination{
     height: 80px;
-    font-size: 48px;
+    font-size: 42px;
     font-weight: 200;
 }
 
@@ -38,47 +37,14 @@ input#destination{
     display: none;
 }
 
-/* FORM INPUTS * /
-/* label color */
-
-.input-field label {
-    color: #000;
-}
-/* label focus color */
-.input-field input:focus + label {
-    color: #26a69a;
-}
-/* label underline focus color */
-.input-field input:focus {
-    border-bottom: 1px solid #26a69a;
-    box-shadow: 0 1px 0 0 #26a69a;
-}
-/* valid color */
-.input-field input.valid {
-    border-bottom: 1px solid #4CAF50;
-    box-shadow: 0 1px 0 0 #4CAF50;
-}
-/* invalid color */
-.input-field input.invalid {
-    border-bottom: 1px solid #000;
-    box-shadow: 0 1px 0 0 #000;
-}
-/* icon prefix focus color */
-.input-field .prefix.active {
-    color: #000;
+#destination-label{
+    width: 100%;
 }
 
-::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-    color:    #333;
+#destination-label:after{
+    margin-top: 40px;
 }
-:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-    color:    #333;
-    opacity:  1;
-}
-::-moz-placeholder { /* Mozilla Firefox 19+ */
-    color:    #333;
-    opacity:  1;
-}
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
-    color:    #333;
+
+#tp-login-form-submit{
+    margin-top:10px;
 }

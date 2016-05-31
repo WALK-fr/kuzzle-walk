@@ -4,6 +4,7 @@
         <navbar (toggle-chat)="toggleChat()"
                 (toggle-notes)="notes.displayModal()"
                 [isChatActivated]="true"
+                [isLoginformActivated]="false"
                 [isNotesActivated]="true"></navbar>
 
         <chat [hidden]="isChatOpened"></chat>

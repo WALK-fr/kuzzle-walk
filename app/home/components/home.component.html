@@ -1,7 +1,10 @@
 <div class="home">
     <div class="row z-depth-2">
         <div class="col s12 m12 l12 white">
-            <navbar></navbar>
+            <navbar
+                [isLoginformActivated]="true"
+                (toggle-login-form)="form.displayForm()">
+            </navbar>
         </div>
     </div>
 
@@ -14,7 +17,7 @@
                         Organize your trip with family or friends, all together, in real-time!
                     </h4>
                 </div>
-                <travel-form></travel-form>
+                <travel-form #form></travel-form>
             </div>
         </section>
     </div>
