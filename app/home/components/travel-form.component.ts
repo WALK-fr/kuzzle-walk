@@ -21,6 +21,7 @@ declare var L:any;
 })
 export class TravelFormComponent implements AfterViewInit {
 
+    signInOnly:boolean = false;
     travel: Travel;
     destinationForm: ControlGroup;
     loginForm: ControlGroup;
@@ -99,8 +100,13 @@ export class TravelFormComponent implements AfterViewInit {
         // The callback must update steps or display error message
         // TODO : On success add user to travel and travel to user
 
-        // navigate to the next step
-        this.step++;
+        if(!this.signInOnly) {
+            // navigate to the next step
+            this.step++;
+        }
+        else{
+            //login directly the user
+        }
     }
 
     inviteFriends(form:any) {
@@ -116,5 +122,13 @@ export class TravelFormComponent implements AfterViewInit {
 
         // redirect to the travel
         this._router.navigate(['Travel']);
+    }
+
+    /**
+     * force the login form display
+     */
+    displayForm(){
+        this.step = 2;
+        this.signInOnly = true;
     }
 }

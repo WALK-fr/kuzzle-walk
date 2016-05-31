@@ -1,6 +1,5 @@
 /* Travel FORM */
 #tp-travel-form {
-    background-color: rgba(255,255,255,0.4) ;
 }
 
 .card {
@@ -44,4 +43,8 @@ input#destination{
 
 #destination-label:after{
     margin-top: 40px;
+}
+
+#tp-login-form-submit{
+    margin-top:10px;
 }

@@ -10,8 +10,10 @@ import {TeamWidgetComponent} from "../../team/components/team-widget.component";
 export class NavbarComponent {
     @Input() isChatActivated = false;
     @Input() isNotesActivated = false;
+    @Input() isLoginformActivated = false;
     @Output('toggle-chat') chatOuput = new EventEmitter();
     @Output('toggle-notes') notesOutput = new EventEmitter();
+    @Output('toggle-login-form') loginOutput = new EventEmitter();
 
     toggleChat() {
         this.chatOuput.emit({});
@@ -19,5 +21,9 @@ export class NavbarComponent {
 
     toggleNotes(){
         this.notesOutput.emit({});
+    }
+
+    toggleLoginForm(){
+        this.loginOutput.emit({});
     }
 }
