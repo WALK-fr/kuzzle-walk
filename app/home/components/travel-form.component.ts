@@ -21,13 +21,13 @@ declare var L:any;
 })
 export class TravelFormComponent implements AfterViewInit {
 
-    travel:Travel;
-    destinationForm:ControlGroup;
-    loginForm:ControlGroup;
-    subscribeForm:ControlGroup;
-    inviteFriendsForm:ControlGroup;
-    step:number = 1;
-    userName:string = "Michel";
+    travel: Travel;
+    destinationForm: ControlGroup;
+    loginForm: ControlGroup;
+    subscribeForm: ControlGroup;
+    inviteFriendsForm: ControlGroup;
+    step: number = 1;
+    userName: string = "Michel";
 
     constructor(formBuilder:FormBuilder, private _router:Router, private kuzzleService:KuzzleService) {
         this.destinationForm = formBuilder.group({
@@ -66,6 +66,9 @@ export class TravelFormComponent implements AfterViewInit {
      * triggered when the destination from is submitted
      */
     saveDestination(form:any) {
+
+        if (!this.destinationForm.valid)
+            return;
         // TODO: keep the destination for the next step
         //console.log("destination: " + form.destination);
 
@@ -86,6 +89,10 @@ export class TravelFormComponent implements AfterViewInit {
      * triggered when the login form is submitted
      */
     login(form:any) {
+
+        if (!this.loginForm.valid)
+            return;
+
         // TODO : Async call, add marker on component to mark as loading
         this.kuzzleService.userService.login(form.username, form.password);
 
