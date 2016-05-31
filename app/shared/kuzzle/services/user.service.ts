@@ -1,11 +1,14 @@
+import {User} from "../../../users/models/user";
 /**
  * Handle each kuzzle calls related to the user.
  */
 export class UserService {
     private kuzzle:Kuzzle;
+    user: User;
 
     public constructor(kuzzle:Kuzzle) {
         this.kuzzle = kuzzle;
+        this.user = new User();
     }
 
     /**

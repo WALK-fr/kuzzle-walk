@@ -1,5 +1,6 @@
 import {Poi} from "./poi";
 import {Location} from "./location";
+import {InterestInterface} from "./interest.interface";
 
 /**
  * Represent an interest pinned to the map by a user.
@@ -9,29 +10,29 @@ import {Location} from "./location";
  * it can be a Location if it's a point on map that represent nothing but a location (per example a point in woods).
  */
 export class TravelMarker {
-    private _name:string;
-    private _content:string;
-    private _interest:Poi | Location;
+    name:string;
+    content:string;
+    interest:InterestInterface;
 
-    constructor(name:string, content:string, interest:Poi | Location) {
-        this._name = name;
-        this._content = content;
-        this._interest = interest;
-    }
-
-    get name():string {
-        return this._name;
-    }
-
-    get content():string {
-        return this._content;
+    constructor(name:string, content:string, interest:InterestInterface) {
+        this.name = name;
+        this.content = content;
+        this.interest = interest;
     }
 
     public isPoi():boolean {
-        return this._interest instanceof Poi;
+        return this.interest instanceof Poi;
     }
 
     public isLocation():boolean {
-        return this._interest instanceof Location;
+        return this.interest instanceof Location;
+    }
+
+    public getLatitude(){
+        return this.interest.getLatitude();
+    }
+
+    public getLongitude(){
+        return this.interest.getLongitude();
     }
 }
