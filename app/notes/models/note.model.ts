@@ -7,10 +7,10 @@ export class Note {
     travelId: string;
     items:[Item];
 
-    constructor(obj?: any) {
-        this.id = obj && obj.id || null;
-        this.name = obj && obj.content.name || null;
-        this.travelId = obj && obj.content.travelId || null;
-        this.items = obj && obj.content.items || null;
+    constructor(id: any, obj?: any) {
+        this.id = id;
+        this.name = obj && obj.name || null;
+        this.travelId = obj && obj.travelId || null;
+        this.items = obj && obj.items || null;
     }
 }

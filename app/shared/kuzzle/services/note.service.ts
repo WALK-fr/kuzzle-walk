@@ -46,7 +46,7 @@ export class NoteService {
                 .advancedSearch(filter, {}, (err, res) => {
                     var notesList = [];
                     res.documents.forEach(document => {
-                        notesList.push(new Note(document))
+                        notesList.push(new Note(document.id, document.content));
                     });
                     observer.next(notesList);
                 });
@@ -61,8 +61,7 @@ export class NoteService {
         var room = this.kuzzle.dataCollectionFactory('notes').subscribe({}, options, (error:any, result:any) => {
 
             // and then you notify the observer
-            console.log(result);
-            notesListener.next(new Note(result.result._source));
+            notesListener.next(new Note(result.result._id, result.result._source));
         });
 
         if (notesListener.isUnsubscribed) {
