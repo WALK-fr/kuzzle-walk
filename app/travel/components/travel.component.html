@@ -7,7 +7,7 @@
                 [isLoginformActivated]="false"
                 [isNotesActivated]="true"></navbar>
 
-        <chat [hidden]="isChatOpened"></chat>
+        <chat [hidden]="!isChatOpened"></chat>
     </div>
     <div class="col s12 m5 l4">
         <travel-selector></travel-selector>
