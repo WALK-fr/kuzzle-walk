@@ -1,9 +1,7 @@
-import {Component, AfterViewInit} from "angular2/core";
+import {Component, AfterViewInit, OnInit} from "angular2/core";
 import {ControlGroup, FormBuilder, Validators} from "angular2/common";
 import {TravelMarker} from "../index";
 import {KuzzleService} from "../../shared/kuzzle/index";
-import {Poi} from "../models/poi";
-import {Location} from "../models/location";
 
 // this is used to accept jquery token at compilation time
 declare var $: any;
@@ -12,19 +10,24 @@ declare var $: any;
     selector: 'poi-form',
     templateUrl: 'app/map/components/poi-form.component.html',
 })
-export class PoiFormComponent implements AfterViewInit {
+export class PoiFormComponent implements OnInit, AfterViewInit {
+
     poiForm:ControlGroup;
     travelMarker:TravelMarker;
 
-    constructor(fb:FormBuilder, private kuzzleService:KuzzleService) {
-        this.poiForm = fb.group({
+    constructor(private fb:FormBuilder, private kuzzleService:KuzzleService) {
+      
+    }
+
+    ngOnInit() {
+        this.poiForm = this.fb.group({
             name: ['', Validators.required],
             address: ['', Validators.required],
             type: ['', Validators.required]
         });
-
         // TODO : Better do it on ngOnInit()
-        this.travelMarker = new TravelMarker("Exemple de marqueur prérempli", "son contenu", new Poi("Un POI", 31, new Location(44.0, 25.0)));
+        this.travelMarker = new TravelMarker({name: 'Michel à gagné', latitude: 48.8557317, longitude: 2.3402912});
+        // this.save();
     }
 
     /**

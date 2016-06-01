@@ -4,8 +4,6 @@ import {ControlGroup, FormBuilder, Validators} from "angular2/common";
 import {BasicValidators} from "../../shared/validators/basicValidators";
 import {Travel} from "../../travel/index";
 import {KuzzleService} from "../../shared/kuzzle/index";
-import {User} from "../../users/index";
-import {Location} from "../../map/index";
 import {FadeToggleDirective} from "../../shared/directives/fadeToggle/fadetoggle.directive";
 
 

@@ -1,8 +1,7 @@
 import {Injectable} from "angular2/core";
-import {ChatService, MapService, UserService} from "../index";
 import {Travel} from "../../../travel/index";
-import {User} from "../../../users/models/user";
-import {NotesService, NoteService} from "./note.service";
+import {Subject} from "rxjs/Rx";
+import {ChatService, MapService, UserService, NoteService} from "../index";
 
 declare let Kuzzle:any;
 
@@ -11,6 +10,7 @@ declare let Kuzzle:any;
  */
 @Injectable()
 export class KuzzleService {
+
     private kuzzle:Kuzzle;
     private _chatService:ChatService;
     private _mapService:MapService;
@@ -27,13 +27,12 @@ export class KuzzleService {
 
     /**
      * Persist the travel and override the travel ID
-     *
      * @param travel
      */
     public createTravel(travel:Travel) {
         var hasBeenUpdated:boolean = false;
 
-        this.kuzzle.dataCollectionFactory('travel','travel').createDocument(travel, (err:any, document:any) => {
+        this.kuzzle.dataCollectionFactory('travel').createDocument(travel, (err:any, document:any) => {
             console.log(document);
             hasBeenUpdated = true;
 
@@ -48,11 +47,23 @@ export class KuzzleService {
 
     }
 
-    /**
-     * Fetch a travel from it's ID
-     */
-    public getTravel(user:User) {
-       
+    public getTravel() {
+        var travelListener:Subject<Travel> = new Subject<Travel>(null);
+        // TODO : Change this value
+        var room = this.kuzzle.dataCollectionFactory('travel').fetchDocument('AVS5a8AIeivQYXVQtlJN', (err, result) => {
+            // TODO : Handle errors
+            var travel:Travel = result.content;
+
+            // and then you notify the observer
+            travelListener.next(travel);
+        });
+
+        if (travelListener.isUnsubscribed) {
+            console.log('OK cest fait');
+            room.unsubscribe()
+        }
+
+        return travelListener;
     }
 
     get chatService():ChatService {
@@ -63,15 +74,9 @@ export class KuzzleService {
         return this._mapService;
     }
 
-    /**
-     * Return the user service that allows to manage login and user's specific methods.
-     *
-     * @returns {KuzzleUserService}
-     */
     get userService():UserService {
         return this._userService;
     }
-
 
     get noteService():NoteService {
         return this._noteService;

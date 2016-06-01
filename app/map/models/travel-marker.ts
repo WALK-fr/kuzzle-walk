@@ -1,38 +1,23 @@
-import {Poi} from "./poi";
-import {Location} from "./location";
-import {InterestInterface} from "./interest.interface";
-
-/**
- * Represent an interest pinned to the map by a user.
- * It is also represented in the right panel menu (map and panel are linked).
- *
- * It can be one of Poi (if it's a value fetched from the Backoffice database and accessible to all application user) or
- * it can be a Location if it's a point on map that represent nothing but a location (per example a point in woods).
- */
 export class TravelMarker {
-    name:string;
-    content:string;
-    interest:InterestInterface;
+    name: string;
+    content: string;
+    travelId: string;
+    latitude: number;
+    longitude: number;
+    type: string;
+    address: string;
+    duration: number;
+    price: number;
 
-    constructor(name:string, content:string, interest:InterestInterface) {
-        this.name = name;
-        this.content = content;
-        this.interest = interest;
-    }
-
-    public isPoi():boolean {
-        return this.interest instanceof Poi;
-    }
-
-    public isLocation():boolean {
-        return this.interest instanceof Location;
-    }
-
-    public getLatitude(){
-        return this.interest.getLatitude();
-    }
-
-    public getLongitude(){
-        return this.interest.getLongitude();
+    constructor(obj?: any) {
+        this.name = obj && obj.name || null;
+        this.content = obj && obj.content || null;
+        this.latitude = obj && obj.latitude || null;
+        this.longitude = obj && obj.longitude || null;
+        this.travelId = obj && obj.travelId || null;
+        this.address = obj && obj.address || null;
+        this.type = obj && obj.type || null;
+        this.duration = obj && obj.duration || null;
+        this.price = obj && obj.price || null;
     }
 }

@@ -1,4 +1,4 @@
-import {TravelMarker, Poi, Location} from "../../../map/index";
+import {TravelMarker} from "../../../map/index";
 import {Observable} from "rxjs/Observable";
 import * as Rx from "rxjs/Rx";
 import {Subject} from "rxjs/Rx";
@@ -19,7 +19,7 @@ export class MapService {
      * @returns {any}
      */
     public publishTravelMarker(travelMarker:TravelMarker) {
-        return this.kuzzle.dataCollectionFactory('travel', 'markers').createDocument(travelMarker);
+        return this.kuzzle.dataCollectionFactory('markers').createDocument(travelMarker);
     }
 
     /**
@@ -29,38 +29,51 @@ export class MapService {
      * @returns {Observable<TravelMarker[]>}
      */
     public getAllMarkersForTravel(travelID:string) {
-        return Rx.Observable.create(function (observer) {
-            var travelMarkers = [
-                new TravelMarker("Un marqueur", "son contenu", new Poi("Un POI", 45, new Location(51.5, -0.09))),
-                new TravelMarker("Un autre marqueur POI", "son contenu", new Poi("Un POI", 20, new Location(45.0, 25.0))),
-                new TravelMarker("Un troisième marqueur location", "son contenu", new Poi("Un POI", 31, new Location(44.0, 25.0)))
-            ];
-            observer.next(travelMarkers);
+        return Rx.Observable.create((observer) => {
+
+            var filter = {
+                query: {
+                    match: {
+                        travelId: "AVS5a8AIeivQYXVQtlJN"
+                    }
+                }
+            };
+
+            this.kuzzle
+                .dataCollectionFactory('markers')
+                .advancedSearch(filter, {}, (err, res) => {
+
+                    var markersList = [];
+                    res.documents.forEach(document => {
+                        markersList.push(new TravelMarker(document.content))
+                    });
+
+                    observer.next(markersList);
+                });
+
         });
         // TODO : Kuzzle call further to replace the mock.
 
     }
 
-    public subsribeToTravelMarkers() {
+    public subsribeToTravelMarkers(): Subject<TravelMarker> {
         var options = {};
 
-        var travelMarkers:TravelMarker[] = [];
 
-        //
-        // create the observable to return
-        return Observable.create((observer:any) => {
-            // subscribe to kuzzle service in order to get the data
-            this.kuzzle
-                .dataCollectionFactory('travelMarkers')
-                .subscribe({}, options, (error:any, result:any) => {
-                    // each time you get a message, you push it
-                    var content = result.result._source._content;
-                    travelMarkers.push(new TravelMarker('aa', content, new Poi('dqdqd',15, new Location(15,20))));
+        var markersListener:Subject<TravelMarker> = new Subject<TravelMarker>(null);
+        // TODO : Change this value
+        var room = this.kuzzle.dataCollectionFactory('markers').subscribe({}, options, (error:any, result:any) => {
 
-                    // and then you notify the observer
-                    observer.next(travelMarkers);
-                });
+            // and then you notify the observer
+            markersListener.next(new TravelMarker(result.result._source._content));
         });
+
+        if (markersListener.isUnsubscribed) {
+            console.log('OK cest fait');
+            room.unsubscribe()
+        }
+
+        return markersListener;
     }
 
     /**

@@ -9,9 +9,7 @@ import {Location} from '../models/location';
 })
 export class MarkerListComponent {
     markers: TravelMarker[] = [
-        new TravelMarker("Jacky", "Ye, so fun!", new Location(10, 10)),
-        new TravelMarker("Michel", "It was great.", new Location(10, 10)),
-        new TravelMarker("Francis", "Go to the pool.", new Location(10, 10))
+        new TravelMarker({name : "Jacky",content: "Ye, so fun!",interest: new Location(10, 10)}),
     ];
 
 
