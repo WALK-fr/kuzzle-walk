@@ -65,7 +65,8 @@ export class MapService {
         var room = this.kuzzle.dataCollectionFactory('markers').subscribe({}, options, (error:any, result:any) => {
 
             // and then you notify the observer
-            markersListener.next(new TravelMarker(result.result._source._content));
+            console.log(result);
+            markersListener.next(new TravelMarker(result.result._source));
         });
 
         if (markersListener.isUnsubscribed) {

@@ -43,6 +43,7 @@ export class MapComponent implements OnInit {
 
         var markersStream: Subject<TravelMarker> = this.kuzzleService.mapService.subsribeToTravelMarkers();
         markersStream.subscribe((x) => {
+            console.log(x);
             this.addMarker(x.latitude, x.longitude, x.name)
         })
 
