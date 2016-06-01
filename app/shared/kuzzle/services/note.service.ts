@@ -1,5 +1,7 @@
 import {Observable} from "rxjs/Observable";
 import * as Rx from "rxjs/Rx";
+import {Note} from "../../../notes/models/note.model";
+import {Subject} from "rxjs/Subject";
 
 /**
  * Handle each kuzzle calls related to the notes component.
@@ -17,7 +19,10 @@ export class NoteService {
      * @returns {any}
      */
     public publishNote(travelNote) {
-        return this.kuzzle.dataCollectionFactory('travel', 'markers').createDocument(travelNote);
+        if(travelNote.id){
+            return this.kuzzle.dataCollectionFactory('notes').updateDocument(travelNote.id, travelNote);
+        }
+        else return this.kuzzle.dataCollectionFactory('notes').createDocument(travelNote);
     }
 
     /**
@@ -27,37 +32,44 @@ export class NoteService {
      * @returns {Observable<TravelMarker[]>}
      */
     public getAllNotesForTravel(travelID:string) {
-        return Rx.Observable.create(function (observer) {
-            var allNotes = [
-                {"name":"Paris", "items":[{"name":"note1", "done":false} , {"name":"note2", "done":false}, {"name":"note3", "done":false}]},
-                {"name":"Deauville", "items":[{"name":"note1", "done":false} , {"name":"note2", "done":false}, {"name":"note3", "done":false}]},
-                {"name":"Bibi", "items":[{"name":"note1", "done":false} , {"name":"note2", "done":false}, {"name":"note3", "done":false}]},
-                {"name":"DeBi", "items":[{"name":"note1", "done":false} , {"name":"note2", "done":false}, {"name":"note3", "done":false}]},
-            ];
-            observer.next(allNotes);
-        });
-        // TODO : Kuzzle call further to replace the mock.
-    }
+        return Rx.Observable.create((observer) => {
 
-    public subsribeToTravelNotes() {
-        var options = {};
-
-        var travelNotes:any[] = [];
-
-        //
-        // create the observable to return
-        return Observable.create((observer:any) => {
-            // subscribe to kuzzle service in order to get the data
+            var filter = {
+                query: {
+                    match: {
+                        travelId: "AVS5a8AIeivQYXVQtlJN"
+                    }
+                }
+            };
             this.kuzzle
-                .dataCollectionFactory('travelNotes')
-                .subscribe({}, options, (error:any, result:any) => {
-                    // each time you get a message, you push it
-                    var content = result.result._source._content;
-                    //travelNotes.push(new TravelMarker('aa', content, new Poi('dqdqd',15, new Location(15,20))));
-
-                    // and then you notify the observer
-                    observer.next(travelNotes);
+                .dataCollectionFactory('notes')
+                .advancedSearch(filter, {}, (err, res) => {
+                    var notesList = [];
+                    res.documents.forEach(document => {
+                        notesList.push(new Note(document))
+                    });
+                    observer.next(notesList);
                 });
         });
+    }
+
+    public subsribeToNotes(): Subject<Note> {
+        var options = {};
+
+        var notesListener:Subject<Note> = new Subject<Note>(null);
+        // TODO : Change this value
+        var room = this.kuzzle.dataCollectionFactory('notes').subscribe({}, options, (error:any, result:any) => {
+
+            // and then you notify the observer
+            console.log(result);
+            notesListener.next(new Note(result.result._source));
+        });
+
+        if (notesListener.isUnsubscribed) {
+            console.log('OK cest fait');
+            room.unsubscribe()
+        }
+
+        return notesListener;
     }
 }
