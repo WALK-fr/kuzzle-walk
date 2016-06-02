@@ -1,14 +1,15 @@
 import {Item} from "./item.model";
+import {KuzzleDocument} from "../../shared/kuzzle/model/kuzzle-document.model";
 
-export class Note {
+export class Note extends KuzzleDocument{
     /** The travel unique ID in kuzzle */
-    id: string;
     name: string;
     travelId: string;
     items: Item[];
 
-    constructor(id: any, obj?: any) {
-        this.id = id;
+    constructor(obj?: any) {
+        super();
+        this.id = obj && obj.id || null;
         this.name = obj && obj.name || null;
         this.travelId = obj && obj.travelId || null;
         this.items = obj && obj.items || null;

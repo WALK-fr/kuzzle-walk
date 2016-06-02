@@ -2,6 +2,7 @@ import {Component, OnInit} from "angular2/core";
 import {KuzzleService} from "../../shared/kuzzle/services/kuzzle.service";
 import {Note} from "../models/note.model";
 import {Item} from "../models/item.model";
+import {KuzzleDocument} from "../../shared/kuzzle/model/kuzzle-document.model";
 
 // this is used to accept jquery token at compilation time
 declare var $:any;
@@ -27,7 +28,7 @@ export class NotesComponent implements OnInit{
 
     ngOnInit(){
         this._kuzzle.noteService.subsribeToNotes().subscribe((note) => {
-            this.allNotes.push(new Note(note));
+            this._kuzzle.updateLocalCollection(this.allNotes, note);
         });
     }
     

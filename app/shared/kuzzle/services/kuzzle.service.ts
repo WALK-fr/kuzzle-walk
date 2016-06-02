@@ -2,6 +2,7 @@ import {Injectable} from "angular2/core";
 import {Travel} from "../../../travel/index";
 import {Subject} from "rxjs/Rx";
 import {ChatService, MapService, UserService, NoteService} from "../index";
+import {KuzzleDocument} from "../model/kuzzle-document.model";
 
 declare let Kuzzle:any;
 
@@ -23,6 +24,30 @@ export class KuzzleService {
         this._mapService = new MapService(this.kuzzle);
         this._userService = new UserService(this.kuzzle);
         this._noteService = new NoteService(this.kuzzle);
+    }
+
+    /**
+     * Update local collection by reference depending on the kuzzle action
+     * @param document The document that must be created / updated / deleted.
+     * @param documentCollection The collection on which action must be made.
+     */
+    public updateLocalCollection(documentCollection: KuzzleDocument[], document:KuzzleDocument){
+        switch(document.status){
+            case 'created':
+                documentCollection.push(document);
+                break;
+            case 'update':
+                var map = documentCollection.map((x) =>{return x.id});
+                var indexToReplace = map.indexOf(document.id);
+                document.status = null;
+
+                documentCollection[indexToReplace] = document;
+                break;
+            case 'delete':
+                var indexToDelete = documentCollection.map((x) =>{return x.id}).indexOf(document.id);
+                documentCollection.splice(indexToDelete, 1);
+                break;
+        }
     }
 
     /**

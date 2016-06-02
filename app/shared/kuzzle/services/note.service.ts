@@ -1,7 +1,7 @@
-import {Observable} from "rxjs/Observable";
 import * as Rx from "rxjs/Rx";
 import {Note} from "../../../notes/models/note.model";
 import {Subject} from "rxjs/Subject";
+import {KuzzleDocument} from "../model/kuzzle-document.model";
 
 /**
  * Handle each kuzzle calls related to the notes component.
@@ -25,6 +25,10 @@ export class NoteService {
         else return this.kuzzle.dataCollectionFactory('notes').createDocument(travelNote);
     }
 
+    public deleteNote(travelNote){
+        return this.kuzzle.dataCollectionFactory('notes').deleteDocument(travelNote.id);
+    }
+
     /**
      * Retrieve all marker that must be displayed on the map.
      *
@@ -46,7 +50,9 @@ export class NoteService {
                 .advancedSearch(filter, {}, (err, res) => {
                     var notesList = [];
                     res.documents.forEach(document => {
-                        notesList.push(new Note(document.id, document.content));
+                        var note = new Note(document.content);
+                        note.id = document.id;
+                        notesList.push(note);
                     });
                     observer.next(notesList);
                 });
@@ -61,7 +67,11 @@ export class NoteService {
         var room = this.kuzzle.dataCollectionFactory('notes').subscribe({}, options, (error:any, result:any) => {
 
             // and then you notify the observer
-            notesListener.next(new Note(result.result._id, result.result._source));
+            var note = new Note(result.result._source);
+            note.status = result.action;
+            note.id = result.result._id;
+
+            notesListener.next(note);
         });
 
         if (notesListener.isUnsubscribed) {
