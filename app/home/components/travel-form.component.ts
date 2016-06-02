@@ -1,9 +1,9 @@
 import {Component, AfterViewInit} from "angular2/core";
 import {Router} from "angular2/router";
 import {ControlGroup, FormBuilder, Validators} from "angular2/common";
+
 import {BasicValidators} from "../../shared/validators/basicValidators";
 import {Travel} from "../../travel/index";
-import {Location} from "../../map/index";
 import {KuzzleService} from "../../shared/kuzzle/index";
 import {FadeToggleDirective} from "../../shared/directives/fadeToggle/fadetoggle.directive";
 
@@ -78,7 +78,7 @@ export class TravelFormComponent implements AfterViewInit {
         //    console.log(data);
         //});
 
-        this.travel = new Travel(form.destination, {location: new Location(45.0, 1.5), zoom: 13}, []);
+        this.travel = new Travel(form.destination, 45.0, 1.5, 13, []);
         //this.kuzzleService.createTravel(this.travel);
 
         // navigate to the next step

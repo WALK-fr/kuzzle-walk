@@ -1,4 +1,4 @@
-import {Component, OnInit} from "angular2/core";
+import {Component, OnInit, Output, EventEmitter} from "angular2/core";
 import {Travel} from "../../travel/models/travel.model";
 import {KuzzleService} from "../../shared/kuzzle/index";
 import {User} from "../../users/index";
@@ -30,8 +30,6 @@ export class MapComponent implements OnInit {
                 });
             })
         });
-
-
     }
 
     ngOnInit() {

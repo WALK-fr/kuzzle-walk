@@ -1,4 +1,4 @@
-import {Location, TravelMarker} from "../../map";
+import {TravelMarker} from "../../map";
 import {User} from "../../users";
 import {ChatMessage} from "../../chat";
 
@@ -9,25 +9,29 @@ import {ChatMessage} from "../../chat";
  */
 export class Travel {
     /** The travel unique ID in kuzzle */
-    id:string;
-    name:string;
-    defaultLocation:Location;
-    defaultZoom:number;
-    members:User[];
-    travelMarkers:TravelMarker[];
-    chatMessages:ChatMessage[];
+    id: string;
+    name: string;
+    latitude: number;
+    longitude: number;
+    defaultZoom: number;
+    members: User[];
+    travelMarkers: TravelMarker[];
+    chatMessages: ChatMessage[];
 
     /**
      * Instantiate a new Travel.
      *
      * @param name
-     * @param defaultLocation The location where the map will pin to and the zoom related to it.
-     * @param members people
+     * @param latitude
+     * @param longitude
+     * @param zoom
+     * @param members
      */
-    constructor(name:string, defaultLocation:{location:Location, zoom:number}, members:User[]) {
+    constructor(name:string, latitude: number, longitude: number, zoom: number, members:User[]) {
         this.name = name;
-        this.defaultLocation = defaultLocation.location;
-        this.defaultZoom = defaultLocation.zoom;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.defaultZoom = zoom;
         this.members = members;
     }
 }
