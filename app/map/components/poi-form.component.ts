@@ -26,7 +26,7 @@ export class PoiFormComponent implements OnInit, AfterViewInit {
             type: ['', Validators.required]
         });
         // TODO : Better do it on ngOnInit()
-        this.travelMarker = new TravelMarker({name: 'Michel à gagné', latitude: 48.8557317, longitude: 2.3402912});
+        this.travelMarker = new TravelMarker({});
         // this.save();
     }
 

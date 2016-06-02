@@ -3,6 +3,7 @@ import {Router} from "angular2/router";
 import {ControlGroup, FormBuilder, Validators} from "angular2/common";
 import {BasicValidators} from "../../shared/validators/basicValidators";
 import {Travel} from "../../travel/index";
+import {Location} from "../../map/index";
 import {KuzzleService} from "../../shared/kuzzle/index";
 import {FadeToggleDirective} from "../../shared/directives/fadeToggle/fadetoggle.directive";
 
