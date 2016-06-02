@@ -2,10 +2,10 @@ import {Component, AfterViewInit} from "angular2/core";
 import {Router} from "angular2/router";
 import {ControlGroup, FormBuilder, Validators} from "angular2/common";
 
-import {BasicValidators} from "../../shared/validators/basicValidators";
+import {BasicValidators} from "../../shared/validators/basic-validator";
 import {Travel} from "../../travel/index";
 import {KuzzleService} from "../../shared/kuzzle/index";
-import {FadeToggleDirective} from "../../shared/directives/fadeToggle/fadetoggle.directive";
+import {FadeToggleDirective} from "../../shared/directives/fade-toggle.directive";
 
 
 // this is used to accept jquery token at compilation time

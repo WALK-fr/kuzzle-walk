@@ -1,5 +1,6 @@
 import {Component, AfterViewInit, OnInit} from "angular2/core";
 import {ControlGroup, FormBuilder, Validators} from "angular2/common";
+
 import {TravelMarker} from "../index";
 import {KuzzleService} from "../../shared/kuzzle/index";
 

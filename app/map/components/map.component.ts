@@ -1,9 +1,10 @@
-import {Component, OnInit, Output, EventEmitter} from "angular2/core";
+import {Component, OnInit} from "angular2/core";
+
 import {Travel} from "../../travel/models/travel.model";
 import {KuzzleService} from "../../shared/kuzzle/index";
 import {User} from "../../users/index";
 import {Subject, Observable} from "rxjs/Rx";
-import {TravelMarker} from "../models/travel-marker";
+import {TravelMarker} from "../models/travel-marker.model";
 
 @Component({
     selector: 'map',

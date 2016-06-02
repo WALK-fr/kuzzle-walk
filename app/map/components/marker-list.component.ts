@@ -1,6 +1,6 @@
 import {Component} from 'angular2/core';
 
-import {TravelMarker} from '../models/travel-marker';
+import {TravelMarker} from '../models/travel-marker.model';
 
 @Component({
     selector: 'marker-list',

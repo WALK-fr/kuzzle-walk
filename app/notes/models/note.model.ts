@@ -5,7 +5,7 @@ export class Note {
     id: string;
     name: string;
     travelId: string;
-    items:[Item];
+    items: Item[];
 
     constructor(id: any, obj?: any) {
         this.id = id;

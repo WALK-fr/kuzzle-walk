@@ -3,11 +3,11 @@ import {Component, OnInit} from "angular2/core";
 import {ChatMessage} from "../index";
 import {User} from "../../users/index";
 import {KuzzleService} from "../../shared/kuzzle/services/kuzzle.service";
-import {AutoScrollDirective} from "../../shared/directives/autoscroll/autoscroll.directive";
-import {ToolTipsDirective} from "../../shared/directives/tooltips/tooltips.directive";
+import {AutoScrollDirective} from "../../shared/directives/auto-scroll.directive";
+import {ToolTipsDirective} from "../../shared/directives/tooltips.directive";
 
 /**
- * This components represent the chatroom of the travel.
+ * This component represent the travel chat room
  */
 @Component({
     selector: 'chat',
