@@ -31,7 +31,14 @@ export class TravelComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        this.kuzzleService.initCurrentTravel();
+        // We fetch the travel and on response we init all streams
+        this.kuzzleService.travelStream.filter((x) => x !== null).subscribe((x) => {
+            this.travel = x;
+            this.initApplication();
+        });
+
+        // Bootstrap application
+        this.kuzzleService.initCurrentTravel()
     }
 
     /**
@@ -56,5 +63,13 @@ export class TravelComponent implements OnInit, AfterViewInit {
 
     toggleChat() {
         this.isChatOpened = !this.isChatOpened;
+    }
+
+    /**
+     * Init all streams of the application
+     */
+    private initApplication() {
+        this.kuzzleService.noteService.initNoteSubscriptionStream(this.travel);
+        this.kuzzleService.mapService.initTravelMarkersSubscriptionStream(this.travel);
     }
 }

@@ -2,7 +2,7 @@ import {Injectable} from "angular2/core";
 import {Travel} from "../../../travel/index";
 import {ChatService, MapService, UserService, NoteService} from "../index";
 import {KuzzleDocument} from "../model/kuzzle-document.model";
-import {Subject} from "rxjs/Rx";
+import {Subject, BehaviorSubject} from "rxjs/Rx";
 
 declare let Kuzzle:any;
 
@@ -27,7 +27,7 @@ export class KuzzleService {
         this._userService = new UserService(this.kuzzle);
         this._noteService = new NoteService(this.kuzzle);
 
-        this._travelStream = new Subject<Travel>();
+        this._travelStream = new BehaviorSubject<Travel>(null);
     }
 
     /**
@@ -42,6 +42,7 @@ export class KuzzleService {
 
         switch(document.status){
             case 'created':
+            case KuzzleDocument.STATUS_FETCHED:
                 documentCollection.push(document);
                 break;
             case 'update':
@@ -91,9 +92,10 @@ export class KuzzleService {
             // TODO : Handle errors
             var travel = new Travel(result.content);
             travel.id = result.id;
-            
+
             this._travelStream.next(travel);
         });
+
     }
 
     get travelStream():Subject<Travel> {

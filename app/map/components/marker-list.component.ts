@@ -16,19 +16,13 @@ export class MarkerListComponent implements OnInit {
 
     ngOnInit() {
         // Fetch the travel async + markers from database
+        // TODO
         this.kuzzleService.travelStream.subscribe(travel => {
             this.travel = travel;
-
-            // Therefore fetch all markers
-            this.kuzzleService.mapService.getAllMarkersForTravel(this.travel.id).subscribe((x:TravelMarker[]) => {
-                x.forEach((x) => {
-                    this.markers.push(x);
-                });
-            });
         });
 
         // ...therefore subscribe the new / update / delete of TravelMarkers
-        this.kuzzleService.mapService.getTravelMarkersListener().subscribe((x) => {
+        this.kuzzleService.mapService.getTravelMarkerStream().subscribe((x) => {
             this.kuzzleService.updateLocalCollection(this.markers, x);
         })
     }

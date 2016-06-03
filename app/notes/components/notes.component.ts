@@ -14,7 +14,7 @@ import {Travel} from "../../travel/models/travel.model";
 })
 export class NotesComponent implements OnInit{
 
-    allNotes: Note[];
+    allNotes:Note[] = [];
     travel:Travel;
 
     constructor(private _kuzzle:KuzzleService) {
@@ -22,21 +22,15 @@ export class NotesComponent implements OnInit{
     }
 
     ngOnInit(){
+        // TODO : remove if we don't need it
         this._kuzzle.travelStream.subscribe(x => {
             this.travel = x;
+        });
 
-            // Get all notes in DB
-            this._kuzzle.noteService.getAllNotesForTravel(this.travel)
-                .subscribe(notes => {
-                    this.allNotes = notes;
-                });
-
-            // Subscribe to note create / update / delete
-            this._kuzzle.noteService.getNotesListener().subscribe((note) => {
-                this._kuzzle.updateLocalCollection(this.allNotes, note);
-            });
-        })
-
+        // Subscribe to note Fetch collection and subscribe to create / update / delete
+        this._kuzzle.noteService.getNoteStream().subscribe((note) => {
+            this._kuzzle.updateLocalCollection(this.allNotes, note);
+        });
     }
     
     persistNewNote() {

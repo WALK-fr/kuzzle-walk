@@ -30,17 +30,10 @@ export class MapComponent implements OnInit {
         // Fetch the travel async + markers from database
         this.kuzzleService.travelStream.subscribe(travel => {
             this.travel = travel;
-            
-            // Therefore fetch all markers
-            this.kuzzleService.mapService.getAllMarkersForTravel(this.travel.id).subscribe((x:TravelMarker[]) => {
-                x.forEach((x) => {
-                    this.addMarker(x.latitude, x.longitude, x.name);
-                });
-            });
         });
 
         // ...therefore subscribe the new / update / delete of TravelMarkers
-        this.kuzzleService.mapService.getTravelMarkersListener().subscribe((x) => {
+        this.kuzzleService.mapService.getTravelMarkerStream().subscribe((x) => {
             this.addMarker(x.latitude, x.longitude, x.name)
         })
     }
