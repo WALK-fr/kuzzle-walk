@@ -1,8 +1,8 @@
 import {Injectable} from "angular2/core";
 import {Travel} from "../../../travel/index";
-import {Subject} from "rxjs/Rx";
 import {ChatService, MapService, UserService, NoteService} from "../index";
 import {KuzzleDocument} from "../model/kuzzle-document.model";
+import {Subject} from "rxjs/Rx";
 
 declare let Kuzzle:any;
 
@@ -18,12 +18,16 @@ export class KuzzleService {
     private _userService:UserService;
     private _noteService:NoteService;
 
+    private _travelStream:Subject<Travel>;
+
     public constructor() {
         this.kuzzle = new Kuzzle('http://walk.challenge.kuzzle.io:7512', {defaultIndex: 'walk'});
         this._chatService = new ChatService(this.kuzzle);
         this._mapService = new MapService(this.kuzzle);
         this._userService = new UserService(this.kuzzle);
         this._noteService = new NoteService(this.kuzzle);
+
+        this._travelStream = new Subject<Travel>();
     }
 
     /**
@@ -32,12 +36,22 @@ export class KuzzleService {
      * @param documentCollection The collection on which action must be made.
      */
     public updateLocalCollection(documentCollection: KuzzleDocument[], document:KuzzleDocument){
+        if (document.id === undefined || document.id === null) {
+            console.error('You must provide an ID before updating the collection', document);
+        }
+
         switch(document.status){
             case 'created':
                 documentCollection.push(document);
                 break;
             case 'update':
-                var map = documentCollection.map((x) =>{return x.id});
+                var map = documentCollection.map((x) => {
+                    if (x.id === undefined || x.id === null) {
+                        console.error('One or more items in your collection don\'t have an ID !', x);
+                    }
+                    return x.id
+
+                });
                 var indexToReplace = map.indexOf(document.id);
                 document.status = null;
 
@@ -72,23 +86,18 @@ export class KuzzleService {
 
     }
 
-    public getTravel() {
-        var travelListener:Subject<Travel> = new Subject<Travel>(null);
-        // TODO : Change this value
-        var room = this.kuzzle.dataCollectionFactory('travel').fetchDocument('AVS5a8AIeivQYXVQtlJN', (err, result) => {
+    public initCurrentTravel() {
+        this.kuzzle.dataCollectionFactory('travel').fetchDocument('AVS5a8AIeivQYXVQtlJN', (err, result) => {
             // TODO : Handle errors
-            var travel:Travel = result.content;
-
-            // and then you notify the observer
-            travelListener.next(travel);
+            var travel = new Travel(result.content);
+            travel.id = result.id;
+            
+            this._travelStream.next(travel);
         });
+    }
 
-        if (travelListener.isUnsubscribed) {
-            console.log('OK cest fait');
-            room.unsubscribe()
-        }
-
-        return travelListener;
+    get travelStream():Subject<Travel> {
+        return this._travelStream;
     }
 
     get chatService():ChatService {

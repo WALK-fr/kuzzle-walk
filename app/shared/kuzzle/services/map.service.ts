@@ -45,7 +45,9 @@ export class MapService {
 
                     var markersList = [];
                     res.documents.forEach(document => {
-                        markersList.push(new TravelMarker(document.content))
+                        var travelMarker = new TravelMarker(document.content);
+                        travelMarker.id = document.id;
+                        markersList.push(travelMarker);
                     });
 
                     observer.next(markersList);
@@ -66,7 +68,6 @@ export class MapService {
             var travelMarker = new TravelMarker(result.result._source);
             travelMarker.status = result.action;
             travelMarker.id = result.result._id;
-
             travelMarkerListener.next(travelMarker);
         });
 
@@ -76,29 +77,5 @@ export class MapService {
         }
 
         return travelMarkerListener;
-    }
-
-    /**
-     * Get the current listener for Travel Object
-     *
-     * @returns {Subject<Travel>}
-     */
-    getTravel() {
-        var travelListener:Subject<Travel> = new Subject<Travel>(null);
-        // TODO : Change this value
-        var room = this.kuzzle.dataCollectionFactory('travel').fetchDocument('AVS5a8AIeivQYXVQtlJN', (err, result) => {
-            // TODO : Handle errors
-            var travel:Travel = result.content;
-
-            // and then you notify the observer
-            travelListener.next(travel);
-        });
-
-        if (travelListener.isUnsubscribed) {
-            console.log('OK cest fait');
-            room.unsubscribe()
-        }
-
-        return travelListener;
     }
 }

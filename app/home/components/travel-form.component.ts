@@ -78,7 +78,7 @@ export class TravelFormComponent implements AfterViewInit {
         //    console.log(data);
         //});
 
-        this.travel = new Travel(form.destination, 45.0, 1.5, 13, []);
+        this.travel = new Travel({name: form.destination, latitude: 45.0, longitude: 1.5, defaultZoom: 13});
         //this.kuzzleService.createTravel(this.travel);
 
         // navigate to the next step

@@ -1,9 +1,7 @@
 import {Component, OnInit} from "angular2/core";
-
 import {Travel} from "../../travel/models/travel.model";
 import {KuzzleService} from "../../shared/kuzzle/index";
 import {User} from "../../users/index";
-import {Subject, Observable} from "rxjs/Rx";
 import {TravelMarker} from "../models/travel-marker.model";
 
 @Component({
@@ -15,35 +13,36 @@ import {TravelMarker} from "../models/travel-marker.model";
 export class MapComponent implements OnInit {
 
     map:L.Map;
-    travel:Travel;
     user:User;
+    travel:Travel;
 
     constructor(private kuzzleService:KuzzleService) {
-        var stream:Subject<Travel> = kuzzleService.getTravel();
-        
-        stream.subscribe(x => {
-            this.travel = x;
-         // Get POI
-            var poiStream = kuzzleService.mapService.getAllMarkersForTravel(this.travel.id);
-            poiStream.subscribe((x:TravelMarker[]) => {
-                x.forEach((x) => {
-                    this.addMarker(x.latitude, x.longitude,x.name);
-                });
-            })
-        });
+
     }
 
     ngOnInit() {
-        // map initialization
+        // Map initialization
         this.map = L.map('mapid').setView([51.505, -0.09], 13);
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors with TravelPlanner team'
         }).addTo(this.map);
 
-      this.kuzzleService.mapService.getTravelMarkersListener().subscribe((x) => {
+        // Fetch the travel async + markers from database
+        this.kuzzleService.travelStream.subscribe(travel => {
+            this.travel = travel;
+            
+            // Therefore fetch all markers
+            this.kuzzleService.mapService.getAllMarkersForTravel(this.travel.id).subscribe((x:TravelMarker[]) => {
+                x.forEach((x) => {
+                    this.addMarker(x.latitude, x.longitude, x.name);
+                });
+            });
+        });
+
+        // ...therefore subscribe the new / update / delete of TravelMarkers
+        this.kuzzleService.mapService.getTravelMarkersListener().subscribe((x) => {
             this.addMarker(x.latitude, x.longitude, x.name)
         })
-
     }
 
     addMarker(lat: number, long: number, popup: string) {

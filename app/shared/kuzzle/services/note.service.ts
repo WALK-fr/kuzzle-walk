@@ -2,6 +2,7 @@ import * as Rx from "rxjs/Rx";
 import {Note} from "../../../notes/models/note.model";
 import {Subject} from "rxjs/Subject";
 import {KuzzleDocument} from "../model/kuzzle-document.model";
+import {Travel} from "../../../travel/models/travel.model";
 
 /**
  * Handle each kuzzle calls related to the notes component.
@@ -32,16 +33,15 @@ export class NoteService {
     /**
      * Retrieve all marker that must be displayed on the map.
      *
-     * @param travelID
+     * @param travel
      * @returns {Observable<TravelMarker[]>}
      */
-    public getAllNotesForTravel(travelID:string) {
+    public getAllNotesForTravel(travel: Travel) {
         return Rx.Observable.create((observer) => {
-
             var filter = {
                 query: {
                     match: {
-                        travelId: "AVS5a8AIeivQYXVQtlJN"
+                        travelId: travel.id
                     }
                 }
             };

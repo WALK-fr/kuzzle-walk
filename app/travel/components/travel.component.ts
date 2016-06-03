@@ -1,9 +1,10 @@
-import {Component, AfterViewInit} from 'angular2/core';
-
-import {TravelSelectorComponent} from './travel-selector.component';
-import {MapComponent, PoiFormComponent, MarkerListComponent} from '../../map/index';
-import {NavbarComponent} from '../../shared/index';
+import {Component, AfterViewInit, OnInit} from "angular2/core";
+import {TravelSelectorComponent} from "./travel-selector.component";
+import {MapComponent, PoiFormComponent, MarkerListComponent} from "../../map/index";
+import {NavbarComponent} from "../../shared/index";
+import {Travel} from "../index";
 import {ChatComponent} from "../../chat/index";
+import {KuzzleService} from "../../shared/kuzzle/index";
 import {NotesComponent} from "../../notes/index";
 import {TeamWidgetComponent} from "../../team/components/team-widget.component";
 
@@ -19,9 +20,19 @@ declare var $: any;
         TravelSelectorComponent, ChatComponent, NotesComponent, TeamWidgetComponent
     ]
 })
-export class TravelComponent implements AfterViewInit {
+export class TravelComponent implements OnInit, AfterViewInit {
 
     isChatOpened = false;
+    travel:Travel;
+
+
+    constructor(private kuzzleService:KuzzleService) {
+
+    }
+
+    ngOnInit() {
+        this.kuzzleService.initCurrentTravel();
+    }
 
     /**
      * triggered after the view initialization. this is used to apply
