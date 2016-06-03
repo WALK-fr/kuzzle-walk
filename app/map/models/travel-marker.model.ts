@@ -1,4 +1,6 @@
-export class TravelMarker {
+import {KuzzleDocument} from "../../shared/kuzzle/model/kuzzle-document.model";
+
+export class TravelMarker extends KuzzleDocument{
     name: string;
     content: string;
     travelId: string;
@@ -10,6 +12,7 @@ export class TravelMarker {
     price: number;
 
     constructor(obj?: any) {
+        super();
         this.name = obj && obj.name || null;
         this.content = obj && obj.content || null;
         this.latitude = obj && obj.latitude || null;

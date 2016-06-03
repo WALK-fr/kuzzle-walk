@@ -10,6 +10,4 @@ export class MarkerListComponent {
     markers: TravelMarker[] = [
         new TravelMarker({name : "Jacky", content: "Ye, so fun!"}),
     ];
-
-
 }

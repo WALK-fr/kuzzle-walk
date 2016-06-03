@@ -56,25 +56,26 @@ export class MapService {
 
     }
 
-    public subsribeToTravelMarkers(): Subject<TravelMarker> {
+    public getTravelMarkersListener(): Subject<TravelMarker> {
         var options = {};
-
-
-        var markersListener:Subject<TravelMarker> = new Subject<TravelMarker>(null);
+        var travelMarkerListener:Subject<TravelMarker> = new Subject<TravelMarker>(null);
         // TODO : Change this value
         var room = this.kuzzle.dataCollectionFactory('markers').subscribe({}, options, (error:any, result:any) => {
 
             // and then you notify the observer
-            console.log(result);
-            markersListener.next(new TravelMarker(result.result._source));
+            var travelMarker = new TravelMarker(result.result._source);
+            travelMarker.status = result.action;
+            travelMarker.id = result.result._id;
+
+            travelMarkerListener.next(travelMarker);
         });
 
-        if (markersListener.isUnsubscribed) {
+        if (travelMarkerListener.isUnsubscribed) {
             console.log('OK cest fait');
             room.unsubscribe()
         }
 
-        return markersListener;
+        return travelMarkerListener;
     }
 
     /**

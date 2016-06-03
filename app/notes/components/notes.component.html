@@ -10,7 +10,7 @@
                             {{note.name}}
                         </h5>
                     </li>
-                    <li *ngFor="#item of note.items" class="collection-item dismissable">
+                    <li *ngFor="#item of note.items" class="collection-item dismissable" [class.green]="item.done">
                         {{item.content}}
                         <div class="actions secondary-content">
                             <i (click)="markAsDone($event, note,item)" class="material-icons green-text">done</i>

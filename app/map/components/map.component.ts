@@ -20,7 +20,7 @@ export class MapComponent implements OnInit {
 
     constructor(private kuzzleService:KuzzleService) {
         var stream:Subject<Travel> = kuzzleService.getTravel();
-        // TODO : Stop stream
+        
         stream.subscribe(x => {
             this.travel = x;
          // Get POI
@@ -40,9 +40,7 @@ export class MapComponent implements OnInit {
             attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors with TravelPlanner team'
         }).addTo(this.map);
 
-        var markersStream: Subject<TravelMarker> = this.kuzzleService.mapService.subsribeToTravelMarkers();
-        markersStream.subscribe((x) => {
-            console.log(x);
+      this.kuzzleService.mapService.getTravelMarkersListener().subscribe((x) => {
             this.addMarker(x.latitude, x.longitude, x.name)
         })
 

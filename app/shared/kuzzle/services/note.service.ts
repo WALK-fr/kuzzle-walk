@@ -59,7 +59,7 @@ export class NoteService {
         });
     }
 
-    public subsribeToNotes(): Subject<Note> {
+    public getNotesListener(): Subject<Note> {
         var options = {};
 
         var notesListener:Subject<Note> = new Subject<Note>(null);

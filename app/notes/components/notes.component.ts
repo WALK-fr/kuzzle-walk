@@ -2,10 +2,6 @@ import {Component, OnInit} from "angular2/core";
 import {KuzzleService} from "../../shared/kuzzle/services/kuzzle.service";
 import {Note} from "../models/note.model";
 import {Item} from "../models/item.model";
-import {KuzzleDocument} from "../../shared/kuzzle/model/kuzzle-document.model";
-
-// this is used to accept jquery token at compilation time
-declare var $:any;
 
 /**
  * This components represent the Notes component of the travel.
@@ -17,7 +13,7 @@ declare var $:any;
 })
 export class NotesComponent implements OnInit{
 
-    allNotes:[Note];
+    allNotes: Note[];
 
     constructor(private _kuzzle:KuzzleService) {
         this._kuzzle.noteService.getAllNotesForTravel('travelString')
@@ -27,7 +23,7 @@ export class NotesComponent implements OnInit{
     }
 
     ngOnInit(){
-        this._kuzzle.noteService.subsribeToNotes().subscribe((note) => {
+        this._kuzzle.noteService.getNotesListener().subscribe((note) => {
             this._kuzzle.updateLocalCollection(this.allNotes, note);
         });
     }
@@ -59,9 +55,6 @@ export class NotesComponent implements OnInit{
 
         //update the document in Kuzzle
         this._kuzzle.noteService.publishNote(this.allNotes[noteIndex]);
-
-        //add a style
-        $($event.target).parents('li').addClass("green", "lighten-1");
     }
 
     cancelItem(note:any, item:any) {
