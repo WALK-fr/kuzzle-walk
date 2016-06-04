@@ -1,7 +1,21 @@
-#tp-notes .collapsible-header i{
-    line-height: 1;
+.actions{
+    cursor:pointer;
 }
 
-.actions{
+.actions i{
+    line-height: 3rem;
+    margin-right: 5px;
+}
+
+.collapsible-form{
+    padding: 10px;
+}
+
+.modal.bottom-sheet{
+    height: 50%;
+    overflow-y: scroll;
+}
+
+.tp-note-add{
     cursor:pointer;
 }

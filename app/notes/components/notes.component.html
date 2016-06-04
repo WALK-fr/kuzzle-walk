@@ -1,35 +1,52 @@
 <!-- Modal Structure -->
 <div id="tp-notes" class="modal bottom-sheet">
     <div class="modal-content">
-        <h4>Notes and reminders <i (click)="persistNewNote()" class="secondary-content material-icons cyan-text lighten-1">playlist_add</i></h4>
-        <section class="row">
-            <div *ngFor="#note of allNotes; #index = index" class="col s12 m4 l4">
-                <ul class="collection">
-                    <li class="collapsible-header">
-                        <h5>
-                            {{note.name}}
-                        </h5>
-                    </li>
-                    <li *ngFor="#item of note.items" class="collection-item dismissable" [class.green]="item.done">
-                        {{item.content}}
-                        <div class="actions secondary-content">
-                            <i (click)="markAsDone($event, note,item)" class="material-icons green-text">done</i>
-                            <i (click)="cancelItem(note,item)" class="material-icons red-text">cancel</i>
-                        </div>
-                    </li>
-                    <li class="collection-item dismissable">
-                        <div class="input-field">
-                            <i class="material-icons prefix cyan-text lighten-1">note_add</i>
-                            <input id="icon_prefix" type="text" value="" (keypress)="persistNewItem($event, note)">
-                            <label for="icon_prefix">New note</label>
-                        </div>
-                    </li>
-                </ul>
+        <h4>
+            Notes and reminders
+            <i (click)="addNewNote()" class="secondary-content material-icons cyan-text lighten-1 tp-note-add">playlist_add</i>
+        </h4>
+        <div id="tp-all-notes" class="row">
+            <div *ngFor="#note of allNotes; #index = index" class="tp-note col s12 m4 l4">
+                <div class="tp-note-content">
+                    <h5>{{note.name}}</h5>
+                    <ul collapsible class="collapsible" data-collapsible="accordion">
+                        <li *ngFor="#item of note.items">
+                            <div class="collapsible-header" [class.green]="item.done">
+                                {{item.title}}
+                                <div class="actions secondary-content">
+                                    <i *ngIf="!item.done" (click)="markAsDone($event, note,item)"
+                                       class="material-icons cyan-text">done</i>
+                                    <i (click)="cancelItem(note,item)" class="material-icons orange-text">clear</i>
+                                </div>
+                            </div>
+                            <div class="collapsible-body">
+                                <p>{{item.content}}</p>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div (click)="rebindMasonry()" #form class="collapsible-header orange white-text">
+                                Add a new item
+                            </div>
+                            <div class="collapsible-body">
+                                <div class="collapsible-form">
+                                    <div class="form-input input-field">
+                                        <input #itemTitle id="item-title" type="text" value="">
+                                        <label for="item-title">New item title</label>
+                                    </div>
+                                    <div class="input-field">
+                                        <textarea #itemContent id="item-content"
+                                                  class="materialize-textarea"></textarea>
+                                        <label for="item-content">New item content</label>
+                                    </div>
+                                    <a (click)="persistNewItem(form, itemTitle, itemContent, note)"
+                                       class="waves-effect waves-light orange btn">Save Item</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <br *ngIf="index % 3 == 0" class="clearfix"/>
-        </section>
-    </div>
-    <div class="modal-footer">
-        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
     </div>
 </div>
