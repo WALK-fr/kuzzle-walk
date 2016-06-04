@@ -4,7 +4,7 @@ import {User} from "../../../users/models/user";
  */
 export class UserService {
     private kuzzle:Kuzzle;
-    user: User;
+    user:User;
 
     public constructor(kuzzle:Kuzzle) {
         this.kuzzle = kuzzle;
@@ -17,18 +17,29 @@ export class UserService {
      * @param login The user login
      * @param password The user password
      */
-    public login(login:string, password:string) {
+    public login(login:string, password:string): Promise{
 
-        console.log(login);
-        console.log(password);
-        var expiresIn = "1h";
+        return new Promise((resolve, reject) => {
 
-        this.kuzzle.login("local", {username: login, password: password}, expiresIn, (err, res) => {
-            this.kuzzle.whoAmI(function (err, result) {
-                console.log('whoami');
-                console.log(err, result);
+
+            var expiresIn = "1h";
+
+            this.kuzzle.login("local", {username: login, password: password}, expiresIn, (err, res) => {
+                if (err) {
+                    reject('failed')
+                }
+
+                this.kuzzle.whoAmI(function (err, result) {
+                    if (err) {
+                        reject('failed')
+                    }
+
+                    resolve('success')
+                });
             });
-        });
+
+
+        })
     }
 
     /**

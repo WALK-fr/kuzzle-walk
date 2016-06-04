@@ -94,7 +94,7 @@ export class TravelFormComponent implements AfterViewInit {
             return;
 
         // TODO : Async call, add marker on component to mark as loading
-        this.kuzzleService.userService.login(form.username, form.password);
+
 
         // The callback must update steps or display error message
         // TODO : On success add user to travel and travel to user
@@ -104,7 +104,11 @@ export class TravelFormComponent implements AfterViewInit {
             this.step++;
         }
         else{
-            //login directly the user
+            this.kuzzleService.userService.login(form.username, form.password).then(res => {
+                // redirect to the travel
+                console.log('Connecté')
+                this._router.navigate(['Travel']);
+            }).catch(console.log('Error on connect'));
         }
     }
 
