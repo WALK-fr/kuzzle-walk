@@ -37,6 +37,7 @@ export class ChatComponent implements OnInit{
         // each time you get notified
         this.kuzzleService.chatService.subscribeToChat()
             .subscribe(x => {
+                console.log(x);
                 this.messagesList.push(x);
             });
     }
@@ -53,7 +54,7 @@ export class ChatComponent implements OnInit{
         var key = event.which || event.keyCode;
 
         if (this.message && key === KEY_ENTER) {
-            var chatMessage = new ChatMessage(this.user, this.message);
+            var chatMessage = new ChatMessage({author: this.user, content: this.message});
             this.kuzzleService.chatService.sendMessage(chatMessage);
 
             this.message = "";

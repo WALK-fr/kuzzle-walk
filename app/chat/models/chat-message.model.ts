@@ -1,4 +1,4 @@
-import {User} from "../../users";
+import { User } from "../../users/models/user";
 /**
  * Represent an instance of a chat message
  */
@@ -7,9 +7,9 @@ export class ChatMessage {
     content: string;
     dateTime: Date;
 
-    constructor(author: User, content:string) {
-        this.author = author;
-        this.content = content;
-        this.dateTime = new Date();
+    constructor(obj?: any) {
+        this.author = obj && obj.author && new User(obj.author) || null;
+        this.content = obj && obj.content || null;
+        this.dateTime = obj && obj.dateTime && new Date(obj.dateTime) || new Date();
     }
 }

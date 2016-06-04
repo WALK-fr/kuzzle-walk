@@ -29,10 +29,8 @@ export class ChatService {
                 .dataCollectionFactory('message')
                 .subscribe({}, options, (error:any, result:any) => {
 
-                    var chatMessage:ChatMessage = result.result._source;
-
                     // and then you notify the observer
-                    newMessages.next(chatMessage);
+                    newMessages.next(new ChatMessage(result.result._source));
                 });
        
         return newMessages;
@@ -45,7 +43,6 @@ export class ChatService {
      * @returns {any}
      */
     public sendMessage(message:ChatMessage) {
-        console.log(message);
         return this.kuzzle.dataCollectionFactory('message').publishMessage(message);
     }
 }
