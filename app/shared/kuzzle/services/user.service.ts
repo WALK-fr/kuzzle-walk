@@ -18,27 +18,13 @@ export class UserService {
      * @param password The user password
      */
     public login(login:string, password:string): Promise{
-
         return new Promise((resolve, reject) => {
-
 
             var expiresIn = "1h";
 
-            this.kuzzle.login("local", {username: login, password: password}, expiresIn, (err, res) => {
-                if (err) {
-                    reject('failed')
-                }
-
-                this.kuzzle.whoAmI(function (err, result) {
-                    if (err) {
-                        reject('failed')
-                    }
-
-                    resolve('success')
-                });
+            this.kuzzle.login("local", {username: login, password: password}, expiresIn, (error, success) => {
+                error === null ? resolve(success) : reject(error); // Return error or success for login
             });
-
-
         })
     }
 

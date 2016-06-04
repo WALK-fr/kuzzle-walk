@@ -1,7 +1,6 @@
 import {Component, AfterViewInit} from "angular2/core";
 import {Router} from "angular2/router";
 import {ControlGroup, FormBuilder, Validators} from "angular2/common";
-
 import {BasicValidators} from "../../shared/validators/basic-validator";
 import {Travel} from "../../travel/index";
 import {KuzzleService} from "../../shared/kuzzle/index";
@@ -106,9 +105,14 @@ export class TravelFormComponent implements AfterViewInit {
         else{
             this.kuzzleService.userService.login(form.username, form.password).then(res => {
                 // redirect to the travel
-                console.log('Connecté')
+                console.log('Connecté');
                 this._router.navigate(['Travel']);
-            }).catch(console.log('Error on connect'));
+            }).catch((error) => {
+                console.log('Error on connect');
+                if (error.message === 'Bad Credentials') {
+                    // DO something that display the error message
+                }
+            });
         }
     }
 
