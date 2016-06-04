@@ -16,3 +16,45 @@ html, body, #tp-content, #tp-content .row, #mapid{
 #mapid{
   z-index: 0;
 }
+
+.leaflet-container .leaflet-control-container .leaflet-top.leaflet-left .leaflet-control-search {
+  position: absolute;
+  top: 174px;
+  left: 0px;
+  margin: 0;
+  padding: 11px;
+  background: #fff;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.leaflet-control-search .search-button:hover {
+  background-position: 2px -22px;
+}
+
+.leaflet-control-search label{display: none}
+
+.leaflet-control-search .search-input{
+  float:right;
+  width: 85%;
+  border:none;
+  padding: 0 0 5px 0;
+}
+
+.leaflet-control-search .search-tooltip{
+  margin:0;
+  padding: 0px;
+  top: 48px;
+  background:#FFF;
+  min-height: 200px;
+  max-width: 360px;
+}
+
+.leaflet-control-search .search-tooltip li{
+  background: #FFF;
+  padding: 10px 10px;
+}
+
+.leaflet-control-search .search-tooltip li:hover{
+  background:#eee;
+}
