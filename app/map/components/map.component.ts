@@ -37,12 +37,13 @@ export class MapComponent implements OnInit {
 
         //add design events
         $('.search-button').click(function(){
-            $('.leaflet-control-search').show().css('width', '360px');
+            $('input.search-input').hide();
+            $('.leaflet-control-search').animate({'width':'360px'}, 600, function(){  $('input.search-input').show().focus() });
         });
 
-        $('.search-input').blur(function(){
-            $(this).hide();
-            $('.leaflet-control-search').css('width', 'auto');
+        $('input.search-input').focusout(function(){
+            $('input.search-input').hide();
+            $('.leaflet-control-search').css('width','auto');
         });
 
 

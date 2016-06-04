@@ -32,6 +32,8 @@ html, body, #tp-content, #tp-content .row, #mapid{
   background-position: 2px -22px;
 }
 
+.leaflet-control-search label{display: none}
+
 .leaflet-control-search .search-input{
   float:right;
   width: 85%;
