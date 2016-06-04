@@ -37,7 +37,6 @@ export class ChatComponent implements OnInit{
         // each time you get notified
         this.kuzzleService.chatService.subscribeToChat()
             .subscribe(x => {
-                console.log(x);
                 this.messagesList.push(x);
             });
     }
