@@ -2,13 +2,14 @@ import {Component, OnInit} from "angular2/core";
 import {Travel} from "../../travel/models/travel.model";
 import {KuzzleService} from "../../shared/kuzzle/index";
 import {User} from "../../users/index";
-import {TravelMarker} from "../models/travel-marker.model";
+
+// this is used to accept jquery token at compilation time
+declare var $:any;
+declare var L:any;
 
 @Component({
     selector: 'map',
-    template: `
-        <div id="mapid"></div>
-    `
+    template: `<div id="mapid"></div>`,
 })
 export class MapComponent implements OnInit {
 
@@ -33,6 +34,18 @@ export class MapComponent implements OnInit {
                 autoType: false,
                 minLength: 2
         }) );
+
+        //add design events
+        $('.search-button').click(function(){
+            $('.leaflet-control-search').show().css('width', '360px');
+        });
+
+        $('.search-input').blur(function(){
+            $(this).hide();
+            $('.leaflet-control-search').css('width', 'auto');
+        });
+
+
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors with TravelPlanner team'
         }).addTo(this.map);
