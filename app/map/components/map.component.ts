@@ -23,6 +23,16 @@ export class MapComponent implements OnInit {
     ngOnInit() {
         // Map initialization
         this.map = L.map('mapid').setView([51.505, -0.09], 13);
+        this.map.addControl( new L.Control.Search({
+            url: 'http://nominatim.openstreetmap.org/search?format=json&q={s}',
+                jsonpParam: 'json_callback',
+                propertyName: 'display_name',
+                propertyLoc: ['lat','lon'],
+                markerLocation: true,
+                autoCollapse: true,
+                autoType: false,
+                minLength: 2
+        }) );
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors with TravelPlanner team'
         }).addTo(this.map);
