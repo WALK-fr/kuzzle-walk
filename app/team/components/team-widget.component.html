@@ -1,13 +1,13 @@
 <a (click)="toggleTeam()" id="tp-team-opener" [class.righten]="isTeamOpened" class="orange">
     <i class="material-icons">people</i>
-    <span class="badge-nb-connected white orange-text ">{{team.length}}</span>
+    <span class="badge-nb-connected white orange-text ">{{connectedUserCollection.length}}</span>
 </a>
 <section *ngIf="isTeamOpened" id="tp-team-window" class="orange">
     <ul class="collection" id="tp-chat-window-message-list">
-        <li *ngFor="#people of team; #i = index" class="collection-item avatar">
+        <li *ngFor="#user of connectedUserCollection; #i = index" class="collection-item avatar">
             <img class="circle" src="http://lorempixel.com/100/100/people/?random={{ i }}"
                  alt="Contact Person">
-            <span class="title">Jane Doe</span>
+            <span class="title">{{ user.humanName() }}</span>
         </li>
     </ul>
 </section>

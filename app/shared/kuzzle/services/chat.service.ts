@@ -45,6 +45,7 @@ export class ChatService {
      * @returns {any}
      */
     public sendMessage(message:ChatMessage) {
+        console.log(message);
         return this.kuzzle.dataCollectionFactory('message').publishMessage(message);
     }
 }

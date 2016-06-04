@@ -22,7 +22,6 @@ export class ChatComponent implements OnInit{
     inputLabel = "Message";
 
     constructor(private kuzzleService:KuzzleService) {
-        this.user = new User();
     }
 
     /**
@@ -30,6 +29,10 @@ export class ChatComponent implements OnInit{
      */
     ngOnInit() {
         this.messagesList = [];
+
+        // Get user
+        this.kuzzleService.userService.getCurrentUserStream().subscribe(x => this.user = x);
+
         // subscribe to the observable and replace the messagesList by the new one
         // each time you get notified
         this.kuzzleService.chatService.subscribeToChat()
@@ -50,7 +53,7 @@ export class ChatComponent implements OnInit{
         var key = event.which || event.keyCode;
 
         if (this.message && key === KEY_ENTER) {
-            var chatMessage = new ChatMessage(new User(), this.message);
+            var chatMessage = new ChatMessage(this.user, this.message);
             this.kuzzleService.chatService.sendMessage(chatMessage);
 
             this.message = "";

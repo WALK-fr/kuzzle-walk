@@ -1,34 +1,22 @@
-import {Travel} from "../../travel/models/travel.model";
+import { Travel } from "../../travel/models/travel.model";
+import { KuzzleDocument } from "../../shared/kuzzle/model/kuzzle-document.model";
 /**
  * Represent one user of the application.
  */
-export class User {
-    private _firstName:string;
-    private _lastName:string;
-    private _email:string;
-    private _password:string;
-    private _travels:Travel[];
+export class User extends KuzzleDocument{
+    firstName: string;
+    lastName: string;
+    photoUrl: string;
+    travels: Travel[];
 
-    constructor() {
-        this._firstName = "John";
-        this._lastName = "Snow";
-        this._email = "johnsnow@gmail.com";
-        this._password = "nightwatch";
+    constructor(obj?: any) {
+        this.firstName = obj && obj.firstName || null;
+        this.lastName = obj && obj.lastName || null;
+        this.photoUrl = obj && obj.photoUrl || null;
+        this.travels = obj && obj.travels || [];
     }
 
     humanName():string {
-        return this._firstName + " " + this._lastName;
-    }
-
-    get login():string {
-        return this._email;
-    }
-
-    get password():string {
-        return this._password;
-    }
-
-    addTravel(travel:Travel) {
-        this._travels.push(travel);
+        return this.firstName + " " + this.lastName;
     }
 }

@@ -1,4 +1,6 @@
-import {Component, Input, OnInit} from "angular2/core";
+import { Component, OnInit } from "angular2/core";
+import { User } from "../../users/models/user";
+import { KuzzleService } from "../../shared/kuzzle/services/kuzzle.service";
 
 // this is used to accept jquery token at compilation time
 declare var $:any;
@@ -11,11 +13,21 @@ declare var $:any;
     templateUrl: "app/team/components/team-widget.component.html",
     styleUrls: ['app/team/components/team-widget.component.css']
 })
-export class TeamWidgetComponent{
+export class TeamWidgetComponent implements OnInit {
     isTeamOpened = false;
-    team = ['user1','user1','user1','user1','user1' ];
+    connectedUserCollection: User[] = [];
+
+    constructor(private kuzzleService: KuzzleService) {
+    }
 
     toggleTeam(){
         this.isTeamOpened = !this.isTeamOpened;
+    }
+
+
+    ngOnInit() {
+        this.kuzzleService.userService.getLoggedUsersStream().subscribe(document => {
+            this.kuzzleService.updateLocalCollection(this.connectedUserCollection, document);
+        })
     }
 }

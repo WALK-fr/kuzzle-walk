@@ -7,6 +7,7 @@ import {ChatComponent} from "../../chat/index";
 import {KuzzleService} from "../../shared/kuzzle/index";
 import {NotesComponent} from "../../notes/index";
 import {TeamWidgetComponent} from "../../team/components/team-widget.component";
+import {User} from "../../users/models/user";
 
 // this is used to accept jquery token at compilation time
 declare var $: any;
@@ -31,6 +32,10 @@ export class TravelComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
+
+        // Connection
+        this.kuzzleService.userService.connectAndSendConnectionNotificationAndSubscribeToUserStream();
+
         // We fetch the travel and on response we init all streams
         this.kuzzleService.travelStream.filter((x) => x !== null).subscribe((x) => {
             this.travel = x;

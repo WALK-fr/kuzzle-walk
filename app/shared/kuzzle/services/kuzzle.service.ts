@@ -40,9 +40,14 @@ export class KuzzleService {
             console.error('You must provide an ID before updating the collection', document);
         }
 
+        if (document.status === undefined || document.status === null) {
+            console.error('You must provide a Status before updating the collection', document);
+        }
+
         switch(document.status){
             case 'created':
             case KuzzleDocument.STATUS_FETCHED:
+            case KuzzleDocument.STATUS_USER_JOINED:
                 documentCollection.push(document);
                 break;
             case 'update':
@@ -59,6 +64,7 @@ export class KuzzleService {
                 documentCollection[indexToReplace] = document;
                 break;
             case 'delete':
+            case KuzzleDocument.STATUS_USER_LEFT:
                 var indexToDelete = documentCollection.map((x) =>{return x.id}).indexOf(document.id);
                 documentCollection.splice(indexToDelete, 1);
                 break;
@@ -80,7 +86,7 @@ export class KuzzleService {
 
             // Update each user to mark them as members of the travel
             for (let user of travel.members) {
-                user.addTravel(travel)
+                // user.addTravel(travel)
                 // TODO : add element
             }
         });
