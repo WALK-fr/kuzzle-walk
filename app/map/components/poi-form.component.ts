@@ -20,13 +20,23 @@ export class PoiFormComponent implements OnInit, AfterViewInit {
       
     }
 
+    /**
+     * Set the Marker Lat Lng on each click on the Map component !
+     * @param $event
+     */
+    setAddress($event){
+        this.travelMarker.latitude = $event.latlng.lat;
+        this.travelMarker.longitude = $event.latlng.lng;
+        console.log(this.travelMarker);
+    }
+    
     ngOnInit() {
         this.poiForm = this.fb.group({
             name: ['', Validators.required],
             address: ['', Validators.required],
             type: ['', Validators.required]
         });
-        // TODO : Better do it on ngOnInit()
+
         this.travelMarker = new TravelMarker({});
         // this.save();
     }

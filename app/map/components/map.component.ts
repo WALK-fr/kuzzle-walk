@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, Output, EventEmitter} from "@angular/core";
 import {Travel} from "../../travel/models/travel.model";
 import {KuzzleService} from "../../shared/kuzzle/index";
 import {User} from "../../users/index";
@@ -16,6 +16,7 @@ export class MapComponent implements OnInit {
     map:L.Map;
     user:User;
     travel:Travel;
+    @Output('map-clicked') mapClick  = new EventEmitter();
 
     constructor(private kuzzleService:KuzzleService) {
 
@@ -35,8 +36,9 @@ export class MapComponent implements OnInit {
                 minLength: 2
         }) );
 
-        this.map.on('click', function(e) {
-            console.log(e.latlng);
+        //we bind the clicks to the emitter so we can give it to the POI Form
+        this.map.on('click', (e) => {
+            this.mapClick.emit({latlng: e.latlng});
         });
 
         //add design events

@@ -16,7 +16,7 @@
 <section id="tp-content">
     <div class="row">
         <div id="map-container" class="col s12 m7 l8">
-            <map></map>
+            <map (map-clicked)="poiForm.setAddress($event)"></map>
             <team></team>
         </div>
         <div class="col s12 m5 l4">
@@ -30,7 +30,7 @@
                 </div>
                 <!-- NEW SPOT FORM -->
                 <div id="test1" class="col s12">
-                    <poi-form></poi-form>
+                    <poi-form #poiForm></poi-form>
                 </div>
                 <!-- ALL SPOTS-->
                 <div id="test2" class="col s12">
