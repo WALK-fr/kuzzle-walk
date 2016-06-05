@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "angular2": "~2.0.0-beta",
+    "typescript": "~1.8",
     "es6-shim": "^0.35.0",
     "kuzzle-sdk": "^1.7.4",
     "leaflet-search": "^1.9.8",
