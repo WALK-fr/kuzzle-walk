@@ -1,7 +1,8 @@
 import { User } from "../../../users/models/user";
 import { Subject } from "rxjs/Rx";
 import { KuzzleDocument } from "../model/kuzzle-document.model";
-// import { Cookie } from "ng2-cookies";
+import { CookieService } from "angular2-cookie/core";
+
 /**
  * Handle each kuzzle calls related to the user.
  */
@@ -11,7 +12,7 @@ export class UserService {
     private currentUserStream: Subject<User> = new Subject<User>();
     private user: User;
 
-    public constructor(kuzzle: Kuzzle) {
+    public constructor(kuzzle: Kuzzle, private cookieService: CookieService) {
         this.kuzzle = kuzzle;
     }
 
@@ -27,7 +28,9 @@ export class UserService {
             var expiresIn = "1d";
 
             this.kuzzle.login("local", {username: login, password: password}, expiresIn, (error, success) => {
-                // Cookie.set('jwt', success.jwt, 1);
+                let tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                this.cookieService.put('jwt', success.jwt, {expires: tomorrow});
 
                 if (error) reject();
 
@@ -58,8 +61,7 @@ export class UserService {
 
         // Connection from session
 
-        // var jwt = Cookie.get('jwt');
-var jwt;
+        let jwt = this.cookieService.get('jwt');
         if (jwt) {
             this.kuzzle.setJwtToken(jwt);
         }

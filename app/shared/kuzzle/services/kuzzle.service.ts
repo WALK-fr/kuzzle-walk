@@ -3,6 +3,7 @@ import {Travel} from "../../../travel/index";
 import {ChatService, MapService, UserService, NoteService} from "../index";
 import {KuzzleDocument} from "../model/kuzzle-document.model";
 import {Subject, BehaviorSubject} from "rxjs/Rx";
+import { CookieService } from "angular2-cookie/core";
 
 declare let Kuzzle:any;
 
@@ -20,11 +21,11 @@ export class KuzzleService {
 
     private _travelStream:Subject<Travel>;
 
-    public constructor() {
+    public constructor(private cookieService: CookieService) {
         this.kuzzle = new Kuzzle('http://walk.challenge.kuzzle.io:7512', {defaultIndex: 'walk'});
         this._chatService = new ChatService(this.kuzzle);
         this._mapService = new MapService(this.kuzzle);
-        this._userService = new UserService(this.kuzzle);
+        this._userService = new UserService(this.kuzzle, this.cookieService);
         this._noteService = new NoteService(this.kuzzle);
 
         this._travelStream = new BehaviorSubject<Travel>(null);
