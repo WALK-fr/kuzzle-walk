@@ -63,7 +63,12 @@ export class TravelComponent implements OnInit, AfterViewInit {
         );
 
         //set the map to fit the window height
-        $('#tp-content').height($(window).height() - $('#tp-top-bar').height());
+        $(document).ready(function(){
+            $('#tp-content').height(window.innerHeight - $('#tp-top-bar').height());
+            $(window).resize(function(){
+                $('#tp-content').height(window.innerHeight - $('#tp-top-bar').height());
+            })
+        });
     }
 
     toggleChat() {

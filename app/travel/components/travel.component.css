@@ -1,7 +1,3 @@
-#tp-content{
-    margin-top: -20px;
-}
-
 #tp-content > .row{
     margin-bottom: 0px;
 }
@@ -33,6 +29,9 @@
     background-color: #FF9800;
 }
 
+#tp-top-bar{
+    margin-bottom: 0px;
+}
 #tp-right-panel{
     height: auto;
     overflow: auto;

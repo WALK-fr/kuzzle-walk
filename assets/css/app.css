@@ -1,5 +1,5 @@
 /* override materialize */
-html, body, #tp-content, #tp-content .row, #mapid{
+html, body, #mapid{
   height:100%;
 }
 
