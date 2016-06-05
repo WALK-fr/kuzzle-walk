@@ -91,7 +91,6 @@ export class UserService {
             }, (error: any, result: any) => {
                 var user = new User(result.metadata);
                 user.status = result.action; // Can be on or off depending on if the user join or not
-                user.id = result.action; // Can be on or off depending on if the user join or not
 
                 this.loggedUsersStream.next(user);
             });

@@ -10,6 +10,7 @@ export class User extends KuzzleDocument{
     travels: Travel[];
 
     constructor(obj?: any) {
+        this.id = obj && obj.id || null;
         this.firstName = obj && obj.firstName || null;
         this.lastName = obj && obj.lastName || null;
         this.photoUrl = obj && obj.photoUrl || null;
