@@ -5,3 +5,7 @@
 .dropdown-content li > a, .dropdown-content li > span {
     color: #FF9800;
 }
+
+.selector-separator{
+    font-size: 3.6rem;
+}
