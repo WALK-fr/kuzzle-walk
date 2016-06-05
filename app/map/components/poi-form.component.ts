@@ -28,6 +28,11 @@ export class PoiFormComponent implements OnInit, AfterViewInit {
         this.travelMarker.latitude = $event.latlng.lat;
         this.travelMarker.longitude = $event.latlng.lng;
         console.log(this.travelMarker);
+
+        //TO-DO remove this, only to test marker creation - handle creation with the submit of the form
+        this.travelMarker.name = "Test d'ajout dynamique de marqueurs";
+        this.travelMarker.address = "Adresse à récupérer plus tard";
+        this.save();
     }
     
     ngOnInit() {
