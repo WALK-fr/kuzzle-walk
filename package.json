@@ -12,20 +12,20 @@
     "start": "concurrently \"npm run tsc:w\" \"npm run lite\" "
   },
   "dependencies": {
-    "angular2": "2.0.0-beta.15",
+    "angular2": "~2.0.0-beta",
     "es6-shim": "^0.35.0",
     "kuzzle-sdk": "^1.7.4",
     "leaflet-search": "^1.9.8",
     "ng2-cookies": "^0.1.9",
-    "reflect-metadata": "0.1.2",
-    "rxjs": "5.0.0-beta.2",
-    "systemjs": "0.19.26",
-    "zone.js": "0.6.10"
+    "reflect-metadata": "~0.1",
+    "rxjs": "~5.0.0-beta",
+    "systemjs": "~0.19",
+    "zone.js": "~0.6"
   },
   "devDependencies": {
     "concurrently": "^2.0.0",
     "lite-server": "^2.2.0",
     "typescript": "^1.8.10",
-    "typings": "^0.7.12"
+    "typings": "~1.0"
   }
 }
