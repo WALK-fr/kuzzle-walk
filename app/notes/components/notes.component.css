@@ -1,21 +1,5 @@
-.actions{
-    cursor:pointer;
-}
-
-.actions i{
-    line-height: 3rem;
-    margin-right: 5px;
-}
-
-.collapsible-form{
-    padding: 10px;
-}
-
 .modal.bottom-sheet{
-    height: 50%;
+    height: 70%;
+    max-height: 70%;
     overflow-y: scroll;
-}
-
-.tp-note-add{
-    cursor:pointer;
 }

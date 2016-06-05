@@ -35,6 +35,10 @@ export class MapComponent implements OnInit {
                 minLength: 2
         }) );
 
+        this.map.on('click', function(e) {
+            console.log(e.latlng);
+        });
+
         //add design events
         $('.search-button').click(function(){
             $('input.search-input').hide();

@@ -5,48 +5,12 @@
             Notes and reminders
             <i (click)="addNewNote()" class="secondary-content material-icons cyan-text lighten-1 tp-note-add">playlist_add</i>
         </h4>
-        <div id="tp-all-notes" class="row">
-            <div *ngFor="#note of allNotes; #index = index" class="tp-note col s12 m4 l4">
-                <div class="tp-note-content">
-                    <h5>{{note.name}}</h5>
-                    <ul collapsible class="collapsible" data-collapsible="accordion">
-                        <li *ngFor="#item of note.items">
-                            <div class="collapsible-header" [class.green]="item.done">
-                                {{item.title}}
-                                <div class="actions secondary-content">
-                                    <i *ngIf="!item.done" (click)="markAsDone($event, note,item)"
-                                       class="material-icons cyan-text">done</i>
-                                    <i (click)="cancelItem(note,item)" class="material-icons orange-text">clear</i>
-                                </div>
-                            </div>
-                            <div class="collapsible-body">
-                                <p>{{item.content}}</p>
-                            </div>
-                        </li>
-
-                        <li>
-                            <div (click)="rebindMasonry()" #form class="collapsible-header orange white-text">
-                                Add a new item
-                            </div>
-                            <div class="collapsible-body">
-                                <div class="collapsible-form">
-                                    <div class="form-input input-field">
-                                        <input #itemTitle id="item-title" type="text" value="">
-                                        <label for="item-title">New item title</label>
-                                    </div>
-                                    <div class="input-field">
-                                        <textarea #itemContent id="item-content"
-                                                  class="materialize-textarea"></textarea>
-                                        <label for="item-content">New item content</label>
-                                    </div>
-                                    <a (click)="persistNewItem(form, itemTitle, itemContent, note)"
-                                       class="waves-effect waves-light orange btn">Save Item</a>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+        <note-panel>
+            <note *ngFor="#note of allNotes, #index = index" [note]="note"
+                  [class.firstCol]="index == 0 || index % 3 == 0"
+                  [class.secondCol]="index % 3 == 1"
+                  [class.thirdCol]="index % 3 == 2">
+            </note>
+        </note-panel>
     </div>
 </div>
