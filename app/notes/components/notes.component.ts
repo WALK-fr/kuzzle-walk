@@ -3,7 +3,8 @@ import {KuzzleService} from "../../shared/kuzzle/services/kuzzle.service";
 import {Note} from "../models/note.model";
 import {Item} from "../models/item.model";
 import {Travel} from "../../travel/models/travel.model";
-import {CollapsibleDirective} from "../../shared/directives/collapsible.directive";
+import {NoteComponent} from "./note.component";
+import {NotePanelComponent} from "./notes-panel.component";
 
 /**
  * This components represent the Notes component of the travel.
@@ -16,7 +17,7 @@ declare var $:any;
     selector: 'notes',
     templateUrl: "app/notes/components/notes.component.html",
     styleUrls: ['app/notes/components/notes.component.css'],
-    directives: [CollapsibleDirective]
+    directives: [NoteComponent, NotePanelComponent]
 })
 export class NotesComponent implements OnInit{
 
@@ -52,7 +53,6 @@ export class NotesComponent implements OnInit{
         var items = [new Item({title:"item 1", content: "content of Item1"}), new Item({title:"item 2", content: "content of Item2"}), new Item({title:"item 3", content: "content of Item3"})];
         var note = new Note({name:"Paris", travelId:"AVS5a8AIeivQYXVQtlJN", items:items});
         this._kuzzle.noteService.publishNote(note);
-        this.rebindMasonry();
     }
 
     /**
@@ -70,7 +70,6 @@ export class NotesComponent implements OnInit{
         $itemTitle.value = "";
         $itemContent.value = "";
         $($form).trigger('click');
-        this.rebindMasonry();
     }
 
     /**
@@ -100,18 +99,6 @@ export class NotesComponent implements OnInit{
 
         //delete the item and push the note to kuzzle
         this._kuzzle.noteService.publishNote(this.allNotes[noteIndex]);
-        this.rebindMasonry();
-    }
-
-    /**
-     * Replay the masonry script to have a beautifull display after each action on the DOM
-     */
-    rebindMasonry(){
-        //wait until the show function has loaded content
-        setTimeout(function(){
-            //call masonry again to fit the form in the layout
-            $('#tp-all-notes').masonry();
-        }, 200);
     }
 
     /**
@@ -119,13 +106,5 @@ export class NotesComponent implements OnInit{
      */
     displayModal() {
         $('#tp-notes').openModal();
-        $(document).ready(function(){
-
-            $('#tp-all-notes').masonry({
-                // options
-                itemSelector: '.tp-note',
-                columnWidth: '.col'
-            });
-        });
     }
 }

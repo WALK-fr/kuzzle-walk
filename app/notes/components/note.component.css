@@ -1,0 +1,16 @@
+.actions{
+    cursor:pointer;
+}
+
+.actions i{
+    line-height: 3rem;
+    margin-right: 5px;
+}
+
+.collapsible-form{
+    padding: 10px;
+}
+
+.tp-note-add{
+    cursor:pointer;
+}

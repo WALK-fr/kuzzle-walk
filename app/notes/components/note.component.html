@@ -1,0 +1,42 @@
+<div class="tp-note-content s1 m6 l4">
+    <h5>{{note.name}}</h5>
+    <ul collapsible class="collapsible" data-collapsible="accordion">
+        <li *ngFor="#item of note.items">
+            <div class="collapsible-header" [class.green]="item.done">
+                {{item.title}}
+                <div class="actions secondary-content">
+                    <i *ngIf="!item.done" (click)="markAsDone($event,item)"
+                       class="material-icons cyan-text">done</i>
+                    <i (click)="cancelItem(item)" class="material-icons orange-text">clear</i>
+                </div>
+            </div>
+            <div class="collapsible-body">
+                <p>{{item.content}}</p>
+            </div>
+        </li>
+
+        <li>
+            <div #form class="collapsible-header cyan white-text">
+                Add a new item
+                <div class="actions secondary-content">
+                    <i class="material-icons white-text">add</i>
+                </div>
+            </div>
+            <div class="collapsible-body">
+                <div class="collapsible-form">
+                    <div class="form-input input-field">
+                        <input #itemTitle id="item-title" type="text" value="">
+                        <label for="item-title">New item title</label>
+                    </div>
+                    <div class="input-field">
+                                        <textarea #itemContent id="item-content"
+                                                  class="materialize-textarea"></textarea>
+                        <label for="item-content">New item content</label>
+                    </div>
+                    <a (click)="persistNewItem(form, itemTitle, itemContent)"
+                       class="waves-effect waves-light cyan btn">Save Item</a>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
