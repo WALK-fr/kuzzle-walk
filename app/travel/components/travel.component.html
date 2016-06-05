@@ -16,27 +16,28 @@
 <section id="tp-content">
     <div class="row">
         <div id="map-container" class="col s12 m7 l8">
-            <map (map-clicked)="poiForm.setAddress($event)"></map>
+            <map #map (map-clicked)="poiForm.setMarkerPosition($event); requestFormFocus(TABS.TAB_MARKER_FORM)">
+            </map>
             <team></team>
         </div>
         <div class="col s12 m5 l4">
             <div class="row" id="tp-right-panel">
                 <div class="col s12">
                     <ul class="tabs" id="tp-tabs">
-                        <li class="tab col s3"><a href="#test1">New Spot</a></li>
-                        <li class="tab col s3"><a class="active" href="#test2">All spots</a></li>
-                        <li class="tab col s3"><a href="#test3">Schedule</a></li>
+                        <li class="tab col s3"><a href="#{{ TABS.TAB_MARKER_FORM }}">New Spot</a></li>
+                        <li class="tab col s3"><a class="active" href="#{{ TABS.TAB_MARKER_LIST }}">All spots</a></li>
+                        <li class="tab col s3"><a href="#{{ TABS.TAB_SCHEDULE }}">Schedule</a></li>
                     </ul>
                 </div>
                 <!-- NEW SPOT FORM -->
-                <div id="test1" class="col s12">
-                    <poi-form #poiForm></poi-form>
+                <div id="{{ TABS.TAB_MARKER_FORM }}" class="col s12">
+                    <poi-form #poiForm (marker-delete)="map.deleteTemporaryMarker(markerTodelete)"></poi-form>
                 </div>
                 <!-- ALL SPOTS-->
-                <div id="test2" class="col s12">
+                <div id="{{ TABS.TAB_MARKER_LIST }}" class="col s12">
                     <marker-list></marker-list>
                 </div>
-                <div id="test3" class="col s12">
+                <div id="{{ TABS.TAB_SCHEDULE }}" class="col s12">
                     <h4> Schedule yout trip day by day </h4>
                     <p> @TODO </p>
                 </div>

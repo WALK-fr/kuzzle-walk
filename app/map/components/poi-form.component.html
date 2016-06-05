@@ -22,13 +22,13 @@
     </div>
     <div class="row">
         <div class="input-field col s12">
-            <select [(ngModel)]="travelMarker.type" ngControl="type">
-                <option value="" disabled selected>Choose your option</option>
-                <option value="1">Landscape</option>
-                <option value="2">Hotel</option>
-                <option value="3">Informations</option>
-                <option value="4">Friends or Family place</option>
-                <option value="5">Other</option>
+            <select [(ngModel)]="travelMarker.type" ngControl="type" id="type-selector">
+                <option value="base" disabled selected>Choose your option</option>
+                <option value="landscape">Landscape</option>
+                <option value="hotel">Hotel</option>
+                <option value="informations">Informations</option>
+                <option value="people">Friends or Family place</option>
+                <option value="other">Other</option>
             </select>
             <label>Type</label>
         </div>
@@ -58,5 +58,5 @@
             </div>
         </div>
     </div>
-    <button type="submit">submit</button>
+    <button type="submit" (click)="save()">submit</button>
 </form>

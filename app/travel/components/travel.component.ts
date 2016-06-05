@@ -25,14 +25,11 @@ export class TravelComponent implements OnInit, AfterViewInit {
 
     isChatOpened = false;
     travel:Travel;
+    TABS = {TAB_MARKER_FORM: 'panel-form', TAB_MARKER_LIST: 'panel-marker-list', TAB_SCHEDULE: 'panel-scheduler'}
 
-
-    constructor(private kuzzleService:KuzzleService) {
-
-    }
+    constructor(private kuzzleService:KuzzleService) {}
 
     ngOnInit() {
-
         // Connection
         this.kuzzleService.userService.connectAndSendConnectionNotificationAndSubscribeToUserStream();
 
@@ -71,6 +68,16 @@ export class TravelComponent implements OnInit, AfterViewInit {
         });
     }
 
+    /**
+     * set the focus on one of the right panel tabs
+     */
+    requestFormFocus(tabName){
+        $('ul.tabs').tabs('select_tab', tabName);
+    }
+
+    /**
+     * Open / Close the chat panel
+     */
     toggleChat() {
         this.isChatOpened = !this.isChatOpened;
     }

@@ -1,8 +1,9 @@
-import {Component, AfterViewInit, OnInit} from "@angular/core";
+import {Component, AfterViewInit, OnInit, Output, EventEmitter} from "@angular/core";
 import {ControlGroup, FormBuilder, Validators} from "@angular/common";
 
 import {TravelMarker} from "../index";
 import {KuzzleService} from "../../shared/kuzzle/index";
+import {Travel} from "../../travel/models/travel.model";
 
 // this is used to accept jquery token at compilation time
 declare var $: any;
@@ -16,33 +17,30 @@ export class PoiFormComponent implements OnInit, AfterViewInit {
     poiForm:ControlGroup;
     travelMarker:TravelMarker;
 
-    constructor(private fb:FormBuilder, private kuzzleService:KuzzleService) {
-      
-    }
+    //output property to notify map to destroy a temporary marker
+    @Output('marker-delete') markerDelete = new EventEmitter();
+
+    constructor(private fb:FormBuilder, private kuzzleService:KuzzleService) {}
 
     /**
      * Set the Marker Lat Lng on each click on the Map component !
      * @param $event
      */
-    setAddress($event){
+    setMarkerPosition($event){
         this.travelMarker.latitude = $event.latlng.lat;
         this.travelMarker.longitude = $event.latlng.lng;
-        console.log(this.travelMarker);
-
-        //TO-DO remove this, only to test marker creation - handle creation with the submit of the form
-        this.travelMarker.name = "Test d'ajout dynamique de marqueurs";
-        this.travelMarker.address = "Adresse à récupérer plus tard";
-        this.save();
     }
     
     ngOnInit() {
+
         this.poiForm = this.fb.group({
             name: ['', Validators.required],
             address: ['', Validators.required],
             type: ['', Validators.required]
         });
 
-        this.travelMarker = new TravelMarker({});
+        //TODO- change for real value
+        this.travelMarker = new TravelMarker({travelId: "AVS5a8AIeivQYXVQtlJN"});
         // this.save();
     }
 
@@ -59,6 +57,10 @@ export class PoiFormComponent implements OnInit, AfterViewInit {
      * save the point of interest and notify the back-end
      */
     save() {
+        //TODO - replace this with true form handling
+        this.travelMarker.type = $('#type-selector').val();
+
+        this.markerDelete.emit(this.travelMarker);
         this.kuzzleService.mapService.publishTravelMarker(this.travelMarker);
     }
 }
