@@ -32,3 +32,8 @@
 .tabs .indicator {
     background-color: #FF9800;
 }
+
+#tp-right-panel{
+    height: auto;
+    overflow: auto;
+}

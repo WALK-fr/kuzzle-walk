@@ -15,7 +15,7 @@
 }
 
 #tp-team-opener.righten{
-    left:200px;
+    left:280px;
 }
 
 #tp-team-opener .badge-nb-connected{
@@ -31,7 +31,7 @@
 }
 
 #tp-team-window{
-    width: 200px;
+    width: 280px;
     display: block;
     max-height: 500px;
     overflow-y: auto;
