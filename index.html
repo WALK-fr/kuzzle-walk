@@ -1,17 +1,9 @@
-<!DOCTYPE html>
 <html>
-<!-- #docregion head -->
-<!-- #docregion base-href -->
-
 <head>
     <base href="/">
-    <!-- #enddocregion base-href -->
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
     <title>Travel Planner</title>
-
-    <!-- #enddocregion head -->
-    <!-- #docregion css -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- material icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- materialize css -->
@@ -21,20 +13,14 @@
     <link rel="stylesheet" href="node_modules/leaflet-search/src/leaflet-search.css" />
     <!-- app css -->
     <link href="assets/css/app.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-    <!-- #enddocregion css -->
-    <!-- #docregion head -->
-    <!-- IE required polyfills, in this exact order -->
-    <script src="node_modules/es6-shim/es6-shim.min.js"></script>
-    <script src="node_modules/systemjs/dist/system-polyfills.js"></script>
-    <script src="node_modules/angular2/es6/dev/src/testing/shims_for_IE.js"></script>
 
-    <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
+    <!-- Polyfill(s) for older browsers -->
+    <script src="node_modules/core-js/client/shim.min.js"></script>
+
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/reflect-metadata/Reflect.js"></script>
     <script src="node_modules/systemjs/dist/system.src.js"></script>
-    <script src="node_modules/rxjs/bundles/Rx.js"></script>
-    <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
-    <!-- #docregion router -->
-    <script src="node_modules/angular2/bundles/router.dev.js"></script>
-    <!-- #enddocregion router -->
+    <script src="systemjs.config.js"></script>
 
     <script src="node_modules/kuzzle-sdk/node_modules/socket.io-client/socket.io.js"></script>
     <script src="node_modules/kuzzle-sdk/dist/kuzzle.min.js"></script>
@@ -46,24 +32,17 @@
     <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
     <script src="node_modules/leaflet-search/src/leaflet-search.js"></script>
 
+
     <script>
-        System.config({
-            packages: {compiled: {format: 'register', defaultExtension: 'js'}},
-            meta: {
-                'node_modules/kuzzle-sdk/dist/kuzzle.js': {
-                    format: 'global',
-                    export: 'Kuzzle',
-                }
-            }
-        });
-        System.import('compiled/main')
+        System.import('app')
                 .then(null, console.error.bind(console));
     </script>
 </head>
-<!-- #enddocregion head -->
 
 <body>
-
+<my-app>Loading...</my-app>
 </body>
-
 </html>
+
+
+

@@ -8,8 +8,8 @@
     "experimentalDecorators": true,
     "removeComments": false,
     "noImplicitAny": false,
-    "suppressImplicitAnyIndexErrors": true,
-    "outDir": "compiled"
+    "suppressImplicitAnyIndexErrors": true
+//    "outDir": "compiled"
   },
   "exclude": [
     "node_modules",

@@ -4,7 +4,7 @@
 </a>
 <section *ngIf="isTeamOpened" id="tp-team-window" class="orange">
     <ul class="collection" id="tp-chat-window-message-list">
-        <li *ngFor="#user of connectedUserCollection; #i = index" class="collection-item avatar">
+        <li *ngFor="let user of connectedUserCollection; let i = index" class="collection-item avatar">
             <img class="circle" src="{{ user.photoUrl }}" alt="Contact Person">
             <span class="title">{{ user.humanName() }}</span>
         </li>

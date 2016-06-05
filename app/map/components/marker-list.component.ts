@@ -1,4 +1,4 @@
-import {Component, OnInit} from "angular2/core";
+import {Component, OnInit} from "@angular/core";
 import {TravelMarker} from "../models/travel-marker.model";
 import {KuzzleService} from "../../shared/kuzzle/services/kuzzle.service";
 import {Travel} from "../../travel/index";

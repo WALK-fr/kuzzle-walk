@@ -1,6 +1,7 @@
 import { User } from "../../../users/models/user";
 import { Subject } from "rxjs/Rx";
 import { KuzzleDocument } from "../model/kuzzle-document.model";
+// import { Cookie } from "ng2-cookies";
 /**
  * Handle each kuzzle calls related to the user.
  */
@@ -23,11 +24,10 @@ export class UserService {
     public login(login:string, password:string): Promise{
         return new Promise((resolve, reject) => {
 
-            var expiresIn = "1h";
+            var expiresIn = "1d";
 
             this.kuzzle.login("local", {username: login, password: password}, expiresIn, (error, success) => {
-                console.log(success);
-                window.sessionStorage.setItem('jwt', success.jwt);
+                // Cookie.set('jwt', success.jwt, 1);
 
                 if (error) reject();
 
@@ -57,8 +57,9 @@ export class UserService {
     public connectAndSendConnectionNotificationAndSubscribeToUserStream() {
 
         // Connection from session
-        var jwt = window.sessionStorage.getItem('jwt');
 
+        // var jwt = Cookie.get('jwt');
+var jwt;
         if (jwt) {
             this.kuzzle.setJwtToken(jwt);
         }

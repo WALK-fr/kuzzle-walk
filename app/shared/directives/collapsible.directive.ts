@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Renderer, AfterViewInit} from "angular2/core";
+import {Directive, ElementRef, Renderer, AfterViewInit} from "@angular/core";
 
 // this is used to accept jquery token at compilation time
 declare var $:any;

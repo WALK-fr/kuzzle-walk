@@ -1,6 +1,6 @@
-import {Component, AfterViewInit} from "angular2/core";
-import {Router} from "angular2/router";
-import {ControlGroup, FormBuilder, Validators} from "angular2/common";
+import {Component, AfterViewInit} from "@angular/core";
+import {Router} from "@angular/router-deprecated";
+import {ControlGroup, FormBuilder, Validators} from "@angular/common";
 import {BasicValidators} from "../../shared/validators/basic-validator";
 import {Travel} from "../../travel/index";
 import {KuzzleService} from "../../shared/kuzzle/index";

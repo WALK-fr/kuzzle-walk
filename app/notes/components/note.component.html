@@ -1,7 +1,7 @@
 <div class="tp-note-content s1 m6 l4">
     <h5>{{note.name}}</h5>
     <ul collapsible class="collapsible" data-collapsible="accordion">
-        <li *ngFor="#item of note.items">
+        <li *ngFor="let item of note.items">
             <div class="collapsible-header" [class.green]="item.done">
                 {{item.title}}
                 <div class="actions secondary-content">

@@ -1,4 +1,4 @@
-import {Component, Input} from "angular2/core";
+import {Component, Input} from "@angular/core";
 import {Item} from "../models/item.model";
 import {CollapsibleDirective} from "../../shared/directives/collapsible.directive";
 import {KuzzleService} from "../../shared/kuzzle/services/kuzzle.service";

@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Renderer, AfterContentInit} from "angular2/core";
+import {Directive, ElementRef, Renderer, AfterContentInit} from "@angular/core";
 
 @Directive({
     selector: '[autoScroll]'

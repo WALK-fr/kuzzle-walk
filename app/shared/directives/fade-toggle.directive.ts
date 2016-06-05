@@ -1,4 +1,4 @@
-import {Directive, Renderer, ElementRef, OnDestroy, OnInit, AfterViewInit} from "angular2/core";
+import {Directive, Renderer, ElementRef, OnDestroy, OnInit, AfterViewInit} from "@angular/core";
 
 @Directive({
     selector: '[fadeToggle]',

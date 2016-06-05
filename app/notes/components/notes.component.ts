@@ -1,4 +1,4 @@
-import {Component, OnInit} from "angular2/core";
+import {Component, OnInit} from "@angular/core";
 import {KuzzleService} from "../../shared/kuzzle/services/kuzzle.service";
 import {Note} from "../models/note.model";
 import {Item} from "../models/item.model";

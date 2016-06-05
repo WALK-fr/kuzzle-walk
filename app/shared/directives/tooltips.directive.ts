@@ -1,4 +1,4 @@
-import {Directive, AfterViewInit, Renderer, ElementRef} from "angular2/core";
+import {Directive, AfterViewInit, Renderer, ElementRef} from "@angular/core";
 
 declare var $:any;
 

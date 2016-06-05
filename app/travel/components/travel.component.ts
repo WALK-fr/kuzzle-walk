@@ -1,4 +1,4 @@
-import {Component, AfterViewInit, OnInit} from "angular2/core";
+import {Component, AfterViewInit, OnInit} from "@angular/core";
 import {TravelSelectorComponent} from "./travel-selector.component";
 import {MapComponent, PoiFormComponent, MarkerListComponent} from "../../map/index";
 import {NavbarComponent} from "../../shared/index";

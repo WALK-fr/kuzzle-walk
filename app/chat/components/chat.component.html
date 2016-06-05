@@ -3,7 +3,7 @@
     <div id="tp-chat-window-container" class="row white z-depth-2">
         <div id="tp-chat-window-messages" class="input-field col s12">
             <ul autoScroll id="tp-chat-window-message-list">
-                <li *ngFor="#message of messagesList, #index = index" class="clearfix">
+                <li *ngFor="let message of messagesList, let index = index" class="clearfix">
                     <a tooltip class="tooltipped" data-position="bottom" data-delay="50" [attr.data-tooltip]="message.author.humanName() + ' - ' + message.dateTime.toLocaleTimeString()">
                         <img src="{{ message.author.photoUrl }}" class="circle">
                     </a>

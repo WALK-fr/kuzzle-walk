@@ -1,4 +1,4 @@
-import {Injectable} from "angular2/core";
+import {Injectable} from "@angular/core";
 import {Travel} from "../../../travel/index";
 import {ChatService, MapService, UserService, NoteService} from "../index";
 import {KuzzleDocument} from "../model/kuzzle-document.model";
