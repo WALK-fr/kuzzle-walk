@@ -1,5 +1,6 @@
 import {Component, AfterViewInit, OnInit} from "@angular/core";
 import {TravelSelectorComponent} from "./travel-selector.component";
+import {Router} from "@angular/router-deprecated";
 import {MapComponent, PoiFormComponent, MarkerListComponent} from "../../map/index";
 import {NavbarComponent} from "../../shared/index";
 import {Travel} from "../index";
@@ -7,7 +8,6 @@ import {ChatComponent} from "../../chat/index";
 import {KuzzleService} from "../../shared/kuzzle/index";
 import {NotesComponent} from "../../notes/index";
 import {TeamWidgetComponent} from "../../team/components/team-widget.component";
-import {User} from "../../users/models/user";
 
 // this is used to accept jquery token at compilation time
 declare var $: any;
@@ -27,11 +27,16 @@ export class TravelComponent implements OnInit, AfterViewInit {
     travel:Travel;
     TABS = {TAB_MARKER_FORM: 'panel-form', TAB_MARKER_LIST: 'panel-marker-list', TAB_SCHEDULE: 'panel-scheduler'}
 
-    constructor(private kuzzleService:KuzzleService) {}
+    constructor(private kuzzleService:KuzzleService, private _router:Router) {}
 
     ngOnInit() {
         // Connection
-        this.kuzzleService.userService.connectAndSendConnectionNotificationAndSubscribeToUserStream();
+        let hasSessionCookie = this.kuzzleService.userService.connectAndSendConnectionNotificationAndSubscribeToUserStream();
+
+        if(!hasSessionCookie){
+            // Force reconnect
+            this._router.navigate(['Home'])
+        }
 
         // We fetch the travel and on response we init all streams
         this.kuzzleService.travelStream.filter((x) => x.id !== undefined).subscribe((x) => {

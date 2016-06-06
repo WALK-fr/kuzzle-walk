@@ -1,6 +1,8 @@
 import {Component, AfterViewInit} from "@angular/core";
 import {Router} from "@angular/router-deprecated";
 import {ControlGroup, FormBuilder, Validators} from "@angular/common";
+
+import {DestinationFormComponent} from "./destination-form.component";
 import {BasicValidators} from "../../shared/validators/basic-validator";
 import {Travel} from "../../travel/index";
 import {KuzzleService} from "../../shared/kuzzle/index";
@@ -15,7 +17,7 @@ declare var L:any;
     selector: 'travel-form',
     templateUrl: 'app/home/components/travel-form.component.html',
     styleUrls: ['app/home/components/travel-form.component.css'],
-    directives: [FadeToggleDirective]
+    directives: [FadeToggleDirective, DestinationFormComponent]
 })
 export class TravelFormComponent implements AfterViewInit {
 
@@ -62,25 +64,10 @@ export class TravelFormComponent implements AfterViewInit {
     }
 
     /**
-     * triggered when the destination from is submitted
+     * create the travel when the destination form is submitted
      */
-    saveDestination(form:any) {
-
-        if (!this.destinationForm.valid)
-            return;
-        // TODO: keep the destination for the next step
-        //console.log("destination: " + form.destination);
-
-        //var googleGeocodeProvider = new L.GeoSearch.Provider.OpenStreetMap();
-        //console.log(googleGeocodeProvider);
-        //googleGeocodeProvider.GetLocations(form.destination, (data:any) => {
-        //    console.log(data);
-        //});
-
-        this.travel = new Travel({name: form.destination, latitude: 45.0, longitude: 1.5, defaultZoom: 13});
-        //this.kuzzleService.createTravel(this.travel);
-
-        // navigate to the next step
+    onDestination(destination) {
+        this.travel = new Travel(destination);
         this.step++;
     }
 
@@ -121,7 +108,7 @@ export class TravelFormComponent implements AfterViewInit {
         console.log("friends: " + form.friends);
         console.log("message: " + form.message);
 
-        this.travel.members.push();
+        //this.travel.members.push();
 
         // TODO : Call webAPI to send mail (Kuzzle module per example)
 

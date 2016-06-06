@@ -1,7 +1,7 @@
-import { User } from "../../../users/models/user";
-import { Subject } from "rxjs/Rx";
-import { KuzzleDocument } from "../model/kuzzle-document.model";
-import { CookieService } from "angular2-cookie/core";
+import {User} from "../../../users/models/user";
+import {Subject} from "rxjs/Rx";
+import {KuzzleDocument} from "../model/kuzzle-document.model";
+import {CookieService} from "angular2-cookie/core";
 
 /**
  * Handle each kuzzle calls related to the user.
@@ -57,13 +57,15 @@ export class UserService {
         return this.currentUserStream;
     }
 
-    public connectAndSendConnectionNotificationAndSubscribeToUserStream() {
+    public connectAndSendConnectionNotificationAndSubscribeToUserStream():boolean {
 
         // Connection from session
 
         let jwt = this.cookieService.get('jwt');
         if (jwt) {
             this.kuzzle.setJwtToken(jwt);
+        } else {
+            return false;
         }
 
         // Fetch user data and then notify connection
@@ -94,6 +96,8 @@ export class UserService {
 
                 this.loggedUsersStream.next(user);
             });
-        })
+        });
+
+        return true;
     }
 }
