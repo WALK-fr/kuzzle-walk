@@ -16,6 +16,7 @@ export class PoiFormComponent implements OnInit, AfterViewInit {
 
     poiForm:ControlGroup;
     travelMarker:TravelMarker;
+    travel:Travel;
 
     //output property to notify map to destroy a temporary marker
     @Output('marker-delete') markerDelete = new EventEmitter();
@@ -39,9 +40,10 @@ export class PoiFormComponent implements OnInit, AfterViewInit {
             type: ['', Validators.required]
         });
 
-        //TODO- change for real value
-        this.travelMarker = new TravelMarker({travelId: "AVS5a8AIeivQYXVQtlJN"});
-        // this.save();
+        this.kuzzleService.travelStream.subscribe(travel => {
+            this.travel = travel;
+            this.travelMarker =  new TravelMarker({travelId: travel.id});
+        });
     }
 
     /**

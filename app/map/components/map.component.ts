@@ -138,7 +138,6 @@ export class MapComponent implements OnInit {
             //default
             var marker = L.marker([lat, long]);
         }
-        console.log(marker);
         marker.addTo(this.map)
             .bindPopup(popup)
             .openPopup();

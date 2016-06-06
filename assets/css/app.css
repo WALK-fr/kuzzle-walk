@@ -3,6 +3,10 @@ html, body, #mapid{
   height:100%;
 }
 
+#tp-right-panel{
+  margin-bottom: 0;
+}
+
 .clearfix:before,
 .clearfix:after {
   content: " ";
