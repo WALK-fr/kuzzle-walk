@@ -1,0 +1,23 @@
+<form [ngFormModel]="destinationForm" (ngSubmit)="saveDestination(destinationForm.value)">
+    <div id="tp-form-card1" class="card-content">
+        <a href="#tp-steps-describer" class="card-title modal-trigger grey-text text-darken-4">
+            Where are you going ?<i class="material-icons right">more_vert</i>
+        </a>
+        <div id="tp-app-destination" class="row">
+            <div class="input-field col s12">
+                <input [ngFormControl]="destinationForm.controls['destination']" value="" id="destination"
+                       type="text"
+                       [class.invalid]="!destinationForm.find('destination').valid && destinationForm.find('destination').touched"
+                       [class.valid]="destinationForm.find('destination').valid && destinationForm.find('destination').touched">
+
+                <label for="destination" id="destination-label" data-error="Error"
+                       data-success="Destination Ok !">Destination</label>
+            </div>
+        </div>
+    </div>
+    <div class="card-action">
+        <button id="tp-destination-form-submit" class="waves-effect waves-light btn orange">
+            Let's go
+        </button>
+    </div>
+</form>
