@@ -35,7 +35,7 @@ export class TravelComponent implements OnInit, AfterViewInit {
 
         if(!hasSessionCookie){
             // Force reconnect
-            this._router.navigate(['Home'])
+            //this._router.navigate(['Home'])
             return;
         }
 

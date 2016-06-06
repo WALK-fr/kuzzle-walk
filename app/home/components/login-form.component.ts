@@ -1,4 +1,4 @@
-import {Component, Output, EventEmitter} from "@angular/core";
+import {Component, Input Output, EventEmitter} from "@angular/core";
 import {ControlGroup, FormBuilder, Validators} from "@angular/common";
 import {Router} from "@angular/router-deprecated";
 
@@ -11,7 +11,7 @@ import {KuzzleService} from "../../shared/kuzzle/index";
 export class LoginFormComponent {
 
     loginForm: ControlGroup;
-    signInOnly = false;
+    @Input('sign-in-only') signInOnly = false;
     @Output('login') loginEvent = new EventEmitter;
 
     constructor(fb: FormBuilder, private _kuzzleService: KuzzleService, private _router: Router) {
@@ -36,21 +36,19 @@ export class LoginFormComponent {
         // The callback must update steps or display error message
         // TODO : On success add user to travel and travel to user
 
-        if(!this.signInOnly) {
-            // emit a signal to notify that connection is done
+        // TODO: Handle sign in ONLY
+        this._kuzzleService.userService.login(form.username, form.password).then(res => {
+            // redirect to the travel
+            console.log('Connecté');
             this.loginEvent.emit({});
-        }
-        else{
-            this._kuzzleService.userService.login(form.username, form.password).then(res => {
-                // redirect to the travel
-                console.log('Connecté');
-                this._router.navigate(['Travel']);
-            }).catch((error) => {
-                console.log('Error on connect');
-                if (error.message === 'Bad Credentials') {
-                    // DO something that display the error message
-                }
-            });
-        }
+
+            // this one is when we are using sign in only
+            //this._router.navigate(['Travel']);
+        }).catch((error) => {
+            console.log('Error on connect');
+            if (error.message === 'Bad Credentials') {
+                // DO something that display the error message
+            }
+        });
     }
 }
