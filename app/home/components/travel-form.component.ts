@@ -1,11 +1,10 @@
 import {Component, AfterViewInit} from "@angular/core";
 import {Router} from "@angular/router-deprecated";
-import {ControlGroup, FormBuilder, Validators} from "@angular/common";
 
 import {DestinationFormComponent} from "./destination-form.component";
-import {BasicValidators} from "../../shared/validators/basic-validator";
+import {LoginFormComponent} from "./login-form.component";
+import {InviteFriendsFormComponent} from "./invite-friends-form.component";
 import {Travel} from "../../travel/index";
-import {KuzzleService} from "../../shared/kuzzle/index";
 import {FadeToggleDirective} from "../../shared/directives/fade-toggle.directive";
 
 
@@ -17,40 +16,15 @@ declare var L:any;
     selector: 'travel-form',
     templateUrl: 'app/home/components/travel-form.component.html',
     styleUrls: ['app/home/components/travel-form.component.css'],
-    directives: [FadeToggleDirective, DestinationFormComponent]
+    directives: [FadeToggleDirective, DestinationFormComponent, LoginFormComponent, InviteFriendsFormComponent]
 })
 export class TravelFormComponent implements AfterViewInit {
 
     signInOnly:boolean = false;
     travel: Travel;
-    destinationForm: ControlGroup;
-    loginForm: ControlGroup;
-    subscribeForm: ControlGroup;
-    inviteFriendsForm: ControlGroup;
     step: number = 1;
-    userName: string = "Michel";
 
-    constructor(formBuilder:FormBuilder, private _router:Router, private kuzzleService:KuzzleService) {
-        this.destinationForm = formBuilder.group({
-            destination: ['', Validators.required]
-        });
-
-        this.subscribeForm = formBuilder.group({
-            username: ['', Validators.required],
-            password: ['', Validators.required],
-            email: ['', BasicValidators.email]
-        });
-
-        this.loginForm = formBuilder.group({
-            username: ['', Validators.required],
-            password: ['', Validators.required]
-        });
-
-        this.inviteFriendsForm = formBuilder.group({
-            friends: [],
-            message: []
-        });
-    }
+    constructor(private _router:Router) {}
 
     /**
      * triggered after the view initialization. this is used to apply
@@ -65,6 +39,7 @@ export class TravelFormComponent implements AfterViewInit {
 
     /**
      * create the travel when the destination form is submitted
+     * @param destination
      */
     onDestination(destination) {
         this.travel = new Travel(destination);
@@ -73,56 +48,20 @@ export class TravelFormComponent implements AfterViewInit {
 
     /**
      * triggered when the login form is submitted
+     * @param result
      */
-    login(form:any) {
-
-        if (!this.loginForm.valid)
-            return;
-
-        // TODO : Async call, add marker on component to mark as loading
-
-
-        // The callback must update steps or display error message
-        // TODO : On success add user to travel and travel to user
-
-        if(!this.signInOnly) {
-            // navigate to the next step
-            this.step++;
-        }
-        else{
-            this.kuzzleService.userService.login(form.username, form.password).then(res => {
-                // redirect to the travel
-                console.log('Connecté');
-                this._router.navigate(['Travel']);
-            }).catch((error) => {
-                console.log('Error on connect');
-                if (error.message === 'Bad Credentials') {
-                    // DO something that display the error message
-                }
-            });
-        }
-    }
-
-    inviteFriends(form:any) {
-        // TODO: Handle invite friends here
-        console.log("friends: " + form.friends);
-        console.log("message: " + form.message);
-
-        //this.travel.members.push();
-
-        // TODO : Call webAPI to send mail (Kuzzle module per example)
-
-        // Generate a kuzzle invitation, on validation add the user to the travel object
-
-        // redirect to the travel
-        this._router.navigate(['Travel']);
+    onLogin(result) {
+        this.step++;
     }
 
     /**
-     * force the login form display
+     * triggered when the invite friends form is submitted
+     * @param result
      */
-    displayForm(){
-        this.step = 2;
-        this.signInOnly = true;
+    onInviteFriends(result) {
+        console.log("friends");
+
+        // redirect to the travel
+        this._router.navigate(['Travel']);
     }
 }

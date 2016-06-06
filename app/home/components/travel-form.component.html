@@ -6,107 +6,11 @@
         </div>
 
         <div fadeToggle *ngSwitchWhen="2" class="card col s12">
-            <form [ngFormModel]="loginForm" (ngSubmit)="login(loginForm.value)">
-                <div id="tp-form-card2" class="card-content">
-                    <a href="#tp-steps-describer" class="modal-trigger">
-                        <i class="material-icons right">more_vert</i>
-                    </a>
-                    <h4 class="center-align clearfix">
-                        Let's build the perfect trip to
-                        <strong> {{ destinationForm.find('destination').value }} </strong>
-                    </h4>
-                    <div class="row">
-                        <div class="col s12 m8 l8">
-                            <p class="card-title grey-text text-darken-4 center-align">
-                                Please <a id="login-account" href="#">login</a> or <a id="create-account" href="#">create
-                                an
-                                account</a>
-                            </p>
-                            <div id="tp-app-login" class="row center-align">
-                                <div class="input-field col s12">
-                                    <input [ngFormControl]="loginForm.controls['username']" value="" id="login_username"
-                                           type="text" autocomplete="off"
-                                           [class.invalid]="!loginForm.find('username').valid && loginForm.find('username').touched && loginForm.find('username').value != ''"
-                                           [class.valid]="loginForm.find('username').valid && loginForm.find('username').touched">
-                                    <label for="login_username" data-error="Incorrect username">Username</label>
-                                </div>
-                                <div class="input-field col s12">
-                                    <input [ngFormControl]="loginForm.controls['password']" value="" id="login_password"
-                                           type="password" autocomplete="off"
-                                           [class.invalid]="!loginForm.find('password').valid && loginForm.find('password').touched && loginForm.find('username').value != ''"
-                                           [class.valid]="loginForm.find('password').valid && loginForm.find('password').touched">
-                                    <label for="login_password" data-error="Incorrect password">Password</label>
-                                </div>
-                                <button id="tp-login-form-submit" class="waves-effect waves-light btn orange">
-                                    Login and start now !
-                                </button>
-                            </div>
-                        </div>
-                        <div class="col last s12 m4 l4">
-                            <div id="tp-first-form-socials" class="row">
-                                <p class="card-title grey-text text-darken-4 center-align">
-                                    ... or, connect with your favorite social network
-                                </p>
-                                <div id="tp-first-form-social-networks" class="row">
-                                    <div class="input-field col s12">
-                                        <button class="waves-effect waves-light btn blue darken-3">
-                                            <i class="fa fa-facebook-official" aria-hidden="true"></i> Facebook
-                                        </button>
-                                    </div>
-                                    <div class="input-field col s12">
-                                        <button class="waves-effect waves-light btn blue">
-                                            <i class="fa fa-twitter" aria-hidden="true"></i> Twitter
-                                        </button>
-                                    </div>
-                                    <div class="input-field col s12">
-                                        <button class="waves-effect waves-light btn red">
-                                            <i class="fa fa-google" aria-hidden="true"></i> Google
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
+            <login-form (login)="onLogin($event)"></login-form>
         </div>
 
         <div fadeToggle *ngSwitchWhen="3" class="card">
-            <form [ngFormModel]="inviteFriendsForm" (ngSubmit)="inviteFriends(inviteFriendsForm.value)">
-                <div id="tp-form-card3" class="card-content">
-                    <a href="#tp-steps-describer" class="modal-trigger">
-                        <i class="material-icons right">more_vert</i>
-                    </a>
-                    <h4 class="center-align clearfix">
-                        Let's build the perfect trip to <strong> Tokyo </strong>
-                    </h4>
-                    <p class="card-title grey-text text-darken-4 center-align">
-                        Welcome {{ userName }} ! Now it's time to involve everyone !
-                    </p>
-
-                    <div id="tp-app-invite" class="row">
-                        <div class="input-field col s12">
-                                <textarea [ngFormControl]="inviteFriendsForm.controls['friends']"
-                                          name="emails" placeholder="One mail address per line...">
-                                </textarea>
-                        </div>
-                        <div class="input-field col s12">
-                                <textarea [ngFormControl]="inviteFriendsForm.controls['message']"
-                                          name="message" placeholder="Add a message to tell everyone...">
-                                </textarea>
-                            <div *ngIf="!loginForm.find('password').valid
-                                    && loginForm.find('password').touched">
-                                Incorrect password
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-action">
-                    <button id="tp-invite-form-submit" class="waves-effect waves-light btn orange">
-                        Let's organize !
-                    </button>
-                </div>
-            </form>
+            <invite-friends-form (invite-friends)="onInviteFriends($event)"></invite-friends-form>
         </div>
     </div>
 </div>
