@@ -36,6 +36,7 @@ export class TravelComponent implements OnInit, AfterViewInit {
         if(!hasSessionCookie){
             // Force reconnect
             this._router.navigate(['Home'])
+            return;
         }
 
         // We fetch the travel and on response we init all streams
