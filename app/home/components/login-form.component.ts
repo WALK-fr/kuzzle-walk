@@ -14,7 +14,7 @@ export class LoginFormComponent {
     signInOnly = false;
     @Output('login') loginEvent = new EventEmitter;
 
-    constructor(fb: FormBuilder, private _router: Router) {
+    constructor(fb: FormBuilder, private _kuzzleService: KuzzleService, private _router: Router) {
         this.loginForm = fb.group({
             username: ['', Validators.required],
             password: ['', Validators.required]
@@ -40,17 +40,17 @@ export class LoginFormComponent {
             // emit a signal to notify that connection is done
             this.loginEvent.emit({});
         }
-        // else{
-        //     this._kuzzleService.userService.login(form.username, form.password).then(res => {
-        //         // redirect to the travel
-        //         console.log('Connecté');
-        //         this._router.navigate(['Travel']);
-        //     }).catch((error) => {
-        //         console.log('Error on connect');
-        //         if (error.message === 'Bad Credentials') {
-        //             // DO something that display the error message
-        //         }
-        //     });
-        // }
+        else{
+            this._kuzzleService.userService.login(form.username, form.password).then(res => {
+                // redirect to the travel
+                console.log('Connecté');
+                this._router.navigate(['Travel']);
+            }).catch((error) => {
+                console.log('Error on connect');
+                if (error.message === 'Bad Credentials') {
+                    // DO something that display the error message
+                }
+            });
+        }
     }
 }

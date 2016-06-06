@@ -1,11 +1,11 @@
 import {Component, AfterViewInit} from "@angular/core";
 import {Router} from "@angular/router-deprecated";
 
+import {Travel} from "../../travel/index";
+import {FadeToggleDirective} from "../../shared/directives/fade-toggle.directive";
 import {DestinationFormComponent} from "./destination-form.component";
 import {LoginFormComponent} from "./login-form.component";
 import {InviteFriendsFormComponent} from "./invite-friends-form.component";
-import {Travel} from "../../travel/index";
-import {FadeToggleDirective} from "../../shared/directives/fade-toggle.directive";
 
 
 // this is used to accept jquery token at compilation time
