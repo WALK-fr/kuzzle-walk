@@ -34,7 +34,7 @@ export class TravelComponent implements OnInit, AfterViewInit {
         this.kuzzleService.userService.connectAndSendConnectionNotificationAndSubscribeToUserStream();
 
         // We fetch the travel and on response we init all streams
-        this.kuzzleService.travelStream.filter((x) => x !== null).subscribe((x) => {
+        this.kuzzleService.travelStream.filter((x) => x.id !== undefined).subscribe((x) => {
             this.travel = x;
             this.initApplication();
         });
@@ -61,9 +61,13 @@ export class TravelComponent implements OnInit, AfterViewInit {
 
         //set the map to fit the window height
         $(document).ready(function(){
-            $('#tp-content').height(window.innerHeight - $('#tp-top-bar').height());
+            var dynamicHeight = window.innerHeight - $('#tp-top-bar').height();
+            $('#tp-content').height(dynamicHeight);
+            $('#tp-right-panel').height(dynamicHeight);
             $(window).resize(function(){
-                $('#tp-content').height(window.innerHeight - $('#tp-top-bar').height());
+                var dynamicHeight = window.innerHeight - $('#tp-top-bar').height();
+                $('#tp-content').height(dynamicHeight);
+                $('#tp-right-panel').height(dynamicHeight);
             })
         });
     }

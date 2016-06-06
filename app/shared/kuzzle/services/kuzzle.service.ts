@@ -28,7 +28,7 @@ export class KuzzleService {
         this._userService = new UserService(this.kuzzle, this.cookieService);
         this._noteService = new NoteService(this.kuzzle);
 
-        this._travelStream = new BehaviorSubject<Travel>(null);
+        this._travelStream = new BehaviorSubject<Travel>(new Travel());
     }
 
     /**
@@ -46,6 +46,7 @@ export class KuzzleService {
         }
 
         switch(document.status){
+            case 'create':
             case 'created':
             case KuzzleDocument.STATUS_FETCHED:
             case KuzzleDocument.STATUS_USER_JOINED:
@@ -80,7 +81,6 @@ export class KuzzleService {
         var hasBeenUpdated:boolean = false;
 
         this.kuzzle.dataCollectionFactory('travel').createDocument(travel, (err:any, document:any) => {
-            console.log(document);
             hasBeenUpdated = true;
 
             travel.id = document.id;

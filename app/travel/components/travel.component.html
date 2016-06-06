@@ -31,7 +31,7 @@
                 </div>
                 <!-- NEW SPOT FORM -->
                 <div id="{{ TABS.TAB_MARKER_FORM }}" class="col s12">
-                    <poi-form #poiForm (marker-delete)="map.deleteTemporaryMarker(markerTodelete)"></poi-form>
+                    <poi-form #poiForm (marker-delete)="map.deleteTemporaryMarker($event); requestFormFocus(TABS.TAB_MARKER_LIST)"></poi-form>
                 </div>
                 <!-- ALL SPOTS-->
                 <div id="{{ TABS.TAB_MARKER_LIST }}" class="col s12">

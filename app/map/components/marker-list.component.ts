@@ -11,8 +11,7 @@ export class MarkerListComponent implements OnInit {
     markers: TravelMarker[] = [];
     travel:Travel;
 
-    constructor(private kuzzleService:KuzzleService) {
-    }
+    constructor(private kuzzleService:KuzzleService) {}
 
     ngOnInit() {
         // Fetch the travel async + markers from database

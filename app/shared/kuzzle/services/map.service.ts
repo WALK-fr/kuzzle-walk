@@ -54,7 +54,6 @@ export class MapService {
             var travelMarker = new TravelMarker(result.result._source);
             travelMarker.status = result.action;
             travelMarker.id = result.result._id;
-
             this.travelMarkerStream.next(travelMarker);
         });
     }
