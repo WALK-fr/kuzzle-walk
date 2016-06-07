@@ -37,18 +37,14 @@ export class LoginFormComponent {
         // TODO : On success add user to travel and travel to user
 
         // TODO: Handle sign in ONLY
-        this._kuzzleService.userService.login(form.username, form.password).then(res => {
-            // redirect to the travel
-            console.log('Connecté');
-            this.loginEvent.emit({});
-
-            // this one is when we are using sign in only
-            //this._router.navigate(['Travel']);
-        }).catch((error) => {
-            console.log('Error on connect');
-            if (error.message === 'Bad Credentials') {
-                // DO something that display the error message
-            }
-        });
+        this._kuzzleService.userService.login(form.username, form.password)
+            .then(res => this.loginEvent.emit({}))
+            .catch(error => {
+                console.log('Error on connect');
+                if (error.message === 'Bad Credentials') {
+                    // TODO : Handle error message display
+                    // DO something that display the error message
+                }
+            });
     }
 }

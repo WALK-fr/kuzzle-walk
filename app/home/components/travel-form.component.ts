@@ -1,4 +1,4 @@
-import {Component, AfterViewInit} from "@angular/core";
+import {Component, Input, OnInit, AfterViewInit} from "@angular/core";
 import {Router} from "@angular/router-deprecated";
 
 import {Travel} from "../../travel/index";
@@ -18,13 +18,22 @@ declare var L:any;
     styleUrls: ['app/home/components/travel-form.component.css'],
     directives: [FadeToggleDirective, DestinationFormComponent, LoginFormComponent, InviteFriendsFormComponent]
 })
-export class TravelFormComponent implements AfterViewInit {
+export class TravelFormComponent implements OnInit, AfterViewInit {
 
-    signInOnly:boolean = false;
+    @Input('signInOnly') signInOnly: boolean = false;
     travel: Travel;
-    step: number = 1;
+    step: number;
 
-    constructor(private _router:Router) {}
+    constructor(private _router:Router) {
+
+    }
+
+    /**
+     * triggered on the component initialization. here, input properties are initialized
+     */
+    ngOnInit() {
+        this.signInOnly ? this.step = 2 : this.step = 1
+    }
 
     /**
      * triggered after the view initialization. this is used to apply
@@ -51,7 +60,7 @@ export class TravelFormComponent implements AfterViewInit {
      * @param result
      */
     onLogin(result) {
-        this.step++;
+        this.signInOnly ? this._router.navigate(['Travel']) : this.step++
     }
 
     /**
