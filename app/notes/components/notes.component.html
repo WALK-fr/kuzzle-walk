@@ -8,7 +8,7 @@
 
         <section id="tp-all-notes-panel" class="row">
 
-            <note *ngFor="let note of allNotes, let index = index" [note]="note"
+            <note *ngFor="let note of allNotes, let index = index" [note]="note" id="note-{{note.id}}"
                   [class.first-col]="index == 0 || index % 3 == 0"
                   [class.second-col]="index % 3 == 1"
                   [class.third-col]="index % 3 == 2">

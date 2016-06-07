@@ -56,52 +56,6 @@ export class NotesComponent implements OnInit{
     }
 
     /**
-     *
-     * @param $form - is use only to collapse again the form once used
-     * @param $itemTitle - the title DOM object of the new item
-     * @param $itemContent - the conent DOM object of the new item
-     * @param note - the note which has to be updated
-     */
-    persistNewItem($form, $itemTitle, $itemContent, note: Note) {
-
-        // TODO add some validation
-        note.items.push(new Item({title: $itemTitle.value, content: $itemContent.value, done: false}));
-        this._kuzzle.noteService.publishNote(note);
-        $itemTitle.value = "";
-        $itemContent.value = "";
-        $($form).trigger('click');
-    }
-
-    /**
-     * Mark a note item as done and persist the modification in kuzzle
-     * @param $event
-     * @param note
-     * @param item
-     */
-    markAsDone($event:any, note:any, item:any) {
-        var noteIndex = this.allNotes.indexOf(note);
-        var itemIndex = this.allNotes[noteIndex].items.indexOf(item);
-        this.allNotes[noteIndex].items[itemIndex].done = true;
-
-        //update the document in Kuzzle
-        this._kuzzle.noteService.publishNote(this.allNotes[noteIndex]);
-    }
-
-    /**
-     * Delete a item from a note and persist into kuzzle
-     * @param note
-     * @param item
-     */
-    cancelItem(note:any, item:any) {
-        var noteIndex = this.allNotes.indexOf(note);
-        var itemIndex = this.allNotes[noteIndex].items.indexOf(item);
-        this.allNotes[noteIndex].items.splice(itemIndex, 1);
-
-        //delete the item and push the note to kuzzle
-        this._kuzzle.noteService.publishNote(this.allNotes[noteIndex]);
-    }
-
-    /**
      * Displays the notes modal window
      */
     displayModal() {

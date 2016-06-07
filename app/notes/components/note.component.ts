@@ -1,4 +1,6 @@
 import { Component, Input, AfterViewInit, ElementRef } from "@angular/core";
+import { FormBuilder, ControlGroup, Validators } from "@angular/common";
+
 import {Item} from "../models/item.model";
 import {CollapsibleDirective} from "../../shared/directives/collapsible.directive";
 import {KuzzleService} from "../../shared/kuzzle/services/kuzzle.service";
@@ -19,13 +21,24 @@ declare var $:any;
 export class NoteComponent implements AfterViewInit{
 
     @Input() note;
+    itemForm: ControlGroup;
 
-    constructor(private _element: ElementRef, private _kuzzle: KuzzleService) {}
+    constructor(private _element: ElementRef, private _kuzzle: KuzzleService, fb: FormBuilder) {
+        this.itemForm = fb.group({
+            title: ['', Validators.required],
+            content: ['']
+        });
+    }
 
     ngAfterViewInit(){
         $(document).ready( element => {
+            var noteId = $(this._element.nativeElement).attr('id');
             var columnId = '#panel-'+$(this._element.nativeElement).attr('class');
-            $(this._element.nativeElement).appendTo(columnId);
+            if($(columnId).find('#'+noteId).length > 0){
+
+            };
+
+            $(this._element.nativeElement).appendTo(columnId)
         });
     }
 
@@ -36,14 +49,9 @@ export class NoteComponent implements AfterViewInit{
      * @param $itemContent - the conent DOM object of the new item
      * @param note - the note which has to be updated
      */
-    persistNewItem($form, $itemTitle, $itemContent) {
-
-        // TODO add some validation
-        this.note.items.push(new Item({title: $itemTitle.value, content: $itemContent.value, done: false}));
+    persistNewItem(form){
+        this.note.items.push(new Item({title: form.title, content: form.content.replace("\r\n", "\\n"), done: false}));
         this._kuzzle.noteService.publishNote(this.note);
-        $itemTitle.value = "";
-        $itemContent.value = "";
-        $($form).trigger('click');
     }
 
     /**

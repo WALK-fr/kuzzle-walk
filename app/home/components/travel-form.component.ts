@@ -36,6 +36,14 @@ export class TravelFormComponent implements OnInit, AfterViewInit {
     }
 
     /**
+     * When arriving through the "sign in" link in NavBar
+     */
+    displayLoginForm(){
+        this.signInOnly = true;
+        this.step = 2;
+    }
+
+    /**
      * triggered after the view initialization. this is used to apply
      * materialize js on the select
      */

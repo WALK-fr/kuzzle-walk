@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 import {ROUTER_DIRECTIVES, RouteData} from '@angular/router-deprecated';
 
 import {TravelFormComponent} from "./travel-form.component";
@@ -10,12 +10,11 @@ import {NavbarComponent} from '../../shared/index';
     styleUrls: ['app/home/components/home.component.css'],
     directives: [ROUTER_DIRECTIVES, TravelFormComponent, NavbarComponent]
 })
-export class HomeComponent {
-
+export class HomeComponent{
     signInOnly: boolean;
 
-    constructor(data: RouteData) {
-        this.signInOnly = data.get('signInOnly') || false;
+    constructor(private _data: RouteData) {
+        //when arriving directly from /login URL
+        this.signInOnly = this._data.get('signInOnly') || false;
     }
-
 }

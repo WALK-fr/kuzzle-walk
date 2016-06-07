@@ -16,6 +16,7 @@
         </li>
 
         <li>
+
             <div #form class="collapsible-header cyan white-text">
                 Add a new item
                 <div class="actions secondary-content">
@@ -24,17 +25,22 @@
             </div>
             <div class="collapsible-body">
                 <div class="collapsible-form">
-                    <div class="form-input input-field">
-                        <input #itemTitle id="item-title" type="text" value="">
-                        <label for="item-title">New item title</label>
-                    </div>
-                    <div class="input-field">
-                                        <textarea #itemContent id="item-content"
-                                                  class="materialize-textarea"></textarea>
-                        <label for="item-content">New item content</label>
-                    </div>
-                    <a (click)="persistNewItem(form, itemTitle, itemContent)"
-                       class="waves-effect waves-light cyan btn">Save Item</a>
+                    <form [ngFormModel]="itemForm" (ngSubmit)="persistNewItem(itemForm.value)">
+                        <div class="form-input input-field">
+                            <input [ngFormControl]="itemForm.controls['title']" #itemTitle id="item-title" type="text"
+                                   value="">
+                            <label for="item-title">New item title</label>
+                        </div>
+                        <div class="input-field">
+                        <textarea #itemContent
+                                  [ngFormControl]="itemForm.controls['content']"
+                                  id="item-content"
+                                  class="materialize-textarea"></textarea>
+                            <label for="item-content">New item content</label>
+                        </div>
+                        <button class="waves-effect waves-light cyan btn">Save</button>
+
+                    </form>
                 </div>
             </div>
         </li>
