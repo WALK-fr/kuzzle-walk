@@ -1,4 +1,4 @@
-import {Component, Input Output, EventEmitter} from "@angular/core";
+import {Component, Input, Output, EventEmitter} from "@angular/core";
 import {ControlGroup, FormBuilder, Validators} from "@angular/common";
 import {Router} from "@angular/router-deprecated";
 
