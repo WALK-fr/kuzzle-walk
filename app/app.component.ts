@@ -2,13 +2,12 @@ import {Component} from "@angular/core";
 import {RouteConfig, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
 
 import {HomeComponent} from "./home/index";
-import {LoginFormComponent} from "./users/index";
 import {TravelComponent} from "./travel/index";
 
 
 @RouteConfig([
     { path: '/', name: 'Home', component: HomeComponent},
-    { path: '/login', name: 'Login', component: LoginFormComponent},
+    { path: '/login', name: 'Login', component: HomeComponent, data: {signInOnly: true}},
     { path: '/travel', name: 'Travel', component: TravelComponent}
 ])
 @Component({
