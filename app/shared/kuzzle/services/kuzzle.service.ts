@@ -73,7 +73,7 @@ export class KuzzleService {
                 break;
             case 'delete':
             case KuzzleDocument.STATUS_USER_LEFT:
-                var indexToDelete = documentCollection.map((x) =>{return x.id}).indexOf(document.id);
+                var indexToDelete = documentIDCollection.indexOf(document.id);
                 documentCollection.splice(indexToDelete, 1);
                 break;
         }
