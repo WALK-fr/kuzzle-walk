@@ -60,7 +60,6 @@ export class KuzzleService {
                 var documentAlreadyInCollection = documentIDCollection.indexOf(document.id) >= 0;
 
                 if (documentAlreadyInCollection) {
-                    console.info('Document ' + document.id + ' already in collection');
                     return;
                 }
                 document.status = null;
@@ -68,7 +67,7 @@ export class KuzzleService {
                 break;
             case 'update':
                 var indexToReplace = documentIDCollection.indexOf(document.id);
-                
+
                 document.status = null;
                 documentCollection[indexToReplace] = document;
                 break;
