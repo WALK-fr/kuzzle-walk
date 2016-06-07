@@ -54,7 +54,7 @@ interface Kuzzle {
 }
 
 interface KuzzleDataCollection {
-    publishMessage(document: any, options: KuzzleMessageOptions): any;
+    publishMessage(document: any, options? : KuzzleMessageOptions): any;
     createDocument(document: any, callback?: (err: any, res: any) => any): any;
     updateDocument(documentId: any, document: any, callback?: (err: any, res: any) => any): any;
     deleteDocument(documentId: any, callback?: (err: any, res: any) => any): any;

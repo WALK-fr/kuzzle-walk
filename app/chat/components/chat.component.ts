@@ -1,10 +1,10 @@
-import {Component, OnInit} from "@angular/core";
-
-import {ChatMessage} from "../index";
-import {User} from "../../users/index";
-import {KuzzleService} from "../../shared/kuzzle/services/kuzzle.service";
-import {AutoScrollDirective} from "../../shared/directives/auto-scroll.directive";
-import {ToolTipsDirective} from "../../shared/directives/tooltips.directive";
+import { Component, OnInit } from "@angular/core";
+import { ChatMessage } from "../index";
+import { User } from "../../users/index";
+import { KuzzleService } from "../../shared/kuzzle/services/kuzzle.service";
+import { AutoScrollDirective } from "../../shared/directives/auto-scroll.directive";
+import { ToolTipsDirective } from "../../shared/directives/tooltips.directive";
+import { Travel } from "../../travel/index";
 
 /**
  * This component represent the travel chat room
@@ -20,6 +20,7 @@ export class ChatComponent implements OnInit{
     messagesList:ChatMessage[];
     message:string;
     inputLabel = "Message";
+    travel: Travel;
 
     constructor(private kuzzleService:KuzzleService) {
     }
@@ -33,11 +34,14 @@ export class ChatComponent implements OnInit{
         // Get user
         this.kuzzleService.userService.getCurrentUserStream().subscribe(x => this.user = x);
 
-        // subscribe to the observable and replace the messagesList by the new one
-        // each time you get notified
-        this.kuzzleService.chatService.subscribeToChat()
-            .subscribe(x => {
-                this.messagesList.push(x);
+        // Get travel
+        this.kuzzleService.travelStream
+            .filter(x => x.id !== undefined)
+            .subscribe(travel => {
+                this.travel = travel;
+                // Subscribe to chat messages
+                this.kuzzleService.chatService.subscribeToChat(this.travel)
+                    .subscribe(x => this.messagesList.push(x));
             });
     }
 
@@ -53,7 +57,7 @@ export class ChatComponent implements OnInit{
         var key = event.which || event.keyCode;
 
         if (this.message && key === KEY_ENTER) {
-            var chatMessage = new ChatMessage({author: this.user, content: this.message});
+            var chatMessage = new ChatMessage({travelId: this.travel.id, author: this.user, content: this.message});
             this.kuzzleService.chatService.sendMessage(chatMessage);
 
             this.message = "";

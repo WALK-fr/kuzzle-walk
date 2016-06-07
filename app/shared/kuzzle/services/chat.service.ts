@@ -1,5 +1,6 @@
-import {ChatMessage} from "../../../chat/index";
-import {Subject} from "rxjs/Rx";
+import { ChatMessage } from "../../../chat/index";
+import { Subject } from "rxjs/Rx";
+import { Travel } from "../../../travel/models/travel.model";
 
 //test michel
 //import 'rxjs/add/observable/fromArray';
@@ -8,10 +9,10 @@ import {Subject} from "rxjs/Rx";
  * Handle each kuzzle calls related to the chat component.
  */
 export class ChatService {
-    private kuzzle:Kuzzle;
-    messages:ChatMessage[] = [];
+    private kuzzle: Kuzzle;
+    messages: ChatMessage[] = [];
 
-    public constructor(kuzzle:Kuzzle) {
+    public constructor(kuzzle: Kuzzle) {
         this.kuzzle = kuzzle;
     }
 
@@ -19,20 +20,24 @@ export class ChatService {
      * The collection of message where the incoming message must be imported.
      * @return {Subject<ChatMessage>} the observable to which you need to subscribe
      */
-    public subscribeToChat() {
-
-        var newMessages:Subject<ChatMessage> = new Subject<ChatMessage>();
+    public subscribeToChat(travel: Travel) {
+        var newMessages: Subject<ChatMessage> = new Subject<ChatMessage>();
+        var filter = {
+            term: {
+                travelId: travel.id
+            }
+        };
         var options = {};
 
-            // subscribe to kuzzle service in order to get the data
-            this.kuzzle
-                .dataCollectionFactory('message')
-                .subscribe({}, options, (error:any, result:any) => {
+        // subscribe to kuzzle service in order to get the data
+        this.kuzzle
+            .dataCollectionFactory('message')
+            .subscribe(filter, options, (error: any, result: any) => {
 
-                    // and then you notify the observer
-                    newMessages.next(new ChatMessage(result.result._source));
-                });
-       
+                // and then you notify the observer
+                newMessages.next(new ChatMessage(result.result._source));
+            });
+
         return newMessages;
     }
 
@@ -42,7 +47,11 @@ export class ChatService {
      *
      * @returns {any}
      */
-    public sendMessage(message:ChatMessage) {
+    public sendMessage(message: ChatMessage) {
+        if (message.travelId === undefined || message.travelId === null) {
+            console.log('Please provide travelId for message');
+            return
+        }
         return this.kuzzle.dataCollectionFactory('message').publishMessage(message);
     }
 }
