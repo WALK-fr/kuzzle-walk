@@ -123,7 +123,7 @@ export class MapComponent implements OnInit {
      * @param popup
      */
     addMarker(lat: number, long: number, popup: string, icon: string) {
-        if(icon != null){
+        if(icon != null && this.markers[icon]){
             //get marker by type name
             var marker = L.marker([lat, long], {icon: this.markers[icon]});
         }
