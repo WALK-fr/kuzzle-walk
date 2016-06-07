@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
 
 import {ChatMessage} from "../index";
 import {User} from "../../users/index";
@@ -21,6 +21,9 @@ export class ChatComponent implements OnInit{
     message:string;
     inputLabel = "Message";
 
+    @Input() isChatOpened = false;
+    @Output('unread-message-received') unreadMessageReceived = new EventEmitter();
+
     constructor(private kuzzleService:KuzzleService) {
     }
 
@@ -38,6 +41,9 @@ export class ChatComponent implements OnInit{
         this.kuzzleService.chatService.subscribeToChat()
             .subscribe(x => {
                 this.messagesList.push(x);
+                if(!this.isChatOpened){
+                    this.unreadMessageReceived.emit({});
+                }
             });
     }
 

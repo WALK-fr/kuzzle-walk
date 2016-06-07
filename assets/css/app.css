@@ -21,15 +21,12 @@ html, body, #mapid{
   z-index: 0;
 }
 
-.leaflet-container .leaflet-control-container .leaflet-top.leaflet-left .leaflet-control-search {
-  position: absolute;
-  top: 168px;
-  left: 0px;
-  margin: 0;
+.leaflet-container .leaflet-control-container .leaflet-bottom.leaflet-left .leaflet-control-search {
   padding: 11px;
   background: #fff;
   border-radius: 0;
   box-shadow: none;
+  width: 340px;
 }
 
 .leaflet-control-search .search-button:hover {
@@ -48,10 +45,11 @@ html, body, #mapid{
 .leaflet-control-search .search-tooltip{
   margin:0;
   padding: 0px;
-  top: 48px;
+  top: auto;
+  bottom: 54px;
   background:#FFF;
   min-height: 200px;
-  max-width: 360px;
+  max-width: 340px;
 }
 
 .leaflet-control-search .search-tooltip li{

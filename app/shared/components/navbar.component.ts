@@ -11,6 +11,8 @@ export class NavbarComponent {
     @Input() isChatActivated = false;
     @Input() isNotesActivated = false;
     @Input() isLoginformActivated = false;
+    @Input() chatUnreadMessages;
+
     @Output('toggle-chat') chatOuput = new EventEmitter();
     @Output('toggle-notes') notesOutput = new EventEmitter();
     @Output('toggle-login-form') loginOutput = new EventEmitter();
@@ -26,4 +28,6 @@ export class NavbarComponent {
     toggleLoginForm(){
         this.loginOutput.emit({});
     }
+    
+    
 }

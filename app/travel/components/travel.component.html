@@ -5,9 +5,10 @@
                 (toggle-notes)="notes.displayModal()"
                 [isChatActivated]="true"
                 [isLoginformActivated]="false"
-                [isNotesActivated]="true"></navbar>
+                [isNotesActivated]="true"
+                [chatUnreadMessages]="chatUnreadMessages"></navbar>
 
-        <chat [hidden]="!isChatOpened"></chat>
+        <chat (unread-message-received)="incrementChatUnreadMessages()" [isChatOpened]="isChatOpened"></chat>
     </div>
     <div class="col s12 m5 l4">
         <travel-selector></travel-selector>

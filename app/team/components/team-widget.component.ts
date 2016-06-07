@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { User } from "../../users/models/user";
 import { KuzzleService } from "../../shared/kuzzle/services/kuzzle.service";
 
@@ -12,6 +12,7 @@ declare var $:any;
     selector: 'team',
     templateUrl: "app/team/components/team-widget.component.html",
     styleUrls: ['app/team/components/team-widget.component.css']
+    
 })
 export class TeamWidgetComponent implements OnInit {
     isTeamOpened = false;

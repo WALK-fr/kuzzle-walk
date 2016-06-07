@@ -81,10 +81,13 @@ export class MapComponent implements OnInit {
                 jsonpParam: 'json_callback',
                 propertyName: 'display_name',
                 propertyLoc: ['lat','lon'],
+                collapsed: false,
                 markerLocation: true,
-                autoCollapse: true,
+                autoCollapse: false,
                 autoType: false,
-                minLength: 2
+                autoResize: true,
+                minLength: 2,
+                position: 'bottomleft'
         }) );
 
         //we bind the clicks to the emitter so we can give it to the POI Form
@@ -96,16 +99,6 @@ export class MapComponent implements OnInit {
             this.mapClick.emit({latlng: e.latlng});
         });
 
-        //add design events
-        $('.search-button').click(function(){
-            $('input.search-input').hide();
-            $('.leaflet-control-search').animate({'width':'360px'}, 600, function(){  $('input.search-input').show().focus() });
-        });
-
-        $('input.search-input').focusout(function(){
-            $('input.search-input').hide();
-            $('.leaflet-control-search').css('width','auto');
-        });
 
 
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {

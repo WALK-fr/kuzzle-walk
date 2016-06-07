@@ -24,16 +24,18 @@ declare var $: any;
 export class TravelComponent implements OnInit, AfterViewInit {
 
     isChatOpened = false;
-    travel:Travel;
+    chatUnreadMessages = 0;
+    travel: Travel;
     TABS = {TAB_MARKER_FORM: 'panel-form', TAB_MARKER_LIST: 'panel-marker-list', TAB_SCHEDULE: 'panel-scheduler'}
 
-    constructor(private kuzzleService:KuzzleService, private _router:Router) {}
+    constructor(private kuzzleService: KuzzleService, private _router: Router) {
+    }
 
     ngOnInit() {
         // Connection
         let hasSessionCookie = this.kuzzleService.userService.connectAndSendConnectionNotificationAndSubscribeToUserStream();
 
-        if(!hasSessionCookie){
+        if (!hasSessionCookie) {
             // Force reconnect
             //this._router.navigate(['Home'])
             return;
@@ -55,22 +57,22 @@ export class TravelComponent implements OnInit, AfterViewInit {
      */
     ngAfterViewInit() {
         $('.dropdown-button').dropdown({
-                    inDuration: 300,
-                    outDuration: 225,
-                    constrain_width: false, // Does not change width of dropdown to that of the activator
-                    hover: true, // Activate on hover
-                    gutter: 0, // Spacing from edge
-                    belowOrigin: false, // Displays dropdown below the button
-                    alignment: 'left' // Displays dropdown with edge aligned to the left of button
-                }
+                inDuration: 300,
+                outDuration: 225,
+                constrain_width: false, // Does not change width of dropdown to that of the activator
+                hover: true, // Activate on hover
+                gutter: 0, // Spacing from edge
+                belowOrigin: false, // Displays dropdown below the button
+                alignment: 'left' // Displays dropdown with edge aligned to the left of button
+            }
         );
 
         //set the map to fit the window height
-        $(document).ready(function(){
+        $(document).ready(function () {
             var dynamicHeight = window.innerHeight - $('#tp-top-bar').height();
             $('#tp-content').height(dynamicHeight);
             $('#tp-right-panel').height(dynamicHeight);
-            $(window).resize(function(){
+            $(window).resize(function () {
                 var dynamicHeight = window.innerHeight - $('#tp-top-bar').height();
                 $('#tp-content').height(dynamicHeight);
                 $('#tp-right-panel').height(dynamicHeight);
@@ -81,7 +83,7 @@ export class TravelComponent implements OnInit, AfterViewInit {
     /**
      * set the focus on one of the right panel tabs
      */
-    requestFormFocus(tabName){
+    requestFormFocus(tabName) {
         $('ul.tabs').tabs('select_tab', tabName);
     }
 
@@ -90,8 +92,14 @@ export class TravelComponent implements OnInit, AfterViewInit {
      */
     toggleChat() {
         this.isChatOpened = !this.isChatOpened;
+        if (this.isChatOpened) {
+            this.chatUnreadMessages = 0;
+        }
     }
 
+    incrementChatUnreadMessages(){
+        this.chatUnreadMessages++;
+    }
     /**
      * Init all streams of the application
      */

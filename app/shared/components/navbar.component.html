@@ -11,6 +11,7 @@
             <div *ngIf="isChatActivated" class="col right right-align">
                 <a (click)="toggleChat()" id="tp-chat-all"
                    class="btn-floating btn-large waves-effect waves-light orange"><i class="material-icons">chat</i></a>
+                <span *ngIf="chatUnreadMessages > 0" class="badge-nb-messages white grey-text text-darken-1 z-depth-2">{{ chatUnreadMessages }}</span>
             </div>
 
             <div *ngIf="isNotesActivated" class="col right right-align">
