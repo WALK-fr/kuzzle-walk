@@ -1,7 +1,7 @@
-import {User} from "../../../users/models/user";
-import {Subject} from "rxjs/Rx";
-import {KuzzleDocument} from "../model/kuzzle-document.model";
-import {CookieService} from "angular2-cookie/core";
+import { User } from "../../../users/models/user";
+import { Subject } from "rxjs/Rx";
+import { KuzzleDocument } from "../model/kuzzle-document.model";
+import { CookieService } from "angular2-cookie/core";
 
 /**
  * Handle each kuzzle calls related to the user.
@@ -85,14 +85,29 @@ export class UserService {
                 resolve();
             })
         }).then(() => {
+            var usersDataCollection = this.kuzzle.dataCollectionFactory('users');
+
             // Subscribe to users list to notify the user presence and listen to incoming / leaving users
-            this.kuzzle.dataCollectionFactory('users').subscribe({}, {
-                scope: 'none', // This scope must be none because we only are interested on subscription users
+            usersDataCollection.subscribe({}, {
+                // scope: 'none', // This scope must be none because we only are interested on subscription users
+                scope: 'in', // This scope must be ib because we only are interested on subscription users
                 users: 'all',
-                metadata: this.user
+                metadata: this.user,
+                subscribeToSelf: false // We don't want to receive i'm here notification if we send it
             }, (error: any, result: any) => {
+                // Notify each users of our presence when someone join the room in the which we are.
+                if (result.action === KuzzleDocument.STATUS_USER_JOINED) {
+                    usersDataCollection.publishMessage({notify: "im here"}, {metadata: this.user});
+                }
+
+                // When someone enter / leave the room we created an user with specific action.
+                // Depending on that one we will add or remove from the logged users collection.
                 var user = new User(result.metadata);
-                user.status = result.action; // Can be on or off depending on if the user join or not
+                user.status = result.action;
+
+                // In case of I'm here notification we add curently logged user to the collection
+                if (user.status === 'publish') user.status = 'on';
+
 
                 this.loggedUsersStream.next(user);
             });

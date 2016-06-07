@@ -7,7 +7,7 @@
  * Initiate a Kuzzle object (main object)
  */
 interface Kuzzle {
-    constructor(url:string, options?:kuzzleConnectOptions):Kuzzle;
+    constructor(url: string, options?: kuzzleConnectOptions): Kuzzle;
 
     /**
      * Log a user according to a strategy and credentials.
@@ -26,7 +26,7 @@ interface Kuzzle {
      * @param expiresIn
      * @param callback
      */
-    login(strategy:string, credential:{username:string; password:string}, expiresIn:string, callback:(err:any, res:any) => any):Kuzzle;
+    login(strategy: string, credential: {username: string; password: string}, expiresIn: string, callback: (err: any, res: any) => any): Kuzzle;
     /**
      * Logs the user out.
      *
@@ -35,14 +35,14 @@ interface Kuzzle {
      *
      * @param callback
      */
-    logout(callback:(err:any, res:any)=>any):Kuzzle;
+    logout(callback: (err: any, res: any)=>any): Kuzzle;
     /**
      * Return informations about the currently logged user.
      *
      * @param callback
      */
-    whoAmI(callback:(err:any, result:any)=>any):void;
-    setJwtToken(jwt:string):Kuzzle;
+    whoAmI(callback: (err: any, result: any)=>any): void;
+    setJwtToken(jwt: string): Kuzzle;
     /**
      *
      * @param index
@@ -50,27 +50,32 @@ interface Kuzzle {
      *
      * @return KuzzleDataCollection
      */
-    dataCollectionFactory(index?:string, collection?:string):KuzzleDataCollection; // Todo change optionnal parameters when signature will be updated
+    dataCollectionFactory(index?: string, collection?: string): KuzzleDataCollection; // Todo change optionnal parameters when signature will be updated
 }
 
 interface KuzzleDataCollection {
-    publishMessage(document:any):any;
-    createDocument(document:any, callback?:(err:any, res:any) => any):any;
-    updateDocument(documentId:any, document:any, callback?:(err:any, res:any) => any):any;
-    deleteDocument(documentId:any, callback?:(err:any, res:any) => any):any;
-    subscribe(filters:any, options:any, callback:(err:any, result:any)=> any):any;
-    fetchDocument(documentID:string,callback?:(err:any, res:any) => any):any
-    advancedSearch(filters: Object, options: any, callback:(err:any, result:any)=> any): any;
+    publishMessage(document: any, options: KuzzleMessageOptions): any;
+    createDocument(document: any, callback?: (err: any, res: any) => any): any;
+    updateDocument(documentId: any, document: any, callback?: (err: any, res: any) => any): any;
+    deleteDocument(documentId: any, callback?: (err: any, res: any) => any): any;
+    subscribe(filters: any, options: any, callback: (err: any, result: any)=> any): any;
+    fetchDocument(documentID: string, callback?: (err: any, res: any) => any): any
+    advancedSearch(filters: Object, options: any, callback: (err: any, result: any)=> any): any;
 }
 
 interface kuzzleConnectOptions {
-    autoQueue:boolean,
-    autoReconnect:boolean,
-    autoReplay:boolean,
-    autoResubscribe:boolean,
-    connect:string,
-    defaultIndex:string,
-    headers:any,
-    metadata:any,
-    offlineMode:string
+    autoQueue: boolean,
+    autoReconnect: boolean,
+    autoReplay: boolean,
+    autoResubscribe: boolean,
+    connect: string,
+    defaultIndex: string,
+    headers: any,
+    metadata: any,
+    offlineMode: string
+}
+
+interface KuzzleMessageOptions {
+    metadata?: any;
+    queuable?: boolean
 }

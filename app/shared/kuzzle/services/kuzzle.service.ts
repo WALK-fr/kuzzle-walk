@@ -1,8 +1,8 @@
-import {Injectable} from "@angular/core";
-import {Travel} from "../../../travel/index";
-import {ChatService, MapService, UserService, NoteService} from "../index";
-import {KuzzleDocument} from "../model/kuzzle-document.model";
-import {Subject, BehaviorSubject} from "rxjs/Rx";
+import { Injectable } from "@angular/core";
+import { Travel } from "../../../travel/index";
+import { ChatService, MapService, UserService, NoteService } from "../index";
+import { KuzzleDocument } from "../model/kuzzle-document.model";
+import { Subject, BehaviorSubject } from "rxjs/Rx";
 import { CookieService } from "angular2-cookie/core";
 
 declare let Kuzzle:any;
@@ -45,24 +45,31 @@ export class KuzzleService {
             console.error('You must provide a Status before updating the collection', document);
         }
 
+        let documentIDCollection = documentCollection.map((x) => {
+            if (x.id === undefined || x.id === null) {
+                console.error('One or more items in your collection don\'t have an ID !', x);
+            }
+            return x.id
+        });
+
         switch(document.status){
             case 'create':
             case 'created':
             case KuzzleDocument.STATUS_FETCHED:
             case KuzzleDocument.STATUS_USER_JOINED:
+                var documentAlreadyInCollection = documentIDCollection.indexOf(document.id) >= 0;
+
+                if (documentAlreadyInCollection) {
+                    console.info('Document ' + document.id + ' already in collection');
+                    return;
+                }
+                document.status = null;
                 documentCollection.push(document);
                 break;
             case 'update':
-                var map = documentCollection.map((x) => {
-                    if (x.id === undefined || x.id === null) {
-                        console.error('One or more items in your collection don\'t have an ID !', x);
-                    }
-                    return x.id
-
-                });
-                var indexToReplace = map.indexOf(document.id);
+                var indexToReplace = documentIDCollection.indexOf(document.id);
+                
                 document.status = null;
-
                 documentCollection[indexToReplace] = document;
                 break;
             case 'delete':
