@@ -5,12 +5,18 @@
             Notes and reminders
             <i (click)="addNewNote()" class="secondary-content material-icons cyan-text lighten-1 tp-note-add">playlist_add</i>
         </h4>
-        <note-panel>
+
+        <section id="tp-all-notes-panel" class="row">
+
             <note *ngFor="let note of allNotes, let index = index" [note]="note"
-                  [class.firstCol]="index == 0 || index % 3 == 0"
-                  [class.secondCol]="index % 3 == 1"
-                  [class.thirdCol]="index % 3 == 2">
+                  [class.first-col]="index == 0 || index % 3 == 0"
+                  [class.second-col]="index % 3 == 1"
+                  [class.third-col]="index % 3 == 2">
             </note>
-        </note-panel>
+
+            <div id="panel-first-col" class="col s12 m6 l4"></div>
+            <div id="panel-second-col" class="col s12 m6 l4"></div>
+            <div id="panel-third-col"class="col s12 m6 l4"></div>
+        </section>
     </div>
 </div>

@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import {KuzzleService} from "../../shared/kuzzle/services/kuzzle.service";
 import {Note} from "../models/note.model";
 import {Item} from "../models/item.model";
@@ -17,7 +17,7 @@ declare var $:any;
     selector: 'notes',
     templateUrl: "app/notes/components/notes.component.html",
     styleUrls: ['app/notes/components/notes.component.css'],
-    directives: [NoteComponent, NotePanelComponent]
+    directives: [NoteComponent]
 })
 export class NotesComponent implements OnInit{
 

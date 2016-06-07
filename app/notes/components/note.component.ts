@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import { Component, Input, AfterViewInit, ElementRef } from "@angular/core";
 import {Item} from "../models/item.model";
 import {CollapsibleDirective} from "../../shared/directives/collapsible.directive";
 import {KuzzleService} from "../../shared/kuzzle/services/kuzzle.service";
@@ -16,12 +16,19 @@ declare var $:any;
     styleUrls: ['app/notes/components/note.component.css'],
     directives: [CollapsibleDirective]
 })
-export class NoteComponent{
+export class NoteComponent implements AfterViewInit{
 
     @Input() note;
 
-    constructor(private _kuzzle: KuzzleService) {}
-    
+    constructor(private _element: ElementRef, private _kuzzle: KuzzleService) {}
+
+    ngAfterViewInit(){
+        $(document).ready( element => {
+            var columnId = '#panel-'+$(this._element.nativeElement).attr('class');
+            $(this._element.nativeElement).appendTo(columnId);
+        });
+    }
+
     /**
      *
      * @param $form - is use only to collapse again the form once used
