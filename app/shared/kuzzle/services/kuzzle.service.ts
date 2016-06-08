@@ -56,6 +56,7 @@ export class KuzzleService {
         switch(document.status){
             case 'create':
             case 'created':
+            case 'publish':
             case KuzzleDocument.STATUS_FETCHED:
             case User.USER_JOINED:
                 var documentAlreadyInCollection = documentIDCollection.indexOf(document.id) >= 0;

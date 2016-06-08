@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { User } from "../../users/models/user";
 import { KuzzleService } from "../../shared/kuzzle/services/kuzzle.service";
-import { KuzzleDocument } from "../../shared/kuzzle/model/kuzzle-document.model";
 
 // this is used to accept jquery token at compilation time
 declare var $:any;
@@ -46,11 +45,10 @@ export class TeamWidgetComponent implements OnInit {
                             Materialize.toast(user.humanName() + ' s\'est deconnecté !', 3000, 'team-toast');
                             break;
                         case User.USER_ALREADY_HERE:
-                            // Do nothing on that case
+                            user.status = User.USER_JOINED;
                             break;
                     }
                 }
-
                 // Update current users list
                 this.kuzzleService.updateLocalCollection(this.connectedUserCollection, user);
             })
