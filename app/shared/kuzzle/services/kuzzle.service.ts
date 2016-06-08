@@ -4,6 +4,7 @@ import { ChatService, MapService, UserService, NoteService } from "../index";
 import { KuzzleDocument } from "../model/kuzzle-document.model";
 import { Subject, BehaviorSubject } from "rxjs/Rx";
 import { CookieService } from "angular2-cookie/core";
+import { User } from "../../../users/models/user";
 
 declare let Kuzzle:any;
 
@@ -56,7 +57,7 @@ export class KuzzleService {
             case 'create':
             case 'created':
             case KuzzleDocument.STATUS_FETCHED:
-            case KuzzleDocument.STATUS_USER_JOINED:
+            case User.USER_JOINED:
                 var documentAlreadyInCollection = documentIDCollection.indexOf(document.id) >= 0;
 
                 if (documentAlreadyInCollection) {
@@ -72,7 +73,7 @@ export class KuzzleService {
                 documentCollection[indexToReplace] = document;
                 break;
             case 'delete':
-            case KuzzleDocument.STATUS_USER_LEFT:
+            case User.USER_LEFT:
                 var indexToDelete = documentIDCollection.indexOf(document.id);
                 documentCollection.splice(indexToDelete, 1);
                 break;

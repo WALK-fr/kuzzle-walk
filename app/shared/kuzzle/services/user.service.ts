@@ -1,6 +1,5 @@
 import { User } from "../../../users/models/user";
-import { Subject } from "rxjs/Rx";
-import { KuzzleDocument } from "../model/kuzzle-document.model";
+import { Subject, BehaviorSubject } from "rxjs/Rx";
 import { CookieService } from "angular2-cookie/core";
 
 /**
@@ -8,7 +7,7 @@ import { CookieService } from "angular2-cookie/core";
  */
 export class UserService {
     private kuzzle: Kuzzle;
-    private loggedUsersStream: Subject<User> = new Subject<User>();
+    private loggedUsersStream: Subject<User> = new BehaviorSubject<User>(null);
     private currentUserStream: Subject<User> = new Subject<User>();
     private user: User;
 
@@ -77,7 +76,7 @@ export class UserService {
                 // Set the current user
                 var user = new User(success.content);
                 user.id = success.id;
-                user.status = KuzzleDocument.STATUS_USER_JOINED;
+                user.status = User.USER_JOINED;
 
                 this.user = user;
                 this.loggedUsersStream.next(user); // Add current user to the list
@@ -90,14 +89,14 @@ export class UserService {
             // Subscribe to users list to notify the user presence and listen to incoming / leaving users
             usersDataCollection.subscribe({}, {
                 // scope: 'none', // This scope must be none because we only are interested on subscription users
-                scope: 'in', // This scope must be ib because we only are interested on subscription users
+                scope: 'in', // This scope must be in because we only are interested on subscription users
                 users: 'all',
                 metadata: this.user,
                 subscribeToSelf: false // We don't want to receive i'm here notification if we send it
             }, (error: any, result: any) => {
                 // Notify each users of our presence when someone join the room in the which we are.
-                if (result.action === KuzzleDocument.STATUS_USER_JOINED) {
-                    usersDataCollection.publishMessage({notify: "im here"}, {metadata: this.user});
+                if (result.action === User.USER_JOINED) {
+                    usersDataCollection.publishMessage({notify: User.USER_ALREADY_HERE}, {metadata: this.user});
                 }
 
                 // When someone enter / leave the room we created an user with specific action.
@@ -106,9 +105,7 @@ export class UserService {
                 user.status = result.action;
 
                 // In case of I'm here notification we add curently logged user to the collection
-                if (user.status === 'publish') user.status = 'on';
-
-
+                if (result.notify === User.USER_ALREADY_HERE) user.status = User.USER_ALREADY_HERE;
                 this.loggedUsersStream.next(user);
             });
         });

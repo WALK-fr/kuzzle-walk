@@ -19,6 +19,7 @@ declare var Materialize:any;
 export class TeamWidgetComponent implements OnInit {
     isTeamOpened = false;
     connectedUserCollection: User[] = [];
+    private user: User;
 
     constructor(private kuzzleService: KuzzleService) {
     }
@@ -29,28 +30,30 @@ export class TeamWidgetComponent implements OnInit {
 
 
     ngOnInit() {
-        this.kuzzleService.userService.getLoggedUsersStream().subscribe(user => {
+        this.kuzzleService.userService.getCurrentUserStream().subscribe(user => {
+            // Init current user
+            this.user = user;
 
-            // Notify for joining / leaving users
-            let documentIDCollection = this.connectedUserCollection.map((x) => {
-                return x.id
-            });
-            switch (user.status) {
-                case KuzzleDocument.STATUS_USER_JOINED:
-                    var documentAlreadyInCollection = documentIDCollection.indexOf(user.id) >= 0;
-
-                    if (documentAlreadyInCollection) {
-                        return;
+            // Subscribe to incomming and present users notification
+            this.kuzzleService.userService.getLoggedUsersStream().subscribe(user => {
+                // Display notification Toast
+                if (this.user.id !== user.id) {
+                    switch (user.status) {
+                        case User.USER_JOINED:
+                            Materialize.toast(user.humanName() + ' s\'est connecté !', 3000, 'team-toast');
+                            break;
+                        case User.USER_LEFT:
+                            Materialize.toast(user.humanName() + ' s\'est deconnecté !', 3000, 'team-toast');
+                            break;
+                        case User.USER_ALREADY_HERE:
+                            // Do nothing on that case
+                            break;
                     }
-                    Materialize.toast(user.humanName() + ' s\'est connecté !', 3000); // 4000 is the duration of the toast
-                    break;
-                case KuzzleDocument.STATUS_USER_LEFT:
-                    Materialize.toast(user.humanName() + ' s\'est deconnecté !', 3000); // 4000 is the duration of the toast
-                    break;
-            }
+                }
 
-            this.kuzzleService.updateLocalCollection(this.connectedUserCollection, user);
-
-        })
+                // Update current users list
+                this.kuzzleService.updateLocalCollection(this.connectedUserCollection, user);
+            })
+        });
     }
 }
