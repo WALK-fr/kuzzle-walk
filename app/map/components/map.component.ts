@@ -110,7 +110,7 @@ export class MapComponent implements OnInit, AfterViewInit{
         })
     };
     private listeCategLayerGroup = ['default','art','museum','temple','entertainment','bar','mall','restaurant','informations','hotel','station','harbor','airport','landscape','friends','family','other'];
-    private poiFilter: any = [];
+    private layerGroups: any = [];
 
     constructor(private kuzzleService:KuzzleService) {}
 
