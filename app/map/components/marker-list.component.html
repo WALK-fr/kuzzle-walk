@@ -2,7 +2,7 @@
     <li *ngFor="let marker of markers" class="collection-item avatar">
         <img src="http://lorempixel.com/100/100/city/?random=1" alt="" class="circle">
         <span class="title">{{ marker.name }}</span>
-        <p> {{ marker.content }} </p>
+        <p> {{ marker.description }} </p>
         <a href="#!" class="secondary-content">
             <div *ngIf="marker.userId !== null" class="chip">
                 <img src="{{ allUsers[marker.userId].photoUrl }}" alt="Contact Person">

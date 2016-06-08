@@ -1,4 +1,4 @@
-import { Component, Input, AfterViewInit, ElementRef } from "@angular/core";
+import { Component, Input, ElementRef } from "@angular/core";
 import { FormBuilder, ControlGroup, Validators } from "@angular/common";
 
 import {Item} from "../models/item.model";
@@ -18,7 +18,7 @@ declare var $:any;
     styleUrls: ['app/notes/components/note.component.css'],
     directives: [CollapsibleDirective]
 })
-export class NoteComponent implements AfterViewInit{
+export class NoteComponent{
 
     @Input() note;
     itemForm: ControlGroup;
@@ -27,18 +27,6 @@ export class NoteComponent implements AfterViewInit{
         this.itemForm = fb.group({
             title: ['', Validators.required],
             content: ['']
-        });
-    }
-
-    ngAfterViewInit(){
-        $(document).ready( element => {
-            var noteId = $(this._element.nativeElement).attr('id');
-            var columnId = '#panel-'+$(this._element.nativeElement).attr('class');
-            if($(columnId).find('#'+noteId).length > 0){
-
-            };
-
-            $(this._element.nativeElement).appendTo(columnId)
         });
     }
 

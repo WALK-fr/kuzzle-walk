@@ -21,6 +21,18 @@ h1, h2, h3, h4, h5, h6{
   clear: both;
 }
 
+#toast-container{
+  top: auto;
+  right: 10px;
+  bottom : 20px;
+  left: auto;
+  font-weight: 400;
+}
+.toast, .team-toast{
+  background-color: #00bcd4;
+  color: #FFF;
+}
+
 #mapid{
   z-index: 0;
 }
