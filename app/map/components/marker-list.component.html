@@ -4,9 +4,9 @@
         <span class="title">{{ marker.name }}</span>
         <p> {{ marker.content }} </p>
         <a href="#!" class="secondary-content">
-            <div class="chip">
-                <img src="http://lorempixel.com/100/100/people/?random=1" alt="Contact Person">
-                Jane Doe
+            <div *ngIf="marker.userId !== null" class="chip">
+                <img src="{{ allUsers[marker.userId].photoUrl }}" alt="Contact Person">
+                {{ allUsers[marker.userId].firstName }} {{ allUsers[marker.userId].lastName }}
             </div>
         </a>
     </li>

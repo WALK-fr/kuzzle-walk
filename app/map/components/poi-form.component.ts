@@ -3,7 +3,8 @@ import {ControlGroup, FormBuilder, Validators} from "@angular/common";
 
 import {TravelMarker} from "../index";
 import {KuzzleService} from "../../shared/kuzzle/index";
-import {Travel} from "../../travel/models/travel.model";
+import {Travel} from "../../travel/index";
+import {User} from "../../users/index";
 
 // this is used to accept jquery token at compilation time
 declare var $: any;
@@ -17,6 +18,7 @@ export class PoiFormComponent implements OnInit, AfterViewInit {
     poiForm:ControlGroup;
     travelMarker:TravelMarker;
     travel:Travel;
+    user: User;
 
     //output property to notify map to destroy a temporary marker
     @Output('marker-delete') markerDelete = new EventEmitter();
@@ -42,9 +44,17 @@ export class PoiFormComponent implements OnInit, AfterViewInit {
     }
     
     ngOnInit() {
+
+        this.travelMarker =  new TravelMarker();
+
+        this.kuzzleService.userService.getCurrentUserStream().subscribe( user => {
+            this.user = user;
+            this.travelMarker.userId = user.id;
+        });
+
         this.kuzzleService.travelStream.subscribe(travel => {
             this.travel = travel;
-            this.travelMarker =  new TravelMarker({travelId: travel.id});
+            this.travelMarker.travelId = travel.id;
         });
     }
 
