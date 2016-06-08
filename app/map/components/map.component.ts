@@ -1,8 +1,11 @@
 import { Component, OnInit, Output, EventEmitter, AfterViewInit } from "@angular/core";
-import {Travel} from "../../travel/models/travel.model";
-import {KuzzleService} from "../../shared/kuzzle/index";
-import {User} from "../../users/index";
-import {TravelMarker} from "../models/travel-marker.model";
+import { Travel } from "../../travel/models/travel.model";
+import { KuzzleService } from "../../shared/kuzzle/index";
+import { User } from "../../users/index";
+import { TravelMarker } from "../models/travel-marker.model";
+import FeatureGroup = L.FeatureGroup;
+import LatLngBounds = L.LatLngBounds;
+import LatLng = L.LatLng;
 
 // this is used to accept jquery token at compilation time
 declare var $:any;
@@ -18,8 +21,13 @@ export class MapComponent implements OnInit, AfterViewInit{
     user:User;
     travel:Travel;
 
-    //MARKERS - one marker per type of TravelMarkers
-    private markers = {
+    /** Event Emitter when map is clicked, used to trigger the POI Form **/
+    @Output('map-clicked') mapClick = new EventEmitter();
+
+    /**
+     *  MARKERS - one marker per type of TravelMarkers
+     */
+    private markersIcons = {
         base : L.icon({
             iconUrl: 'assets/img/markers/base.png',
             shadowUrl: 'assets/img/markers/shadow.png',
@@ -67,15 +75,17 @@ export class MapComponent implements OnInit, AfterViewInit{
         }),
 
     };
-
-    //Event Emitter when map is clicked, used to trigger the POI Form
-    @Output('map-clicked') mapClick  = new EventEmitter();
+    private listeCategLayerGroup = ['people', 'informations', 'landscape', 'hotels'];
+    private poiFilter: any = [];
 
     constructor(private kuzzleService:KuzzleService) {}
 
     ngOnInit() {
         // Map initialization
-        this.map = L.map('mapid').setView([51.505, -0.09], 13);
+        // this.map = L.map('mapid').setView([48.8587741, 2.2], 13);
+        this.map = L.map('mapid');
+
+        // Search box
         this.map.addControl( new L.Control.Search({
             url: 'http://nominatim.openstreetmap.org/search?format=json&q={s}',
                 jsonpParam: 'json_callback',
@@ -90,8 +100,8 @@ export class MapComponent implements OnInit, AfterViewInit{
                 position: 'bottomleft'
         }) );
 
-        //we bind the clicks to the emitter so we can give it to the POI Form
-        this.map.on('click', (e) => {
+        // We bind the clicks to the emitter so we can give it to the POI Form
+        this.map.on('click', (e: L.LeafletMouseEvent) => {
             //add a temporary marker on the map, while the user fill the POI FORM
             this.addMarker(e.latlng.lat, e.latlng.lng, '', null);
 
@@ -99,11 +109,20 @@ export class MapComponent implements OnInit, AfterViewInit{
             this.mapClick.emit({latlng: e.latlng});
         });
 
-
-
+        // We add tiles to the map
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors with TravelPlanner team'
         }).addTo(this.map);
+
+        // Add to the map the container of all markers
+
+        this.listeCategLayerGroup.forEach(value => {
+            this.poiFilter[value] = L.layerGroup();
+            this.map.addLayer(this.poiFilter[value]);
+        });
+
+        // add right control of filters
+        this.map.addControl(L.control.layers(null, this.poiFilter));
 
         // Fetch the travel async + markers from database
         this.kuzzleService.travelStream.subscribe(travel => {
@@ -114,32 +133,31 @@ export class MapComponent implements OnInit, AfterViewInit{
         this.kuzzleService.mapService.getTravelMarkerStream().subscribe((x) => {
             this.addMarker(x.latitude, x.longitude, x.name, x.type);
         });
+
     }
 
     ngAfterViewInit(){
         //TODO - uncomment when allMarkers on map will be available as a class variable
-        //this.map.fitBounds(this.mapMarkers.getBounds().pad(0.5));
     }
 
     /**
      * Add a new Marker on the map
-     * @param lat
-     * @param long
-     * @param popup
      */
-    addMarker(lat: number, long: number, popup: string, icon: string) {
-        if(icon != null && this.markers[icon]){
+    addMarker(lat: number, long: number, popup: string, markerType: string) {
+        if (markerType != null && this.markersIcons[markerType]) {
             //get marker by type name
-            var marker = L.marker([lat, long], {icon: this.markers[icon]});
+            var marker = L.marker([lat, long], {icon: this.markersIcons[markerType]});
         }
         else{
             //default
+            markerType = 'default';
             var marker = L.marker([lat, long]);
         }
-        marker.addTo(this.map)
-            .bindPopup(popup);
 
-        this.map.setView([lat, long], 13);
+        // TODO Securiser la méthode pour alerter en cas de non correspondance
+
+        // Add marker to his specific group
+        this.poiFilter[markerType].addLayer(marker);
     }
 
     /**
