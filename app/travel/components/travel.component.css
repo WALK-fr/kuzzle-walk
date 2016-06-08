@@ -15,6 +15,12 @@
     position:relative;
 }
 
+#tp-panel-container{
+    margin: 0;
+    padding: 0 0 0 10px;
+    background: #FFF;
+}
+
 
 /* TABS */
 #tp-tabs{
@@ -33,5 +39,6 @@
     margin-bottom: 0px;
 }
 #tp-right-panel{
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
 }

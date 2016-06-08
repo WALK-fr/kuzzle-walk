@@ -1,55 +1,66 @@
-<form [ngFormModel]="poiForm" (ngSubmit)="save()">
-    <h3> Basic informations </h3>
+<form [ngFormModel]="poiForm" (ngSubmit)="persistNewMarker(poiForm.value)" id="tp-marker-form">
+    <h5> Basic informations </h5>
     <div class="row">
         <div class="input-field col s12">
-            <input [(ngModel)]="travelMarker.name"
-                    ngControl="name"
-                    id="poi_name"
-                    type="text"
-                    class="validate">
+            <i class="material-icons cyan-text prefix">location_on</i>
+            <input [ngFormControl]="poiForm.controls['name']"
+                   id="poi_name"
+                   type="text"
+                   class="validate">
             <label for="poi_name" data-error="wrong" data-success="right">Name</label>
         </div>
     </div>
     <div class="row">
         <div class="input-field col s12">
-            <input [(ngModel)]="travelMarker.address"
-                    ngControl="address"
-                    id="poi_address"
-                    type="text"
-                    class="validate">
+            <i class="material-icons cyan-text prefix">description</i>
+            <textarea id="description" class="materialize-textarea" [ngFormControl]="poiForm.controls['description']"></textarea>
+            <label for="description">Description</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s12">
+            <i class="material-icons cyan-text prefix">location_city</i>
+            <input [ngFormControl]="poiForm.controls['address']"
+                   id="poi_address"
+                   type="text"
+                   class="validate">
             <label for="poi_address" data-error="wrong" data-success="right">Address</label>
         </div>
     </div>
     <div class="row">
         <div class="input-field col s12">
-            <select [(ngModel)]="travelMarker.type" ngControl="type" id="type-selector">
-                <option value="base" disabled selected>Choose your option</option>
+            <i class="material-icons cyan-text prefix">list</i>
+            <select name="type" id="type-selector">
+                <option value="base" disabled selected>Type of marker</option>
                 <option value="landscape">Landscape</option>
                 <option value="hotel">Hotel</option>
                 <option value="informations">Informations</option>
                 <option value="people">Friends or Family place</option>
                 <option value="other">Other</option>
             </select>
-            <label>Type</label>
         </div>
     </div>
 
-    <h3> Details </h3>
+    <div class="divider"></div>
+    <h5> Details </h5>
     <div class="row">
-        <div class="input-field col s12">
-            <input [(ngModel)]="travelMarker.duration" id="poi_duration" type="text" class="validate">
+        <div class="input-field col s12 m12 l6">
+            <i class="material-icons cyan-text prefix">access_time</i>
+            <input [ngFormControl]="poiForm.controls['duration']" id="poi_duration" type="text" class="validate">
             <label for="poi_duration" data-error="wrong" data-success="right">Duration</label>
         </div>
-    </div>
-    <div class="row">
-        <div class="input-field col s12">
-            <input [(ngModel)]="travelMarker.price" id="poi_price" type="text" class="validate">
+        <div class="input-field col s12 m12 l6">
+            <i class="material-icons cyan-text prefix">attach_money</i>
+            <input [ngFormControl]="poiForm.controls['price']" id="poi_price" type="text" class="validate">
             <label for="poi_price" data-error="wrong" data-success="right">Price</label>
         </div>
     </div>
+
+    <div class="divider"></div>
+    <h5> Files </h5>
     <div class="row">
-        <div class="file-field input-field">
-            <div class="btn">
+        <div class="file-field input-field col s12">
+            <div class="btn cyan">
                 <span>File</span>
                 <input type="file" multiple>
             </div>
@@ -58,5 +69,11 @@
             </div>
         </div>
     </div>
-    <button type="submit">submit</button>
+
+    <div class="divider"></div>
+    <div class="row">
+        <div class="file-field input-field col s12">
+            <button class="waves-effect waves-light cyan btn btn-large center-align" type="submit">Add Marker</button>
+        </div>
+    </div>
 </form>

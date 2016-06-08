@@ -2,6 +2,7 @@ import {KuzzleDocument} from "../../shared/kuzzle/model/kuzzle-document.model";
 
 export class TravelMarker extends KuzzleDocument{
     name: string;
+    description: string;
     content: string;
     travelId: string;
     userId: string;
@@ -15,6 +16,7 @@ export class TravelMarker extends KuzzleDocument{
     constructor(obj?: any) {
         super();
         this.name = obj && obj.name || null;
+        this.description = obj && obj.description || null;
         this.content = obj && obj.content || null;
         this.latitude = obj && obj.latitude || null;
         this.longitude = obj && obj.longitude || null;

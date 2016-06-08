@@ -21,7 +21,16 @@ export class PoiFormComponent implements OnInit, AfterViewInit {
     //output property to notify map to destroy a temporary marker
     @Output('marker-delete') markerDelete = new EventEmitter();
 
-    constructor(private fb:FormBuilder, private kuzzleService:KuzzleService) {}
+    constructor(fb:FormBuilder, private kuzzleService:KuzzleService) {
+        this.poiForm = fb.group({
+            name: ['', Validators.required],
+            description: [''],
+            address: [''],
+            type: [''],
+            duration: [''],
+            price: ['']
+        });
+    }
 
     /**
      * Set the Marker Lat Lng on each click on the Map component !
@@ -33,13 +42,6 @@ export class PoiFormComponent implements OnInit, AfterViewInit {
     }
     
     ngOnInit() {
-
-        this.poiForm = this.fb.group({
-            name: ['', Validators.required],
-            address: ['', Validators.required],
-            type: ['', Validators.required]
-        });
-
         this.kuzzleService.travelStream.subscribe(travel => {
             this.travel = travel;
             this.travelMarker =  new TravelMarker({travelId: travel.id});
@@ -51,18 +53,30 @@ export class PoiFormComponent implements OnInit, AfterViewInit {
      * materialize js on the select
      */
     ngAfterViewInit () {
-        $('select').material_select();
-        $('ul.tabs').tabs();
+        $(document).ready(function() {
+            $('select').material_select();
+            $('ul.tabs').tabs();
+        });
     }
 
     /**
      * save the point of interest and notify the back-end
      */
-    save() {
-        //TODO - replace this with true form handling
+    persistNewMarker(form) {
+        this.travelMarker.name = form.name;
+        this.travelMarker.description = form.description;
+        this.travelMarker.address = form.address;
+        this.travelMarker.duration = form.duration;
+        this.travelMarker.price = form.price;
+
+        //this is because we want to use the materializecss selector which is hacked by ul and li..
         this.travelMarker.type = $('#type-selector').val();
 
+        //emit to delete the temporary marker on the map
         this.markerDelete.emit(this.travelMarker);
-        this.kuzzleService.mapService.publishTravelMarker(this.travelMarker);
+
+        if(this.travelMarker.latitude && this.travelMarker.longitude){
+            this.kuzzleService.mapService.publishTravelMarker(this.travelMarker);
+        }
     }
 }

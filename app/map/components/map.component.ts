@@ -1,4 +1,4 @@
-import {Component, OnInit, Output, EventEmitter} from "@angular/core";
+import { Component, OnInit, Output, EventEmitter, AfterViewInit } from "@angular/core";
 import {Travel} from "../../travel/models/travel.model";
 import {KuzzleService} from "../../shared/kuzzle/index";
 import {User} from "../../users/index";
@@ -12,7 +12,7 @@ declare var L:any;
     selector: 'map',
     template: `<div id="mapid"></div>`,
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, AfterViewInit{
 
     map:L.Map;
     user:User;
@@ -113,7 +113,12 @@ export class MapComponent implements OnInit {
         // ...therefore subscribe the new / update / delete of TravelMarkers
         this.kuzzleService.mapService.getTravelMarkerStream().subscribe((x) => {
             this.addMarker(x.latitude, x.longitude, x.name, x.type);
-        })
+        });
+    }
+
+    ngAfterViewInit(){
+        //TODO - uncomment when allMarkers on map will be available as a class variable
+        //this.map.fitBounds(this.mapMarkers.getBounds().pad(0.5));
     }
 
     /**
@@ -132,8 +137,7 @@ export class MapComponent implements OnInit {
             var marker = L.marker([lat, long]);
         }
         marker.addTo(this.map)
-            .bindPopup(popup)
-            .openPopup();
+            .bindPopup(popup);
 
         this.map.setView([lat, long], 13);
     }
