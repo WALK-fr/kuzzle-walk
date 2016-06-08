@@ -5,8 +5,8 @@
         <p> {{ marker.description }} </p>
         <a href="#!" class="secondary-content">
             <div *ngIf="marker.userId !== null" class="chip">
-                <img src="{{ allUsers[marker.userId].photoUrl }}" alt="Contact Person">
-                {{ allUsers[marker.userId].firstName }} {{ allUsers[marker.userId].lastName }}
+                <img src="{{ travel.members[marker.userId].photoUrl }}" alt="Contact Person">
+                {{ travel.members[marker.userId].humanName() }}
             </div>
         </a>
     </li>

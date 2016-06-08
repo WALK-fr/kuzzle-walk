@@ -142,7 +142,7 @@ export class KuzzleService {
                         .forEach((document) => {
                             let user = new User(document.content);
                             user.id = document.id;
-                            travel.members.push(user);
+                            travel.members[user.id] = user;
                         });
 
                     // Then we dispatch the travel to application
