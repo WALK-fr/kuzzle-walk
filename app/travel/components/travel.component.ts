@@ -44,6 +44,7 @@ export class TravelComponent implements OnInit, AfterViewInit {
         // We fetch the travel and on response we init all streams
         this.kuzzleService.travelStream.filter((x) => x.id !== undefined).subscribe((x) => {
             this.travel = x;
+            console.log(this.travel);
             this.initApplication();
         });
 

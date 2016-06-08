@@ -148,15 +148,13 @@ export class MapComponent implements OnInit, AfterViewInit{
             attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors with TravelPlanner team'
         }).addTo(this.map);
 
-        // Add to the map the container of all markers
-
+        // Add layergroups for each category of POI
         this.listeCategLayerGroup.forEach(value => {
-            this.poiFilter[value] = L.layerGroup();
-            this.map.addLayer(this.poiFilter[value]);
+            this.layerGroups[value] = L.layerGroup();
+            this.map.addLayer(this.layerGroups[value]);
         });
-
-        // add right control of filters
-        this.map.addControl(L.control.layers(null, this.poiFilter));
+        // And allow control on them
+        this.map.addControl(L.control.layers(null, this.layerGroups));
 
         // Fetch the travel async + markers from database
         this.kuzzleService.travelStream.subscribe(travel => {
@@ -167,7 +165,6 @@ export class MapComponent implements OnInit, AfterViewInit{
         this.kuzzleService.mapService.getTravelMarkerStream().subscribe((x) => {
             this.addMarker(x.latitude, x.longitude, x.name, x.type);
         });
-
     }
 
     ngAfterViewInit(){
@@ -186,7 +183,7 @@ export class MapComponent implements OnInit, AfterViewInit{
         // TODO Securiser la méthode pour alerter en cas de non correspondance
 
         // Add marker to his specific group
-        this.poiFilter[markerType].addLayer(marker);
+        this.layerGroups[markerType].addLayer(marker);
     }
 
     /**

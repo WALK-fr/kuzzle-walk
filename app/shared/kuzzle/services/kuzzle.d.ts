@@ -7,6 +7,7 @@
  * Initiate a Kuzzle object (main object)
  */
 interface Kuzzle {
+    security: KuzzleSecurity;
     constructor(url: string, options?: kuzzleConnectOptions): Kuzzle;
 
     /**
@@ -62,6 +63,11 @@ interface KuzzleDataCollection {
     fetchDocument(documentID: string, callback?: (err: any, res: any) => any): any
     advancedSearch(filters: Object, options: any, callback: (err: any, result: any)=> any): any;
 }
+
+interface KuzzleSecurity {
+    searchUsers(filter: any, options?: any, callback?: (err: any, res: any) => any): any
+}
+
 
 interface kuzzleConnectOptions {
     autoQueue: boolean,

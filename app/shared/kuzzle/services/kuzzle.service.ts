@@ -5,8 +5,9 @@ import { KuzzleDocument } from "../model/kuzzle-document.model";
 import { Subject, BehaviorSubject } from "rxjs/Rx";
 import { CookieService } from "angular2-cookie/core";
 import { User } from "../../../users/models/user";
+import { TravelMarker } from "../../../map/models/travel-marker.model";
 
-declare let Kuzzle:any;
+declare let Kuzzle: any;
 
 /**
  * Handle kuzzle methods
@@ -14,13 +15,13 @@ declare let Kuzzle:any;
 @Injectable()
 export class KuzzleService {
 
-    private kuzzle:Kuzzle;
-    private _chatService:ChatService;
-    private _mapService:MapService;
-    private _userService:UserService;
-    private _noteService:NoteService;
+    private kuzzle: Kuzzle;
+    private _chatService: ChatService;
+    private _mapService: MapService;
+    private _userService: UserService;
+    private _noteService: NoteService;
 
-    private _travelStream:Subject<Travel>;
+    private _travelStream: Subject<Travel>;
 
     public constructor(private cookieService: CookieService) {
         this.kuzzle = new Kuzzle('http://walk.challenge.kuzzle.io:7512', {defaultIndex: 'walk'});
@@ -37,7 +38,7 @@ export class KuzzleService {
      * @param document The document that must be created / updated / deleted.
      * @param documentCollection The collection on which action must be made.
      */
-    public updateLocalCollection(documentCollection: KuzzleDocument[], document:KuzzleDocument){
+    public updateLocalCollection(documentCollection: KuzzleDocument[], document: KuzzleDocument) {
         if (document.id === undefined || document.id === null) {
             console.error('You must provide an ID before updating the collection', document);
         }
@@ -53,7 +54,7 @@ export class KuzzleService {
             return x.id
         });
 
-        switch(document.status){
+        switch (document.status) {
             case 'create':
             case 'created':
             case 'publish':
@@ -85,10 +86,10 @@ export class KuzzleService {
      * Persist the travel and override the travel ID
      * @param travel
      */
-    public createTravel(travel:Travel) {
-        var hasBeenUpdated:boolean = false;
+    public createTravel(travel: Travel) {
+        var hasBeenUpdated: boolean = false;
 
-        this.kuzzle.dataCollectionFactory('travel').createDocument(travel, (err:any, document:any) => {
+        this.kuzzle.dataCollectionFactory('travel').createDocument(travel, (err: any, document: any) => {
             hasBeenUpdated = true;
 
             travel.id = document.id;
@@ -103,33 +104,73 @@ export class KuzzleService {
     }
 
     public initCurrentTravel() {
-        this.kuzzle.dataCollectionFactory('travel').fetchDocument('AVS5a8AIeivQYXVQtlJN', (err, result) => {
+        this.kuzzle.dataCollectionFactory('travel').fetchDocument('AVS5a8AIeivQYXVQtlJN', (err, travelFromKuzzle) => {
             // TODO : Handle errors
-            var travel = new Travel(result.content);
-            travel.id = result.id;
+            var travel = new Travel(travelFromKuzzle.content);
+            travel.id = travelFromKuzzle.id;
 
-            this._travelStream.next(travel);
+            new Promise((resolve, reject) => {
+                var filter = {
+                    query: {
+                        match: {
+                            travelId: travel.id
+                        }
+                    }
+                };
+                // Fetch all markers
+                this.kuzzle.dataCollectionFactory('markers').advancedSearch(filter, {}, (err, markersFromKuzzle) => {
+                    // When we get results, we notify the stream of fetched documents
+                    markersFromKuzzle.documents.forEach(document => {
+                        var travelMarker = new TravelMarker(document.content);
+                        travelMarker.id = document.id;
+                        travelMarker.status = KuzzleDocument.STATUS_FETCHED;
+                        this.updateLocalCollection(travel.travelMarkerCollection, travelMarker);
+                        resolve();
+                    });
+                });
+            }).then(() => {
+
+                // Fetch users
+                var userFilters = {
+                    filter: {
+                        terms: {_id: travelFromKuzzle.content.members}
+                    }
+                };
+                this.kuzzle.security.searchUsers(userFilters, (error, usersFromKuzzle) => {
+                    travel.members = [];
+                    usersFromKuzzle.users
+                        .forEach((document) => {
+                            let user = new User(document.content);
+                            user.id = document.id;
+                            travel.members.push(user);
+                        });
+
+                    // Then we dispatch the travel to application
+                    this._travelStream.next(travel);
+                });
+
+            });
+
         });
-
     }
 
-    get travelStream():Subject<Travel> {
+    get travelStream(): Subject<Travel> {
         return this._travelStream;
     }
 
-    get chatService():ChatService {
+    get chatService(): ChatService {
         return this._chatService;
     }
 
-    get mapService():MapService {
+    get mapService(): MapService {
         return this._mapService;
     }
 
-    get userService():UserService {
+    get userService(): UserService {
         return this._userService;
     }
 
-    get noteService():NoteService {
+    get noteService(): NoteService {
         return this._noteService;
     }
 }
