@@ -15,6 +15,6 @@ export class HomeComponent{
 
     constructor(private _data: RouteData) {
         //when arriving directly from /login URL
-        this.signInOnly = this._data.get('signInOnly') || false;
+        this.signInOnly = this._data.get('signInOnly') || true; // set default to false to re-activate the destination form
     }
 }
