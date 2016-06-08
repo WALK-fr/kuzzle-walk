@@ -4,7 +4,6 @@ import {Note} from "../models/note.model";
 import {Item} from "../models/item.model";
 import {Travel} from "../../travel/models/travel.model";
 import {NoteComponent} from "./note.component";
-import {NotePanelComponent} from "./notes-panel.component";
 
 /**
  * This components represent the Notes component of the travel.

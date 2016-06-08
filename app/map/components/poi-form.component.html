@@ -7,7 +7,43 @@
                    id="poi_name"
                    type="text"
                    class="validate">
-            <label for="poi_name" data-error="wrong" data-success="right">Name</label>
+            <label for="poi_name" data-error="Name is required" data-success="">Name</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s12">
+            <i class="material-icons cyan-text prefix">list</i>
+            <select name="type" id="type-selector">
+                <option value="default" disabled selected>Type of marker</option>
+                <optgroup label="Culture">
+                    <option value="art">Art</option>
+                    <option value="museum">Museum</option>
+                    <option value="temple">Temple or Shrine</option>
+                </optgroup>
+                <optgroup label="Entertainment">
+                    <option value="entertainment">Entertainment</option>
+                    <option value="bar">Bar</option>
+                    <option value="mall">Mall</option>
+                    <option value="restaurant">Restaurant</option>
+                </optgroup>
+                <optgroup label="Information">
+                    <option value="informations">Tourist Center</option>
+                </optgroup>
+                <optgroup label="Logistic">
+                    <option value="hotel">Hotel</option>
+                    <option value="station">Transport Station</option>
+                    <option value="harbor">Harbor / Peer</option>
+                    <option value="airport">Airport</option>
+                </optgroup>
+                <optgroup label="Site Seeing">
+                    <option value="landscape">Landscape</option>
+                </optgroup>
+                <optgroup label="People">
+                    <option value="friends">Friends</option>
+                    <option value="family">Family</option>
+                </optgroup>
+                <option value="other">Other</option>
+            </select>
         </div>
     </div>
     <div class="row">
@@ -24,20 +60,7 @@
                    id="poi_address"
                    type="text"
                    class="validate">
-            <label for="poi_address" data-error="wrong" data-success="right">Address</label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="input-field col s12">
-            <i class="material-icons cyan-text prefix">list</i>
-            <select name="type" id="type-selector">
-                <option value="base" disabled selected>Type of marker</option>
-                <option value="landscape">Landscape</option>
-                <option value="hotel">Hotel</option>
-                <option value="informations">Informations</option>
-                <option value="people">Friends or Family place</option>
-                <option value="other">Other</option>
-            </select>
+            <label for="poi_address" data-error="wrong" data-success="">Address</label>
         </div>
     </div>
 
@@ -47,12 +70,12 @@
         <div class="input-field col s12 m12 l6">
             <i class="material-icons cyan-text prefix">access_time</i>
             <input [ngFormControl]="poiForm.controls['duration']" id="poi_duration" type="text" class="validate">
-            <label for="poi_duration" data-error="wrong" data-success="right">Duration</label>
+            <label for="poi_duration" data-error="wrong" data-success="">Duration</label>
         </div>
         <div class="input-field col s12 m12 l6">
             <i class="material-icons cyan-text prefix">attach_money</i>
             <input [ngFormControl]="poiForm.controls['price']" id="poi_price" type="text" class="validate">
-            <label for="poi_price" data-error="wrong" data-success="right">Price</label>
+            <label for="poi_price" data-error="wrong" data-success="">Price</label>
         </div>
     </div>
 

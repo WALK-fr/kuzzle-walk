@@ -28,54 +28,88 @@ export class MapComponent implements OnInit, AfterViewInit{
      *  MARKERS - one marker per type of TravelMarkers
      */
     private markersIcons = {
-        base : L.icon({
-            iconUrl: 'assets/img/markers/base.png',
-            shadowUrl: 'assets/img/markers/shadow.png',
-            iconSize:     [40, 48], // size of the icon
-            iconAnchor:   [20, 46], // point of the icon which will correspond to marker's location
-            shadowSize:   [39, 45], // size of the shadow
-            shadowAnchor: [0, 48],
-            popupAnchor:  [0, -48] // point from which the popup should open relative to the iconAnchor
+        default : L.AwesomeMarkers.icon({
+            icon: 'map-marker',
+            markerColor: 'orange',
+            prefix: 'fa'
         }),
-        people : L.icon({
-            iconUrl: 'assets/img/markers/people.png',
-            shadowUrl: 'assets/img/markers/shadow.png',
-            iconSize:     [40, 48], // size of the icon
-            iconAnchor:   [20, 46], // point of the icon which will correspond to marker's location
-            shadowSize:   [39, 45], // size of the shadow
-            shadowAnchor: [0, 48],
-            popupAnchor:  [0, -48] // point from which the popup should open relative to the iconAnchor
+        art : L.AwesomeMarkers.icon({
+            icon: 'paint-brush',
+            markerColor: 'darkred',
+            prefix: 'fa'
         }),
-        informations : L.icon({
-            iconUrl: 'assets/img/markers/informations.png',
-            shadowUrl: 'assets/img/markers/shadow.png',
-            iconSize:     [40, 48], // size of the icon
-            iconAnchor:   [20, 46], // point of the icon which will correspond to marker's location
-            shadowSize:   [39, 45], // size of the shadow
-            shadowAnchor: [0, 48],
-            popupAnchor:  [0, -48] // point from which the popup should open relative to the iconAnchor
+        museum : L.AwesomeMarkers.icon({
+            icon: 'museum',
+            markerColor: 'darkred',
+            prefix: 'fa'
         }),
-        landscape : L.icon({
-            iconUrl: 'assets/img/markers/landscape.png',
-            shadowUrl: 'assets/img/markers/shadow.png',
-            iconSize:     [40, 48], // size of the icon
-            iconAnchor:   [20, 46], // point of the icon which will correspond to marker's location
-            shadowSize:   [39, 45], // size of the shadow
-            shadowAnchor: [0, 48],
-            popupAnchor:  [0, -48] // point from which the popup should open relative to the iconAnchor
+        temple : L.AwesomeMarkers.icon({
+            icon: 'museum',
+            markerColor: 'darkred',
+            prefix: 'fa'
         }),
-        hotel : L.icon({
-            iconUrl: 'assets/img/markers/hotel.png',
-            shadowUrl: 'assets/img/markers/shadow.png',
-            iconSize:     [40, 48], // size of the icon
-            iconAnchor:   [20, 46], // point of the icon which will correspond to marker's location
-            shadowSize:   [39, 45], // size of the shadow
-            shadowAnchor: [0, 48],
-            popupAnchor:  [0, -48] // point from which the popup should open relative to the iconAnchor
+        entertainment : L.AwesomeMarkers.icon({
+            icon: 'thumbs-up',
+            markerColor: 'cadetblue',
+            prefix: 'fa'
         }),
-
+        bar : L.AwesomeMarkers.icon({
+            icon: 'beer',
+            markerColor: 'cadetblue',
+            prefix: 'fa'
+        }),
+        mall : L.AwesomeMarkers.icon({
+            icon: 'shopping-bag',
+            markerColor: 'cadetblue',
+            prefix: 'fa'
+        }),
+        restaurant : L.AwesomeMarkers.icon({
+            icon: 'coffee',
+            markerColor: 'cadetblue',
+            prefix: 'fa'
+        }),
+        informations : L.AwesomeMarkers.icon({
+            icon: 'coffee',
+            markerColor: 'blue',
+            prefix: 'fa'
+        }),
+        hotel : L.AwesomeMarkers.icon({
+            icon: 'cutlery',
+            markerColor: 'blue',
+            prefix: 'fa'
+        }),
+        station : L.AwesomeMarkers.icon({
+            icon: 'subway',
+            markerColor: 'black',
+            prefix: 'fa'
+        }),
+        harbor : L.AwesomeMarkers.icon({
+            icon: 'anchor',
+            markerColor: 'black',
+            prefix: 'fa'
+        }),
+        airport : L.AwesomeMarkers.icon({
+            icon: 'plane',
+            markerColor: 'black',
+            prefix: 'fa'
+        }),
+        landscape : L.AwesomeMarkers.icon({
+            icon: 'leaf',
+            markerColor: 'green',
+            prefix: 'fa'
+        }),
+        friends : L.AwesomeMarkers.icon({
+            icon: 'user',
+            markerColor: 'purple',
+            prefix: 'fa'
+        }),
+        family : L.AwesomeMarkers.icon({
+            icon: 'users',
+            markerColor: 'purple',
+            prefix: 'fa'
+        })
     };
-    private listeCategLayerGroup = ['people', 'informations', 'landscape', 'hotels'];
+    private listeCategLayerGroup = ['default','art','museum','temple','entertainment','bar','mall','restaurant','informations','hotel','station','harbor','airport','landscape','friends','family','other'];
     private poiFilter: any = [];
 
     constructor(private kuzzleService:KuzzleService) {}
@@ -144,15 +178,10 @@ export class MapComponent implements OnInit, AfterViewInit{
      * Add a new Marker on the map
      */
     addMarker(lat: number, long: number, popup: string, markerType: string) {
-        if (markerType != null && this.markersIcons[markerType]) {
-            //get marker by type name
-            var marker = L.marker([lat, long], {icon: this.markersIcons[markerType]});
-        }
-        else{
-            //default
-            markerType = 'default';
-            var marker = L.marker([lat, long]);
-        }
+        (markerType == null || !this.markersIcons[markerType]) ? markerType = 'default' : '';
+
+        //get marker by type name
+        var marker = L.marker([lat, long], {icon: this.markersIcons[markerType]});
 
         // TODO Securiser la méthode pour alerter en cas de non correspondance
 

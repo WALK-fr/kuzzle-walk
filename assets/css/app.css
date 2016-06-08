@@ -11,6 +11,14 @@ h1, h2, h3, h4, h5, h6{
   font-weight: 300;
 }
 
+.dropdown-content li > a, .dropdown-content li > span{
+  color: #ff9800;
+}
+
+.tabs .indicator{
+  background-color: #ff9800;
+}
+
 .clearfix:before,
 .clearfix:after {
   content: " ";
@@ -21,6 +29,8 @@ h1, h2, h3, h4, h5, h6{
   clear: both;
 }
 
+
+/* TOAST */
 #toast-container{
   top: auto;
   right: 10px;
@@ -36,6 +46,9 @@ h1, h2, h3, h4, h5, h6{
 #mapid{
   z-index: 0;
 }
+
+
+/* LEAFLET SEARCH */
 
 .leaflet-container .leaflet-control-container .leaflet-bottom.leaflet-left .leaflet-control-search {
   padding: 11px;
@@ -75,4 +88,11 @@ h1, h2, h3, h4, h5, h6{
 
 .leaflet-control-search .search-tooltip li:hover{
   background:#eee;
+}
+
+
+/* LEAFLET ICONS WITH FONTAWESOME */
+.awesome-marker i {
+  font-size: 18px;
+  margin-top: 8px;
 }

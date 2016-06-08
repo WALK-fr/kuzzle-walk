@@ -23,8 +23,12 @@ export class PoiFormComponent implements OnInit, AfterViewInit {
     //output property to notify map to destroy a temporary marker
     @Output('marker-delete') markerDelete = new EventEmitter();
 
-    constructor(fb:FormBuilder, private kuzzleService:KuzzleService) {
-        this.poiForm = fb.group({
+    constructor(private _fb:FormBuilder, private kuzzleService:KuzzleService) {
+        this.createForm();
+    }
+    
+    createForm(){
+        this.poiForm = this._fb.group({
             name: ['', Validators.required],
             description: [''],
             address: [''],
@@ -83,10 +87,17 @@ export class PoiFormComponent implements OnInit, AfterViewInit {
         this.travelMarker.type = $('#type-selector').val();
 
         //emit to delete the temporary marker on the map
-        this.markerDelete.emit(this.travelMarker);
+        //this.markerDelete.emit(this.travelMarker);
 
         if(this.travelMarker.latitude && this.travelMarker.longitude){
             this.kuzzleService.mapService.publishTravelMarker(this.travelMarker);
+
+            //recreates the form --> waiting for angular to have a proper reset function
+            this.createForm();
+            $(document).ready(function() {
+                Materialize.updateTextFields();
+            });
+
         }
     }
 }
