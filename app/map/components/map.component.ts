@@ -82,8 +82,8 @@ export class MapComponent implements OnInit, AfterViewInit{
 
     ngOnInit() {
         // Map initialization
-        // this.map = L.map('mapid').setView([48.8587741, 2.2], 13);
-        this.map = L.map('mapid');
+        this.map = L.map('mapid').setView([48.8587741, 2.2], 13);
+        // this.map = L.map('mapid');
 
         // Search box
         this.map.addControl( new L.Control.Search({
