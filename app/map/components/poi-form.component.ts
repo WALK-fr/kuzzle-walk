@@ -8,6 +8,7 @@ import {User} from "../../users/index";
 
 // this is used to accept jquery token at compilation time
 declare var $: any;
+declare var Materialize: any;
 
 @Component({
     selector: 'poi-form',
