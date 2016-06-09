@@ -17,6 +17,7 @@ declare var L:any;
 })
 export class MapComponent implements OnInit, AfterViewInit{
 
+
     map:L.Map;
     user:User;
     travel:Travel;
@@ -111,6 +112,7 @@ export class MapComponent implements OnInit, AfterViewInit{
     };
     private listeCategLayerGroup = ['default','art','museum','temple','entertainment','bar','mall','restaurant','informations','hotel','station','harbor','airport','landscape','friends','family','other'];
     private layerGroups: any = [];
+    private temporaryMarker: any;
 
     constructor(private kuzzleService:KuzzleService) {}
 
@@ -137,10 +139,15 @@ export class MapComponent implements OnInit, AfterViewInit{
         // We bind the clicks to the emitter so we can give it to the POI Form
         this.map.on('click', (e: L.LeafletMouseEvent) => {
             //add a temporary marker on the map, while the user fill the POI FORM
-            this.addMarker(e.latlng.lat, e.latlng.lng, '', null);
+
+            if(this.temporaryMarker) {
+                this.deleteTemporaryMarker(this.temporaryMarker);
+            }
+
+            this.temporaryMarker = this.addMarker(e.latlng.lat, e.latlng.lng, '', null);
 
             //emit the new event to display the panel Form
-            this.mapClick.emit({latlng: e.latlng});
+            this.mapClick.emit({marker: this.temporaryMarker});
         });
 
         // We add tiles to the map
@@ -184,14 +191,15 @@ export class MapComponent implements OnInit, AfterViewInit{
 
         // Add marker to his specific group
         this.layerGroups[markerType].addLayer(marker);
+
+        return marker;
     }
 
     /**
      * delete a previously created temporary marker to use with the panel form
      * @param markerToDelete
      */
-    deleteTemporaryMarker(markerToDelete:TravelMarker){
-        var markerToRemove = L.marker([markerToDelete.latitude, markerToDelete.longitude]);
-        this.map.removeLayer(markerToRemove);
+    deleteTemporaryMarker(markerToDelete: any){
+        this.map.removeLayer(markerToDelete);
     }
 }
