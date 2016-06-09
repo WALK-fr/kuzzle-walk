@@ -8,6 +8,7 @@ import {User} from "../../users/index";
 
 // this is used to accept jquery token at compilation time
 declare var $: any;
+declare var Materialize: any;
 
 @Component({
     selector: 'poi-form',
@@ -24,6 +25,7 @@ export class PoiFormComponent implements OnInit, AfterViewInit {
     @Output('marker-delete') markerDelete = new EventEmitter();
 
     constructor(private _fb:FormBuilder, private kuzzleService:KuzzleService) {
+        this.travel = new Travel();
         this.createForm();
     }
     
@@ -49,7 +51,7 @@ export class PoiFormComponent implements OnInit, AfterViewInit {
     
     ngOnInit() {
 
-        this.travelMarker =  new TravelMarker();
+        this.travelMarker = new TravelMarker();
 
         this.kuzzleService.userService.getCurrentUserStream().subscribe( user => {
             this.user = user;

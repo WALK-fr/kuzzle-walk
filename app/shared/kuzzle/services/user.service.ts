@@ -22,7 +22,7 @@ export class UserService {
      * @param login The user login
      * @param password The user password
      */
-    public login(login:string, password:string): Promise{
+    public login(login:string, password:string): Promise<any>{
         return new Promise((resolve, reject) => {
 
             var expiresIn = "1d";

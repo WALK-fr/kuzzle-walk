@@ -30,7 +30,7 @@ export class KuzzleService {
         this._userService = new UserService(this.kuzzle, this.cookieService);
         this._noteService = new NoteService(this.kuzzle);
 
-        this._travelStream = new BehaviorSubject<Travel>(new Travel());
+        this._travelStream = new Subject<Travel>();
     }
 
     /**
@@ -104,12 +104,22 @@ export class KuzzleService {
     }
 
     public initCurrentTravel() {
-        this.kuzzle.dataCollectionFactory('travel').fetchDocument('AVS5a8AIeivQYXVQtlJN', (err, travelFromKuzzle) => {
-            // TODO : Handle errors
-            var travel = new Travel(travelFromKuzzle.content);
-            travel.id = travelFromKuzzle.id;
+        var travel;
 
-            new Promise((resolve, reject) => {
+        // Load travel and then init application
+        var travelLoaded = new Promise((resolve, reject) => {
+            this.kuzzle.dataCollectionFactory('travel').fetchDocument('AVS5a8AIeivQYXVQtlJN', (err, travelFromKuzzle) => {
+                // TODO : Handle errors
+                travel = new Travel(travelFromKuzzle.content);
+                travel.id = travelFromKuzzle.id;
+                resolve();
+            });
+        });
+
+        // On travel loaded
+        travelLoaded.then(() => {
+
+            var loadTravelMarkersPromise = new Promise((resolve, reject) => {
                 var filter = {
                     query: {
                         match: {
@@ -128,16 +138,16 @@ export class KuzzleService {
                         resolve();
                     });
                 });
-            }).then(() => {
-
+            });
+            var loadUsersPromise = new Promise((resolve, reject) => {
                 // Fetch users
                 var userFilters = {
                     filter: {
-                        terms: {_id: travelFromKuzzle.content.members}
+                        terms: {_id: travel.members}
                     }
                 };
                 this.kuzzle.security.searchUsers(userFilters, (error, usersFromKuzzle) => {
-                    travel.members = [];
+                    travel.members = []; // Reset array because id are replaced by instances of User
                     usersFromKuzzle.users
                         .forEach((document) => {
                             let user = new User(document.content);
@@ -145,12 +155,14 @@ export class KuzzleService {
                             travel.members[user.id] = user;
                         });
 
-                    // Then we dispatch the travel to application
-                    this._travelStream.next(travel);
+                    // Validated action
+                    resolve();
                 });
 
             });
 
+            // When everything is loaded, we dispatch the travel
+            Promise.all([loadTravelMarkersPromise, loadUsersPromise]).then(promisesResult => this._travelStream.next(travel))
         });
     }
 

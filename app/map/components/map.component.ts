@@ -8,10 +8,6 @@ import { TravelMarker } from "../models/travel-marker.model";
 declare var $:any;
 declare var L:any;
 
-import FeatureGroup = L.FeatureGroup;
-import LatLngBounds = L.LatLngBounds;
-import LatLng = L.LatLng;
-
 @Component({
     selector: 'map',
     template: `<div id="mapid"></div>`,
@@ -226,7 +222,9 @@ export class MapComponent implements OnInit{
     ];
     private temporaryMarker: any;
 
-    constructor(private kuzzleService:KuzzleService) {}
+    constructor(private kuzzleService:KuzzleService) {
+        this.travel = new Travel();
+    }
 
     ngOnInit() {
         // Map initialization, Default view of the map that will be overrided if some markers are presents.
@@ -303,15 +301,15 @@ export class MapComponent implements OnInit{
         });
 
         // ...therefore subscribe the new / update / delete of TravelMarkers
-        this.kuzzleService.mapService.getTravelMarkerStream().subscribe((x) => {
-            this.addMarker(x.latitude, x.longitude, x.name, x.type, x.id);
+        this.kuzzleService.mapService.getTravelMarkerStream().subscribe((travelMarker: TravelMarker) => {
+            this.addMarker(travelMarker.latitude, travelMarker.longitude, travelMarker.name, travelMarker.type, travelMarker.id);
         });
     }
 
     /**
      * Add a new Marker on the map
      */
-    addMarker(lat: number, long: number, popup: string, markerType: string, id?: number) {
+    addMarker(lat: number, long: number, popup: string, markerType: string, id?: string) {
         (markerType == null || this.markersCategories.find( category => { return category.name === markerType }) === undefined) ? markerType = 'default' : '';
 
         var markerCategory = this.markersCategories.find( category => { return category.name === markerType });

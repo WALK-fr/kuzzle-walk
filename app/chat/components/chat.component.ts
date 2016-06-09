@@ -1,10 +1,9 @@
 import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
-
-import {ChatMessage} from "../index";
-import {User} from "../../users/index";
-import {KuzzleService} from "../../shared/kuzzle/services/kuzzle.service";
-import {AutoScrollDirective} from "../../shared/directives/auto-scroll.directive";
-import {ToolTipsDirective} from "../../shared/directives/tooltips.directive";
+import { ChatMessage } from "../index";
+import { User } from "../../users/index";
+import { KuzzleService } from "../../shared/kuzzle/services/kuzzle.service";
+import { AutoScrollDirective } from "../../shared/directives/auto-scroll.directive";
+import { ToolTipsDirective } from "../../shared/directives/tooltips.directive";
 import { Travel } from "../../travel/index";
 
 /**
@@ -26,6 +25,7 @@ export class ChatComponent implements OnInit{
     @Input() isChatOpened = false;
     @Output('unread-message-received') unreadMessageReceived = new EventEmitter();
     constructor(private kuzzleService:KuzzleService) {
+        this.travel = new Travel();
     }
 
     /**
@@ -38,19 +38,17 @@ export class ChatComponent implements OnInit{
         this.kuzzleService.userService.getCurrentUserStream().subscribe(x => this.user = x);
 
         // Get travel
-        this.kuzzleService.travelStream
-            .filter(x => x.id !== undefined)
-            .subscribe(travel => {
-                this.travel = travel;
-                // Subscribe to chat messages
-                this.kuzzleService.chatService.subscribeToChat(this.travel)
-                    .subscribe(x => {
-						this.messagesList.push(x)
-						if(!this.isChatOpened){
-                    		this.unreadMessageReceived.emit({});
-                		}					
-					});
-            });
+        this.kuzzleService.travelStream.subscribe(travel => {
+            this.travel = travel;
+            // Subscribe to chat messages
+            this.kuzzleService.chatService.subscribeToChat(this.travel)
+                .subscribe(x => {
+                    this.messagesList.push(x)
+                    if(!this.isChatOpened){
+                        this.unreadMessageReceived.emit({});
+                    }
+                });
+        });
     }
 
 

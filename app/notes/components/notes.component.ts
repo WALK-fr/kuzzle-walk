@@ -32,6 +32,7 @@ export class NotesComponent implements OnInit{
         this.noteForm = fb.group({
             name: ['', Validators.required]
         });
+        this.travel = new Travel();
     }
 
     ngOnInit(){
@@ -70,7 +71,7 @@ export class NotesComponent implements OnInit{
         this.toggleNoteForm();
 
         //TO-DO remove this ones notes will be added by Date of creation
-        $('#tp-all-notes-panel').animate({
+        $('.bottom-sheet').animate({
             scrollTop: $('#tp-all-notes-panel').offset().top
         }, 'slow');
     }

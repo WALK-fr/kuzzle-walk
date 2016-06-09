@@ -12,7 +12,9 @@ export class MarkerListComponent implements OnInit {
     markers: TravelMarker[] = [];
     travel:Travel;
 
-    constructor(private kuzzleService:KuzzleService) {}
+    constructor(private kuzzleService:KuzzleService) {
+        this.travel = new Travel();
+    }
 
     ngOnInit() {
 
@@ -29,14 +31,16 @@ export class MarkerListComponent implements OnInit {
     //Handles the event emitter that comes from the map (marker-click) event (when a persisted marker is clicked)
     highlightMarker($marker){
         //remove class from previously clicked marker
-        $('#panel-marker-list li').removeClass('hightlight-marker');
+        $('#panel-marker-list').find('li').removeClass('hightlight-marker');
 
         //add a class and scroll to the element on the list
         let listItemId = "#marker-" + $marker.id;
         $(listItemId).addClass('hightlight-marker');
 
-        $('.bottom-sheet').animate({
-            scrollTop: $(listItemId).offset().top - $('#tp-right-panel').offset().top + $('#tp-right-panel').scrollTop()
+        var $tpRightPanel = $('#tp-right-panel');
+
+        $tpRightPanel.animate({
+            scrollTop: $(listItemId).offset().top - $tpRightPanel.offset().top + $tpRightPanel.scrollTop()
         });​
     }
 }
