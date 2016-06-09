@@ -24,6 +24,7 @@ export class MapComponent implements OnInit{
 
     /** Event Emitter when map is clicked, used to trigger the POI Form **/
     @Output('map-clicked') mapClick = new EventEmitter();
+    @Output('marker-clicked') markerClick = new EventEmitter();
 
     /**
      *  MARKERS - one marker per type of TravelMarkers
@@ -297,14 +298,14 @@ export class MapComponent implements OnInit{
 
         // ...therefore subscribe the new / update / delete of TravelMarkers
         this.kuzzleService.mapService.getTravelMarkerStream().subscribe((x) => {
-            this.addMarker(x.latitude, x.longitude, x.name, x.type);
+            this.addMarker(x.latitude, x.longitude, x.name, x.type, x.id);
         });
     }
 
     /**
      * Add a new Marker on the map
      */
-    addMarker(lat: number, long: number, popup: string, markerType: string) {
+    addMarker(lat: number, long: number, popup: string, markerType: string, id?: number) {
         (markerType == null || this.markersCategories.find( category => { return category.name === markerType }) === undefined) ? markerType = 'default' : '';
 
         var markerCategory = this.markersCategories.find( category => { return category.name === markerType });
@@ -312,7 +313,10 @@ export class MapComponent implements OnInit{
         //get marker by type name
         var marker = L.marker([lat, long], {icon: markerCategory.icon});
 
-        // TODO Securiser la méthode pour alerter en cas de non correspondance
+        //it's a persisted marker, we had a click listener on it to display it on the right panel
+        if(id !== null){
+            marker.on('click', () => { this.markerClick.emit({id: id});});
+        }
 
         // Add marker to his specific group
         markerCategory.group.layerGroup.addLayer(marker);

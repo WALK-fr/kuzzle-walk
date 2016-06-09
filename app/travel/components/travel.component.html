@@ -17,7 +17,9 @@
 <section id="tp-content">
     <div class="row">
         <div id="map-container" class="col s12 m7 l8">
-            <map #map (map-clicked)="poiForm.setMarkerPosition($event); requestFormFocus(TABS.TAB_MARKER_FORM)">
+            <map #map
+                 (map-clicked)="poiForm.setMarkerPosition($event); requestFormFocus(TABS.TAB_MARKER_FORM)"
+                 (marker-clicked)="markerList.highlightMarker($event); requestFormFocus(TABS.TAB_MARKER_LIST)">
             </map>
             <team></team>
         </div>
@@ -36,7 +38,7 @@
                 </div>
                 <!-- ALL SPOTS-->
                 <div id="{{ TABS.TAB_MARKER_LIST }}" class="col s12">
-                    <marker-list></marker-list>
+                    <marker-list #markerList ></marker-list>
                 </div>
                 <div id="{{ TABS.TAB_SCHEDULE }}" class="col s12">
                     <h4> Schedule yout trip day by day </h4>

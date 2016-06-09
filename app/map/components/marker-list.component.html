@@ -1,5 +1,5 @@
 <ul class="collection" id="panel-marker-list">
-    <li *ngFor="let marker of markers, let index = index" class="collection-item avatar">
+    <li *ngFor="let marker of markers, let index = index" class="collection-item avatar" id="marker-{{ marker.id }}">
         <img src="http://lorempixel.com/100/100/city/?random={{ index }}" alt="" class="circle">
         <span class="title">{{ marker.name }}</span>
         <p> {{ marker.description }} </p>
