@@ -24,6 +24,7 @@ export class MapComponent implements OnInit{
 
     /** Event Emitter when map is clicked, used to trigger the POI Form **/
     @Output('map-clicked') mapClick = new EventEmitter();
+    @Output('map-mousemove') mapHover = new EventEmitter();
     @Output('marker-clicked') markerClick = new EventEmitter();
 
     /**
@@ -262,6 +263,11 @@ export class MapComponent implements OnInit{
             this.mapClick.emit({marker: this.temporaryMarker});
         });
 
+        //Bind the msouse over event for the shareMap feature
+        this.map.on('mousemove', (e: L.LeafletMouseEvent) => {
+            this.mapHover.emit(e.latlng);
+        });
+
         // We add tiles to the map
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
             noWrap: true,
@@ -330,5 +336,22 @@ export class MapComponent implements OnInit{
      */
     deleteTemporaryMarker(markerToDelete: any){
         this.map.removeLayer(markerToDelete);
+    }
+
+    /**
+     * enable kuzzle publish current user map position
+     * @param shareUserMap
+     */
+    shareMyMap(shareUserMap:boolean){
+
+    }
+
+    /**
+     * enable subscribing to another user map move events
+     * @param user
+     * @param allowSharing
+     */
+    seeOtherUserMap(user:User, allowSharing:boolean){
+
     }
 }

@@ -8,6 +8,7 @@ import {ChatComponent} from "../../chat/index";
 import {KuzzleService} from "../../shared/kuzzle/index";
 import {NotesComponent} from "../../notes/index";
 import {TeamWidgetComponent} from "../../team/components/team-widget.component";
+import LatLng = L.LatLng;
 
 // this is used to accept jquery token at compilation time
 declare var $: any;
@@ -78,6 +79,13 @@ export class TravelComponent implements OnInit, AfterViewInit {
                 $('#tp-right-panel').height(dynamicHeight);
             })
         });
+    }
+
+    /**
+     * Share the cursor latlng on mousemove with team mates
+     */
+    sharePositionWithTeam(latlng:LatLng){
+        
     }
 
     /**

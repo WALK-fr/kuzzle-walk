@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { User } from "../../users/models/user";
 import { KuzzleService } from "../../shared/kuzzle/services/kuzzle.service";
 
@@ -19,7 +19,12 @@ export class TeamWidgetComponent implements OnInit {
     isTeamOpened = false;
     connectedUserCollection: User[] = [];
     private user: User;
+    
+    shareMyOwnMap: boolean = false;
 
+    @Output('share-user-map') shareMyOwnMapEvent = new EventEmitter();
+    @Output('see-other-user-map') seeOtherUserMapEvent = new EventEmitter();
+    
     constructor(private kuzzleService: KuzzleService) {
     }
 
@@ -53,5 +58,20 @@ export class TeamWidgetComponent implements OnInit {
                 this.kuzzleService.updateLocalCollection(this.connectedUserCollection, user);
             })
         });
+    }
+
+    /**
+     * Share current user map with other (publish mousemove on kuzzle)
+     */
+    shareMyMap(){
+        this.shareMyOwnMap =! this.shareMyOwnMap;
+        this.shareMyOwnMapEvent.emit({shareUserMap: this.shareMyOwnMap});
+    }
+
+    /**
+     * See another user mouse move on map (suscribe to mousemove for that user on kuzzle)
+     */
+    seeOtherUserMap($event, user: User){
+        this.seeOtherUserMapEvent.emit({user: user, allowSharing: $event.target.checked});
     }
 }

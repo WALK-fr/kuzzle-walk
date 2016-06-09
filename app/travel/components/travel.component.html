@@ -18,10 +18,13 @@
     <div class="row">
         <div id="map-container" class="col s12 m7 l8">
             <map #map
+                 (map-mousemove)="sharePositionWithTeam($event)"
                  (map-clicked)="poiForm.setMarkerPosition($event); requestFormFocus(TABS.TAB_MARKER_FORM)"
                  (marker-clicked)="markerList.highlightMarker($event); requestFormFocus(TABS.TAB_MARKER_LIST)">
             </map>
-            <team></team>
+            <team (share-user-map)="map.shareMyMap(shareUserMap)"
+                  (see-other-user-map)="map.seeOtherUserMap(user, allowSharing)">
+            </team>
         </div>
         <div class="col s12 m5 l4" id="tp-panel-container">
             <div class="row" id="tp-right-panel">
