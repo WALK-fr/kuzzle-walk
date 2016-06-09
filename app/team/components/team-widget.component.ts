@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
 import { User } from "../../users/models/user";
 import { KuzzleService } from "../../shared/kuzzle/services/kuzzle.service";
 
@@ -16,17 +16,17 @@ declare var Materialize:any;
     
 })
 export class TeamWidgetComponent implements OnInit {
-    isTeamOpened = false;
-    connectedUserCollection: User[] = [];
     private user: User;
-    
-    shareMyOwnMap: boolean = false;
 
+    isTeamOpened = false;
+    shareMyOwnMap: boolean = false;
+    connectedUserCollection: User[] = [];
+
+    @Input() isMapSharerActive = false; //set this to true to enable map sharing events
     @Output('share-user-map') shareMyOwnMapEvent = new EventEmitter();
     @Output('see-other-user-map') seeOtherUserMapEvent = new EventEmitter();
     
-    constructor(private kuzzleService: KuzzleService) {
-    }
+    constructor(private kuzzleService: KuzzleService) {}
 
     toggleTeam(){
         this.isTeamOpened = !this.isTeamOpened;
