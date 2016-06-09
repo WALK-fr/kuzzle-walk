@@ -1,6 +1,7 @@
-import { User } from "../../../users/models/user";
 import { Subject, BehaviorSubject } from "rxjs/Rx";
 import { CookieService } from "angular2-cookie/core";
+
+import { User } from "../../../users/models/user";
 
 /**
  * Handle each kuzzle calls related to the user.
@@ -27,11 +28,15 @@ export class UserService {
             var expiresIn = "1d";
 
             this.kuzzle.login("local", {username: login, password: password}, expiresIn, (error, success) => {
+
+                if (error) {
+                    reject(error);
+                    return;
+                }
+
                 let tomorrow = new Date();
                 tomorrow.setDate(tomorrow.getDate() + 1);
                 this.cookieService.put('jwt', success.jwt, {expires: tomorrow});
-
-                if (error) reject();
 
                 resolve(success); // Return error or success for login
             });

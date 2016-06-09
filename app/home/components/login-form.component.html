@@ -10,9 +10,10 @@
         <div class="row">
             <div class="col s12 m8 l8">
                 <p class="card-title grey-text text-darken-4 center-align">
-                    Please <a id="login-account" href="#">login</a> or <a id="create-account" href="#">create
-                    an
-                    account</a>
+                    Please
+                    <a id="login-account" href="#">login</a> or <a id="create-account" href="#">
+                        create an account
+                    </a>
                 </p>
                 <div id="tp-app-login" class="row center-align">
                     <div class="input-field col s12">
@@ -28,6 +29,9 @@
                                [class.invalid]="!loginForm.find('password').valid && loginForm.find('password').touched && loginForm.find('username').value != ''"
                                [class.valid]="loginForm.find('password').valid && loginForm.find('password').touched">
                         <label for="login_password" data-error="Incorrect password">Password</label>
+                    </div>
+                    <div *ngIf="formError">
+                        Bad credentials
                     </div>
                     <button id="tp-login-form-submit" class="waves-effect waves-light btn orange">
                         Login and start now !
