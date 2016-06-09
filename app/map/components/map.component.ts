@@ -1,21 +1,22 @@
-import { Component, OnInit, Output, EventEmitter, AfterViewInit } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { Travel } from "../../travel/models/travel.model";
 import { KuzzleService } from "../../shared/kuzzle/index";
 import { User } from "../../users/index";
 import { TravelMarker } from "../models/travel-marker.model";
-import FeatureGroup = L.FeatureGroup;
-import LatLngBounds = L.LatLngBounds;
-import LatLng = L.LatLng;
 
 // this is used to accept jquery token at compilation time
 declare var $:any;
 declare var L:any;
 
+import FeatureGroup = L.FeatureGroup;
+import LatLngBounds = L.LatLngBounds;
+import LatLng = L.LatLng;
+
 @Component({
     selector: 'map',
     template: `<div id="mapid"></div>`,
 })
-export class MapComponent implements OnInit, AfterViewInit{
+export class MapComponent implements OnInit{
 
     map:L.Map;
     user:User;
@@ -27,90 +28,200 @@ export class MapComponent implements OnInit, AfterViewInit{
     /**
      *  MARKERS - one marker per type of TravelMarkers
      */
-    private markersIcons = {
-        default : L.AwesomeMarkers.icon({
-            icon: 'map-marker',
-            markerColor: 'orange',
-            prefix: 'fa'
-        }),
-        art : L.AwesomeMarkers.icon({
-            icon: 'paint-brush',
-            markerColor: 'darkred',
-            prefix: 'fa'
-        }),
-        museum : L.AwesomeMarkers.icon({
-            icon: 'museum',
-            markerColor: 'darkred',
-            prefix: 'fa'
-        }),
-        temple : L.AwesomeMarkers.icon({
-            icon: 'museum',
-            markerColor: 'darkred',
-            prefix: 'fa'
-        }),
-        entertainment : L.AwesomeMarkers.icon({
-            icon: 'thumbs-up',
-            markerColor: 'cadetblue',
-            prefix: 'fa'
-        }),
-        bar : L.AwesomeMarkers.icon({
-            icon: 'beer',
-            markerColor: 'cadetblue',
-            prefix: 'fa'
-        }),
-        mall : L.AwesomeMarkers.icon({
-            icon: 'shopping-bag',
-            markerColor: 'cadetblue',
-            prefix: 'fa'
-        }),
-        restaurant : L.AwesomeMarkers.icon({
-            icon: 'coffee',
-            markerColor: 'cadetblue',
-            prefix: 'fa'
-        }),
-        informations : L.AwesomeMarkers.icon({
-            icon: 'coffee',
-            markerColor: 'blue',
-            prefix: 'fa'
-        }),
-        hotel : L.AwesomeMarkers.icon({
-            icon: 'cutlery',
-            markerColor: 'blue',
-            prefix: 'fa'
-        }),
-        station : L.AwesomeMarkers.icon({
-            icon: 'subway',
-            markerColor: 'black',
-            prefix: 'fa'
-        }),
-        harbor : L.AwesomeMarkers.icon({
-            icon: 'anchor',
-            markerColor: 'black',
-            prefix: 'fa'
-        }),
-        airport : L.AwesomeMarkers.icon({
-            icon: 'plane',
-            markerColor: 'black',
-            prefix: 'fa'
-        }),
-        landscape : L.AwesomeMarkers.icon({
-            icon: 'leaf',
-            markerColor: 'green',
-            prefix: 'fa'
-        }),
-        friends : L.AwesomeMarkers.icon({
-            icon: 'user',
-            markerColor: 'purple',
-            prefix: 'fa'
-        }),
-        family : L.AwesomeMarkers.icon({
-            icon: 'users',
-            markerColor: 'purple',
-            prefix: 'fa'
-        })
-    };
-    private listeCategLayerGroup = ['default','art','museum','temple','entertainment','bar','mall','restaurant','informations','hotel','station','harbor','airport','landscape','friends','family','other'];
-    private layerGroups: any = [];
+    private markersCategories = [
+        {
+            name: "default",
+            group: {
+                id: '<strong> Other </strong>',
+                layerGroup: L.layerGroup()
+            },
+            icon: L.AwesomeMarkers.icon({
+                icon: 'map-marker',
+                markerColor: 'orange',
+                prefix: 'fa'
+            })
+        },
+        {
+            name: "art",
+            group: {
+                id: '<strong> Art </strong>',
+                layerGroup: L.layerGroup()
+            },
+            icon: L.AwesomeMarkers.icon({
+                icon: 'paint-brush',
+                markerColor: 'darkred',
+                prefix: 'fa'
+            })
+        },
+        {
+            name: "museum",
+            group: {
+                id: '<strong> Museum </strong>',
+                layerGroup: L.layerGroup()
+            },
+            icon: L.AwesomeMarkers.icon({
+                icon: 'university',
+                markerColor: 'red',
+                prefix: 'fa'
+            })
+        },
+        {
+            name: "temple",
+            group: {
+                id: '<strong> Temple </strong>',
+                layerGroup: L.layerGroup()
+            },
+            icon: L.AwesomeMarkers.icon({
+                icon: 'university',
+                markerColor: 'red',
+                prefix: 'fa'
+            })
+        },
+        {
+            name: "entertainment",
+            group: {
+                id: '<strong> Entertainment </strong>',
+                layerGroup: L.layerGroup()
+            },
+            icon: L.AwesomeMarkers.icon({
+                icon: 'thumbs-up',
+                markerColor: 'cadetblue',
+                prefix: 'fa'
+            })
+        },
+        {
+            name: "bar",
+            group: {
+                id: '<strong> Bar </strong>',
+                layerGroup: L.layerGroup()}
+            ,
+            icon: L.AwesomeMarkers.icon({
+                icon: 'beer',
+                markerColor: 'cadetblue',
+                prefix: 'fa'
+            })
+        },
+        {
+            name: "mall",
+            group: {
+                id: '<strong> Shopping </strong>',
+                layerGroup: L.layerGroup()
+            },
+            icon: L.AwesomeMarkers.icon({
+                icon: 'shopping-bag',
+                markerColor: 'cadetblue',
+                prefix: 'fa'
+            })
+        },
+        {
+            name: "restaurant",
+            group: {
+                id: '<strong> Restaurant </strong>',
+                layerGroup: L.layerGroup()
+            },
+            icon: L.AwesomeMarkers.icon({
+                icon: 'cutlery',
+                markerColor: 'cadetblue',
+                prefix: 'fa'
+            })
+        },
+        {
+            name: "informations",
+            group: {
+                id: '<strong> Informations </strong>',
+                layerGroup: L.layerGroup()
+            },
+            icon: L.AwesomeMarkers.icon({
+                icon: 'info',
+                markerColor: 'cadetblue',
+                prefix: 'fa'
+            })
+        },
+        {
+            name: "hotel",
+            group: {
+                id: '<strong> Hotel </strong>',
+                layerGroup: L.layerGroup()
+            },
+            icon: L.AwesomeMarkers.icon({
+                icon: 'hotel',
+                markerColor: 'cadetblue',
+                prefix: 'fa'
+            })
+        },
+        {
+            name: "station",
+            group: {
+                id: '<strong> Station </strong>',
+                layerGroup: L.layerGroup()
+            },
+            icon: L.AwesomeMarkers.icon({
+                icon: 'subway',
+                markerColor: 'black',
+                prefix: 'fa'
+            })
+        },
+        {
+            name: "harbor",
+            group: {
+                id: '<strong> Harbor / Peer </strong>',
+                layerGroup: L.layerGroup()
+            },
+            icon: L.AwesomeMarkers.icon({
+                icon: 'anchor',
+                markerColor: 'black',
+                prefix: 'fa'
+            })
+        },
+        {
+            name: "airport",
+            group: {
+                id: '<strong> Airport </strong>',
+                layerGroup: L.layerGroup()
+            },
+            icon: L.AwesomeMarkers.icon({
+                icon: 'plane',
+                markerColor: 'black',
+                prefix: 'fa'
+            })
+        },
+        {
+            name: "landscape",
+            group: {
+                id: 'Landscape',
+                layerGroup: L.layerGroup()
+            },
+            icon: L.AwesomeMarkers.icon({
+                icon: 'image',
+                markerColor: 'green',
+                prefix: 'fa'
+            })
+        },
+        {
+            name: "friends",
+            group: {
+                id: '<strong> Friends </strong>',
+                layerGroup: L.layerGroup()
+            },
+            icon: L.AwesomeMarkers.icon({
+                icon: 'user',
+                markerColor: 'purple',
+                prefix: 'fa'
+            })
+        },
+        {
+            name: "family",
+            group: {
+                id: '<strong> Family </strong>',
+                layerGroup: L.layerGroup()
+            },
+            icon: L.AwesomeMarkers.icon({
+                icon: 'users',
+                markerColor: 'purple',
+                prefix: 'fa'
+            })
+        }
+    ];
 
     constructor(private kuzzleService:KuzzleService) {}
 
@@ -149,12 +260,15 @@ export class MapComponent implements OnInit, AfterViewInit{
         }).addTo(this.map);
 
         // Add layergroups for each category of POI
-        this.listeCategLayerGroup.forEach(value => {
-            this.layerGroups[value] = L.layerGroup();
-            this.map.addLayer(this.layerGroups[value]);
+        this.markersCategories.forEach( category => {
+           this.map.addLayer((category.group.layerGroup));
         });
+
         // And allow control on them
-        this.map.addControl(L.control.layers(null, this.layerGroups));
+        var allFilters = [];
+        this.markersCategories.map( (category) => { return  category.group } ).forEach( (group) => allFilters[group.id] = group.layerGroup);
+
+        this.map.addControl(L.control.layers({}, allFilters, { position: 'bottomright' }));
 
         // Fetch the travel async + markers from database
         this.kuzzleService.travelStream.subscribe(travel => {
@@ -167,23 +281,21 @@ export class MapComponent implements OnInit, AfterViewInit{
         });
     }
 
-    ngAfterViewInit(){
-        //TODO - uncomment when allMarkers on map will be available as a class variable
-    }
-
     /**
      * Add a new Marker on the map
      */
     addMarker(lat: number, long: number, popup: string, markerType: string) {
-        (markerType == null || !this.markersIcons[markerType]) ? markerType = 'default' : '';
+        (markerType == null || this.markersCategories.find( category => { return category.name === markerType }) === undefined) ? markerType = 'default' : '';
+
+        var markerCategory = this.markersCategories.find( category => { return category.name === markerType });
 
         //get marker by type name
-        var marker = L.marker([lat, long], {icon: this.markersIcons[markerType]});
+        var marker = L.marker([lat, long], {icon: markerCategory.icon});
 
         // TODO Securiser la méthode pour alerter en cas de non correspondance
 
         // Add marker to his specific group
-        this.layerGroups[markerType].addLayer(marker);
+        markerCategory.group.layerGroup.addLayer(marker);
     }
 
     /**

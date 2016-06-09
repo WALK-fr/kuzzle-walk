@@ -96,3 +96,14 @@ h1, h2, h3, h4, h5, h6{
   font-size: 18px;
   margin-top: 8px;
 }
+
+/* LEAFLET CONTROL */
+.leaflet-control-layers-selector{
+  padding: 2px;
+  background: #FFF;
+}
+.leaflet-control-layers-selector:checked{
+  position: inherit;
+  left: auto;
+  opacity: 1;
+}
