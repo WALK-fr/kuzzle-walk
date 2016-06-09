@@ -7,14 +7,17 @@
         <li *ngFor="let userInfo of connectedUserCollection; let i = index" class="collection-item avatar">
             <img class="circle" src="{{ userInfo.photoUrl }}" alt="Contact Person">
             <span class="title">{{ userInfo.humanName() }}</span>
-            <p *ngIf="user.id === userInfo.id">
-                <input (change)="shareMyMap()" type="checkbox" id="shareBox{{ i }}"/>
-                <label [attr.for]="'shareBox'+i">Share my map</label>
-            </p>
-            <p *ngIf="user.id !== userInfo.id">
-                <input (change)="seeOtherUserMap($event, userInfo)" type="checkbox" id="shareBox{{ i }}"/>
-                <label [attr.for]="'shareBox'+i">Allow map sharing</label>
-            </p>
+            <div *ngIf="isMapSharerActive">
+                <p *ngIf="user.id === userInfo.id">
+                    <input (change)="shareMyMap()" type="checkbox" id="shareBox{{ i }}"/>
+                    <label [attr.for]="'shareBox'+i">Share my map</label>
+                </p>
+                <p *ngIf="user.id !== userInfo.id">
+                    <input (change)="seeOtherUserMap($event, userInfo)" type="checkbox" id="shareBox{{ i }}"/>
+                    <label [attr.for]="'shareBox'+i">Allow map sharing</label>
+                </p>
+            </div>
+
         </li>
     </ul>
 </section>
