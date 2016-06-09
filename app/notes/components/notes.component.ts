@@ -72,7 +72,7 @@ export class NotesComponent implements OnInit{
 
         //TO-DO remove this ones notes will be added by Date of creation
         $('.bottom-sheet').animate({
-            scrollTop: $('#tp-all-notes-panel').offset().top
+            scrollTop: $('#tp-all-notes-panel').height()
         }, 'slow');
     }
 
