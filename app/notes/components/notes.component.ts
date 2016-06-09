@@ -1,9 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import {KuzzleService} from "../../shared/kuzzle/services/kuzzle.service";
 import {Note} from "../models/note.model";
-import {Item} from "../models/item.model";
 import {Travel} from "../../travel/models/travel.model";
 import {NoteComponent} from "./note.component";
+import {FadeToggleDirective} from "../../shared/directives/fade-toggle.directive";
+import {NoteDetailComponent} from "./note-detail.component";
+import {ControlGroup, Validators, FormBuilder} from "@angular/common";
 
 /**
  * This components represent the Notes component of the travel.
@@ -16,14 +18,21 @@ declare var $:any;
     selector: 'notes',
     templateUrl: "app/notes/components/notes.component.html",
     styleUrls: ['app/notes/components/notes.component.css'],
-    directives: [NoteComponent]
+    directives: [NoteComponent, NoteDetailComponent, FadeToggleDirective]
 })
 export class NotesComponent implements OnInit{
 
     allNotes:Note[] = [];
     travel:Travel;
+    currentNoteAndItem;
+    noteForm: ControlGroup;
+    isNoteFormActive: boolean = false;
 
-    constructor(private _kuzzle:KuzzleService) {}
+    constructor(private _kuzzle: KuzzleService, fb: FormBuilder) {
+        this.noteForm = fb.group({
+            name: ['', Validators.required]
+        });
+    }
 
     ngOnInit(){
         // TODO : remove if we don't need it
@@ -38,20 +47,32 @@ export class NotesComponent implements OnInit{
     }
 
     /**
+     * load the details of a specific note
+     */
+    loadItem(currentNoteAndItem){
+        this.currentNoteAndItem = currentNoteAndItem;
+    }
+
+    /**
      * Add a new HTML form that handles the creation of a note
      */
-    addNewNote(){
-
+    toggleNoteForm(){
+        this.isNoteFormActive = !this.isNoteFormActive;
     }
 
     /**
      * Persist a new note in kuzzle
      */
-    persistNewNote() {
+    persistNewNote(form) {
         //add form logic here
-        var items = [new Item({title:"item 1", content: "content of Item1"}), new Item({title:"item 2", content: "content of Item2"}), new Item({title:"item 3", content: "content of Item3"})];
-        var note = new Note({name:"Paris", travelId:"AVS5a8AIeivQYXVQtlJN", items:items});
+        var note = new Note({name: form.name, travelId: this.travel.id});
         this._kuzzle.noteService.publishNote(note);
+        this.toggleNoteForm();
+
+        //TO-DO remove this ones notes will be added by Date of creation
+        $('#tp-all-notes-panel').animate({
+            scrollTop: $('#tp-all-notes-panel').offset().top
+        }, 'slow');
     }
 
     /**

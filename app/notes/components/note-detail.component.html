@@ -1,0 +1,61 @@
+<div *ngIf="currentNoteAndItem" class="card" >
+    <div class="card-content">
+        <div *ngIf="!editMode">
+            <span class="card-title activator grey-text text-darken-4">{{currentNoteAndItem.item.title}}</span>
+            <div class="panel-item-content">
+                {{currentNoteAndItem.item.content}}
+            </div>
+        </div>
+        <div *ngIf="editMode">
+            <span class="card-title activator grey-text text-darken-4">{{currentNoteAndItem.item.title}}</span>
+            <form [ngFormModel]="itemForm" (ngSubmit)="editItem(itemForm.value)">
+                <div class="form-input input-field">
+                    <input [ngFormControl]="itemForm.controls['title']"  [(ngModel)]="currentNoteAndItem.item.title" #itemTitle id="item-title"
+                           type="text"
+                           value="">
+                    <label for="item-title">New item title</label>
+                </div>
+                <div class="input-field">
+                    <textarea #itemContent [(ngModel)]="currentNoteAndItem.item.content"
+                              [ngFormControl]="itemForm.controls['content']"
+                              id="item-content"
+                              class="materialize-textarea"></textarea>
+                    <label for="item-content">New item content</label>
+                </div>
+                <button class="waves-effect waves-light cyan btn">Save</button>
+            </form>
+        </div>
+    </div>
+    <div class="fixed-action-btn horizontal">
+        <a class="btn-floating btn-large red">
+            <i class="large material-icons">edit</i>
+        </a>
+        <ul>
+            <li (click)="markAsDone($event,currentNoteAndItem.item)">
+                <a class="btn-floating green darken-1">
+                    <i class="material-icons">done</i>
+                </a>
+            </li>
+            <li (click)="cancelItem(currentNoteAndItem.item)">
+                <a class="btn-floating red darken-1">
+                    <i class="material-icons">delete</i>
+                </a>
+            </li>
+            <li *ngIf="!currentNoteAndItem.item.done" (click)="toggleEditMode()">
+                <a class="btn-floating orange">
+                    <i class="material-icons">mode_edit</i>
+                </a>
+            </li>
+            <li>
+                <a class="btn-floating lime">
+                    <i class="material-icons">insert_photo</i>
+                </a>
+            </li>
+            <li>
+                <a class="btn-floating blue">
+                    <i class="material-icons">attach_file</i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

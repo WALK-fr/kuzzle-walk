@@ -35,7 +35,7 @@ export class MarkerListComponent implements OnInit {
         let listItemId = "#marker-" + $marker.id;
         $(listItemId).addClass('hightlight-marker');
 
-        $('#tp-right-panel').animate({
+        $('.bottom-sheet').animate({
             scrollTop: $(listItemId).offset().top - $('#tp-right-panel').offset().top + $('#tp-right-panel').scrollTop()
         });​
     }

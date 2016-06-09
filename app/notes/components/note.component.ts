@@ -1,9 +1,10 @@
-import { Component, Input, ElementRef } from "@angular/core";
+import { Component, Input, ElementRef, Output, EventEmitter } from "@angular/core";
 import { FormBuilder, ControlGroup, Validators } from "@angular/common";
 
 import {Item} from "../models/item.model";
 import {CollapsibleDirective} from "../../shared/directives/collapsible.directive";
 import {KuzzleService} from "../../shared/kuzzle/services/kuzzle.service";
+import {Note} from "../models/note.model";
 
 /**
  * This components represent a single note component from the travel notes.
@@ -22,6 +23,7 @@ export class NoteComponent{
 
     @Input() note;
     itemForm: ControlGroup;
+    @Output('display-item') itemDisplayEvent = new EventEmitter();
 
     constructor(private _element: ElementRef, private _kuzzle: KuzzleService, fb: FormBuilder) {
         this.itemForm = fb.group({
@@ -43,30 +45,10 @@ export class NoteComponent{
     }
 
     /**
-     * Mark a note item as done and persist the modification in kuzzle
-     * @param $event
-     * @param note
-     * @param item
+     * load the details of a specific note
      */
-    markAsDone($event:any, item:any) {
-        var itemIndex = this.note.items.indexOf(item);
-        this.note.items[itemIndex].done = true;
-
-        //update the document in Kuzzle
-        this._kuzzle.noteService.publishNote(this.note);
-    }
-
-    /**
-     * Delete a item from a note and persist into kuzzle
-     * @param note
-     * @param item
-     */
-    cancelItem(item:any) {
-        var itemIndex = this.note.items.indexOf(item);
-        this.note.items.splice(itemIndex, 1);
-
-        //delete the item and push the note to kuzzle
-        this._kuzzle.noteService.publishNote(this.note);
+    emitItem(note:Note, item:Item){
+        this.itemDisplayEvent.emit({note: note, item: item});
     }
     
 }

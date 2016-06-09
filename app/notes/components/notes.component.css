@@ -3,3 +3,13 @@
     max-height: 70%;
     overflow-y: scroll;
 }
+
+#panel-details{
+    position: fixed;
+    right: 0;
+    margin-right: 0.75rem;
+}
+
+.tp-note-add{
+    cursor: pointer;
+}
