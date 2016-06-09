@@ -227,8 +227,9 @@ export class MapComponent implements OnInit{
     constructor(private kuzzleService:KuzzleService) {}
 
     ngOnInit() {
-        // Map initialization
-        this.map = L.map('mapid').setView([48.8587741, 2.2], 13);
+        // Map initialization, Default view of the map that will be overrided if some markers are presents.
+        this.map = L.map('mapid', {minZoom: 3}).setView([38.82259, -2.8125], 3);
+        this.map.setMaxBounds(L.latLngBounds([84.67351256610522, -174.0234375], [-58.995311187950925, 223.2421875]));
         // this.map = L.map('mapid');
 
         // Search box
@@ -262,6 +263,7 @@ export class MapComponent implements OnInit{
 
         // We add tiles to the map
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+            noWrap: true,
             attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors with TravelPlanner team'
         }).addTo(this.map);
 
@@ -278,7 +280,19 @@ export class MapComponent implements OnInit{
 
         // Fetch the travel async + markers from database
         this.kuzzleService.travelStream.subscribe(travel => {
-            this.travel = travel; // TODO - A QUOI CA SERT ça
+            this.travel = travel;
+
+            // TODO : Replace default null travel coming from stream with a default travel in each component, this stream
+            // will return only a valid fetched travel see @behaviorSubject;
+            if(this.travel.id){
+            // Now Fitbound the map to center the view on a BBOX containing initials markers
+            var latLngCollection = [];
+            this.travel.travelMarkerCollection.forEach((marker: TravelMarker) => {
+                latLngCollection.push(L.latLng(marker.latitude, marker.longitude));
+            });
+            var bounds = L.latLngBounds(latLngCollection);
+            this.map.fitBounds(bounds);
+            }
         });
 
         // ...therefore subscribe the new / update / delete of TravelMarkers
