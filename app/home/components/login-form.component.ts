@@ -13,6 +13,7 @@ export class LoginFormComponent {
     loginForm: ControlGroup;
     @Input('sign-in-only') signInOnly = false;
     @Output('login') loginEvent = new EventEmitter;
+    formError: string;
 
     constructor(fb: FormBuilder, private _kuzzleService: KuzzleService, private _router: Router) {
         this.loginForm = fb.group({
@@ -23,6 +24,7 @@ export class LoginFormComponent {
 
     /**
      * triggered when the login form is submitted
+     * @param form
      */
     login(form:any) {
 
@@ -30,20 +32,11 @@ export class LoginFormComponent {
         if (!this.loginForm.valid)
             return;
 
-        // TODO : Async call, add marker on component to mark as loading
-
-
-        // The callback must update steps or display error message
-        // TODO : On success add user to travel and travel to user
-
-        // TODO: Handle sign in ONLY
         this._kuzzleService.userService.login(form.username, form.password)
             .then(res => this.loginEvent.emit({}))
             .catch(error => {
-                console.log('Error on connect');
                 if (error.message === 'Bad Credentials') {
-                    // TODO : Handle error message display
-                    // DO something that display the error message
+                    this.formError = "Bad credentials";
                 }
             });
     }

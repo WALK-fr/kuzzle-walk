@@ -9,7 +9,7 @@ export class InviteFriendsFormComponent {
 
     inviteFriendsForm: ControlGroup;
     @Output('invite-friends') inviteFriendsEvent = new EventEmitter;
-
+    
     constructor(fb: FormBuilder) {
         this.inviteFriendsForm = fb.group({
             friends: [],
@@ -17,14 +17,14 @@ export class InviteFriendsFormComponent {
         });
     }
 
+    /**
+     * Handle the friends invitation on the form submission
+     * @param form
+     */
     inviteFriends(form) {
         // TODO: Handle invite friends here
         console.log("friends: " + form.friends);
         console.log("message: " + form.message);
-
-        // TODO : Call webAPI to send mail (Kuzzle module per example)
-
-        // Generate a kuzzle invitation, on validation add the user to the travel object
 
         this.inviteFriendsEvent.emit({});
     }
