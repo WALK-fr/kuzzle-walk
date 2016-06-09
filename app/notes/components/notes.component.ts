@@ -23,7 +23,9 @@ export class NotesComponent implements OnInit{
     allNotes:Note[] = [];
     travel:Travel;
 
-    constructor(private _kuzzle:KuzzleService) {}
+    constructor(private _kuzzle:KuzzleService) {
+        this.travel = new Travel();
+    }
 
     ngOnInit(){
         // TODO : remove if we don't need it

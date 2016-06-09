@@ -24,6 +24,7 @@ export class PoiFormComponent implements OnInit, AfterViewInit {
     @Output('marker-delete') markerDelete = new EventEmitter();
 
     constructor(private _fb:FormBuilder, private kuzzleService:KuzzleService) {
+        this.travel = new Travel();
         this.createForm();
     }
     
@@ -49,7 +50,7 @@ export class PoiFormComponent implements OnInit, AfterViewInit {
     
     ngOnInit() {
 
-        this.travelMarker =  new TravelMarker();
+        this.travelMarker = new TravelMarker();
 
         this.kuzzleService.userService.getCurrentUserStream().subscribe( user => {
             this.user = user;

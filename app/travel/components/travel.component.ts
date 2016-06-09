@@ -30,6 +30,7 @@ export class TravelComponent implements OnInit, AfterViewInit {
     TABS = {TAB_MARKER_FORM: 'panel-form', TAB_MARKER_LIST: 'panel-marker-list', TAB_SCHEDULE: 'panel-scheduler'}
 
     constructor(private kuzzleService: KuzzleService, private _router: Router) {
+        this.travel = new Travel();
     }
 
     ngOnInit() {
@@ -43,7 +44,7 @@ export class TravelComponent implements OnInit, AfterViewInit {
         }
 
         // We fetch the travel and on response we init all streams
-        this.kuzzleService.travelStream.filter((x) => x.id !== undefined).subscribe((x) => {
+        this.kuzzleService.travelStream.subscribe((x) => {
             this.travel = x;
             this.initApplication();
         });

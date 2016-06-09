@@ -226,7 +226,9 @@ export class MapComponent implements OnInit{
     ];
     private temporaryMarker: any;
 
-    constructor(private kuzzleService:KuzzleService) {}
+    constructor(private kuzzleService:KuzzleService) {
+        this.travel = new Travel();
+    }
 
     ngOnInit() {
         // Map initialization, Default view of the map that will be overrided if some markers are presents.
