@@ -34,10 +34,7 @@ export class NoteComponent{
 
     /**
      *
-     * @param $form - is use only to collapse again the form once used
-     * @param $itemTitle - the title DOM object of the new item
-     * @param $itemContent - the conent DOM object of the new item
-     * @param note - the note which has to be updated
+     * @param form - is use only to collapse again the form once used
      */
     persistNewItem(form){
         this.note.items.push(new Item({title: form.title, content: form.content.replace("\r\n", "\\n"), done: false}));
@@ -59,7 +56,6 @@ export class NoteComponent{
 
     /**
      * Delete a item from a note and persist into kuzzle
-     * @param note
      * @param item
      */
     cancelItem(item:Item) {
