@@ -1,13 +1,14 @@
 <ul class="collection" id="panel-marker-list">
-    <li *ngFor="let marker of markers, let index = index" class="collection-item avatar" id="marker-{{ marker.id }}">
+    <li *ngFor="let marker of markers, let index = index"
+        (click)="emitMarkerInformationsEvent(marker)"
+        class="collection-item avatar"
+        id="marker-{{ marker.id }}">
+
         <img src="http://lorempixel.com/100/100/city/?random={{ index }}" alt="" class="circle">
         <span class="title">{{ marker.name }}</span>
         <p> {{ marker.description }} </p>
-        <a href="#!" class="secondary-content">
-            <div *ngIf="marker.userId !== null" class="chip">
-                <img src="{{ travel.members[marker.userId].photoUrl }}" alt="Contact Person">
-                {{ travel.members[marker.userId].humanName() }}
-            </div>
-        </a>
+        <div class="secondary-content">
+            <i (click)="deleteMarker(marker)" class="material-icons red-text right">clear</i>
+        </div>
     </li>
 </ul>

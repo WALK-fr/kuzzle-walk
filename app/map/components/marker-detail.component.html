@@ -1,0 +1,4 @@
+<div *ngIf="marker.userId !== null" class="chip">
+    <img src="{{ travel.members[marker.userId].photoUrl }}" alt="Contact Person">
+    {{ travel.members[marker.userId].humanName() }}
+</div>

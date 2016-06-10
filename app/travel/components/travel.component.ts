@@ -9,6 +9,7 @@ import {KuzzleService} from "../../shared/kuzzle/index";
 import {NotesComponent} from "../../notes/index";
 import {TeamWidgetComponent} from "../../team/components/team-widget.component";
 import LatLng = L.LatLng;
+import { TravelMarker } from "../../map/models/travel-marker.model";
 
 // this is used to accept jquery token at compilation time
 declare var $: any;
@@ -25,9 +26,12 @@ declare var $: any;
 export class TravelComponent implements OnInit, AfterViewInit {
 
     isChatOpened = false;
+    //when clicking on a marker of the list, it triggers the display of it's informations
+    markerToDisplay; 
     chatUnreadMessages = 0;
     travel: Travel;
-    TABS = {TAB_MARKER_FORM: 'panel-form', TAB_MARKER_LIST: 'panel-marker-list', TAB_SCHEDULE: 'panel-scheduler'}
+    TABS = {TAB_MARKER_FORM: 'panel-form', TAB_MARKER_LIST: 'panel-marker-list', TAB_SCHEDULE: 'panel-scheduler'};
+
 
     constructor(private kuzzleService: KuzzleService, private _router: Router) {
         this.travel = new Travel();
@@ -83,7 +87,24 @@ export class TravelComponent implements OnInit, AfterViewInit {
     }
 
     /**
-     * Share the cursor latlng on mousemove with team mates
+     * Triggers the isMarkerviewModeActive, hide the panel and display marker information
+     * @param marker
+     */
+    displayMarkerInformation(marker:TravelMarker){
+        this.markerToDisplay = marker;
+    }
+
+    /**
+     * Remove the information of a marker and display the default panel view
+     */
+    backToDefaultPanel(){
+        this.markerToDisplay = null;
+    }
+
+    /**
+     * TODO - Share the cursor latlng on mousemove with team mates
+     * an event is received from the map with the current latlng hovered by the mouse, need to share it with kuzzle
+     * @param latlng
      */
     sharePositionWithTeam(latlng:LatLng){
         

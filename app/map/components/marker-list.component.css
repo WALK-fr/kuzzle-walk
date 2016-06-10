@@ -1,3 +1,9 @@
+.collection li:hover{
+    background-color: #eeeeee;
+    cursor: pointer;
+}
+
+
 .hightlight-marker{
     border: 2px solid #ff9800;
 }
