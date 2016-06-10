@@ -30,6 +30,7 @@ export class MapService {
     public initTravelMarkersSubscriptionStream(travel:Travel) {
         var collectionName = 'markers';
         var filter = {
+            size: 200,
             query: {
                 match: {
                     travelId: travel.id
