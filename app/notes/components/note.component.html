@@ -1,31 +1,32 @@
 <div class="card">
     <div class="card-content">
-        <span class="card-title activator grey-text text-darken-4">{{note.name}} <i class="material-icons right">add</i></span>
-        <ul>
-            <li *ngFor="let item of note.items" (click)="emitItem(note, item)">
-                <div class="collapsible-header" [class.green]="item.done" [class.lighten-4]="item.done">
-                    {{item.title}}
+        <span class="card-title activator grey-text text-darken-4">
+            {{note.name}}
+            <i (click)="deleteNote($event)" class="material-icons red-text right">delete</i>
+            <i class="material-icons cyan-text right">add</i>
+        </span>
+        <ul  class="collection">
+            <li *ngFor="let item of note.items"
+                (click)="emitItem(item)"
+                [class.cyan]="item.done" [class.lighten-4]="item.done"
+                class="collection-item" >
+
+                {{item.title}}
+                <div class="secondary-content">
+                    <i (click)="cancelItem(item)" class="material-icons red-text right">clear</i>
                 </div>
             </li>
         </ul>
     </div>
     <div class="card-reveal">
-        <span class="card-title grey-text text-darken-4">Add a new item<i class="material-icons right">close</i></span>
+        <span class="card-title grey-text text-darken-4">Add a new item<i class="material-icons cyan-text right">close</i></span>
         <form [ngFormModel]="itemForm" (ngSubmit)="persistNewItem(itemForm.value)">
             <div class="form-input input-field">
                 <input [ngFormControl]="itemForm.controls['title']" #itemTitle id="item-title" type="text"
                        value="">
                 <label for="item-title">New item title</label>
             </div>
-            <div class="input-field">
-                <textarea #itemContent
-                          [ngFormControl]="itemForm.controls['content']"
-                          id="item-content"
-                          class="materialize-textarea"></textarea>
-                <label for="item-content">New item content</label>
-            </div>
             <button class="waves-effect waves-light cyan btn">Save</button>
-
         </form>
     </div>
 </div>

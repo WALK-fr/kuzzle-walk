@@ -1,16 +1,11 @@
-.actions{
-    cursor:pointer;
+.card{
+    min-height: 220px;
 }
 
-.actions i{
-    line-height: 3rem;
-    margin-right: 5px;
+.collection-item{
+    cursor: pointer;
 }
 
-.collapsible-form{
-    padding: 10px;
-}
-
-.tp-note-add{
-    cursor:pointer;
+.collection-item:hover{
+    background: #eeeeee;
 }

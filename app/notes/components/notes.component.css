@@ -10,6 +10,13 @@
     margin-right: 0.75rem;
 }
 
-.tp-note-add{
-    cursor: pointer;
+#panel-notes h4{
+    margin-bottom: 40px;
 }
+
+
+.tp-note-add{
+    font-size: 44px;
+    cursor:pointer;
+}
+

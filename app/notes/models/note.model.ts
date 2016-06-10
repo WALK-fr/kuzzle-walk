@@ -12,6 +12,6 @@ export class Note extends KuzzleDocument{
         this.id = obj && obj.id || null;
         this.name = obj && obj.name || null;
         this.travelId = obj && obj.travelId || null;
-        this.items = obj && obj.items || null;
+        this.items = obj && obj.items || [];
     }
 }

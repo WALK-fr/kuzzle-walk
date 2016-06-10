@@ -6,26 +6,24 @@
             <div id="panel-notes" class="col s12 m6 l6">
                 <h4>
                     Notes and reminders
-                    <i (click)="toggleNoteForm()" class="secondary-content material-icons cyan-text lighten-1 tp-note-add">playlist_add</i>
+                    <i (click)="toggleNoteForm()" class="secondary-content material-icons cyan-text lighten-1 tp-note-add">note_add</i>
                 </h4>
 
                 <form *ngIf="isNoteFormActive" [ngFormModel]="noteForm" (ngSubmit)="persistNewNote(noteForm.value)">
                     <div class="form-input input-field">
-                        <input [ngFormControl]="noteForm.controls['name']" #itemName id="item-title"
-                               type="text"
-                               value="">
+                        <input [ngFormControl]="noteForm.controls['name']"
+                               #itemName id="item-title"
+                               type="text" value="">
                         <label for="item-title">New item title</label>
                     </div>
                     <button class="waves-effect waves-light cyan btn">Save</button>
+                    <div (click)="toggleNoteForm()" class="waves-effect waves-light red btn">Cancel</div>
                 </form>
 
                 <note *ngFor="let note of allNotes, let index = index"
                       [note]="note"
                       id="note-{{note.id}}"
-                      (display-item)="loadItem($event)"
-                      [class.first-col]="index == 0 || index % 3 == 0"
-                      [class.second-col]="index % 3 == 1"
-                      [class.third-col]="index % 3 == 2">
+                      (display-item)="loadItem($event)">
                 </note>
             </div>
             <!-- this contain the note detail zone -->

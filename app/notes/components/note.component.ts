@@ -44,11 +44,30 @@ export class NoteComponent{
         this._kuzzle.noteService.publishNote(this.note);
     }
 
+    deleteNote($event){
+
+        this._kuzzle.noteService.deleteNote(this.note);
+        $event.stopPropagation(); //prevent item form from opening
+    }
+
     /**
      * load the details of a specific note
      */
-    emitItem(note:Note, item:Item){
-        this.itemDisplayEvent.emit({note: note, item: item});
+    emitItem(item:Item){
+        this.itemDisplayEvent.emit({note: this.note, item: item});
+    }
+
+    /**
+     * Delete a item from a note and persist into kuzzle
+     * @param note
+     * @param item
+     */
+    cancelItem(item:Item) {
+        var itemIndex = this.note.items.indexOf(item);
+        this.note.items.splice(itemIndex, 1);
+
+        //delete the item and push the note to kuzzle
+        this._kuzzle.noteService.publishNote(this.note);
     }
     
 }

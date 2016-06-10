@@ -53,7 +53,7 @@ export class NoteDetailComponent{
      */
     markAsDone($event:any, item:Item) {
         var itemIndex = this.currentNoteAndItem.note.items.indexOf(item);
-        this.currentNoteAndItem.note.items[itemIndex].done = true;
+        this.currentNoteAndItem.note.items[itemIndex].done = !this.currentNoteAndItem.note.items[itemIndex].done;
 
         //update the document in Kuzzle
         this._kuzzle.noteService.publishNote(this.currentNoteAndItem.note);
