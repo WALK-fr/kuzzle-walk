@@ -50,7 +50,7 @@ export class TravelComponent implements OnInit, AfterViewInit {
         });
 
         // Bootstrap application
-        this.kuzzleService.initCurrentTravel()
+        this.kuzzleService.initializeTravel('AVS5a8AIeivQYXVQtlJN')
     }
 
     /**

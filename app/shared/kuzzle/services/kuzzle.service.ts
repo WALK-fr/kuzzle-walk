@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Travel } from "../../../travel/index";
 import { ChatService, MapService, UserService, NoteService } from "../index";
 import { KuzzleDocument } from "../model/kuzzle-document.model";
-import { Subject, BehaviorSubject } from "rxjs/Rx";
+import { Subject } from "rxjs/Rx";
 import { CookieService } from "angular2-cookie/core";
 import { User } from "../../../users/models/user";
 import { TravelMarker } from "../../../map/models/travel-marker.model";
@@ -83,7 +83,10 @@ export class KuzzleService {
     }
 
     /**
-     * Persist the travel and override the travel ID
+     * Create a new travel in kuzzle and automatically bootstrap him
+     * This method will automatically dispatch the travel to every components listeting on travelStream Subject
+     * TODO : Verifier si c'est possible du coup avec le mode listener ou si il faut quand même passer par initialize
+     * 
      * @param travel
      */
     public createTravel(travel: Travel) {
@@ -103,12 +106,18 @@ export class KuzzleService {
 
     }
 
-    public initCurrentTravel() {
+    /**
+     * Load the travel with given ID that will be the base of the application.
+     * This method will automatically dispatch the travel to every components listeting on travelStream Subject
+     *
+     * @param travelID The id of the travel we want to load from Kuzzle
+     */
+    public initializeTravel(travelID: string) {
         var travel;
 
         // Load travel and then init application
         var travelLoaded = new Promise((resolve, reject) => {
-            this.kuzzle.dataCollectionFactory('travel').fetchDocument('AVS5a8AIeivQYXVQtlJN', (err, travelFromKuzzle) => {
+            this.kuzzle.dataCollectionFactory('travel').fetchDocument(travelID, (err, travelFromKuzzle) => {
                 // TODO : Handle errors
                 travel = new Travel(travelFromKuzzle.content);
                 travel.id = travelFromKuzzle.id;
@@ -164,6 +173,20 @@ export class KuzzleService {
             // When everything is loaded, we dispatch the travel
             Promise.all([loadTravelMarkersPromise, loadUsersPromise]).then(promisesResult => this._travelStream.next(travel))
         });
+    }
+
+    /**
+     * Update the travel in Kuzzle, with given informations
+     * This method will automatically dispatch the travel to every components listeting on travelStream Subject
+     *
+     * @param travel
+     */
+    public updateTravel(travel: Travel){
+        // TODO :
+    }
+
+    public deleteTravel(travel: Travel){
+        // TODO :
     }
 
     get travelStream(): Subject<Travel> {
