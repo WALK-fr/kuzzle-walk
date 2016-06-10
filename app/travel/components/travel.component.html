@@ -50,7 +50,7 @@
                     </div>
                 </div>
                 <div *ngIf="markerToDisplay" id="tp-right-panel-marker-detail">
-                    <marker-detail (back-to-list)="backToDefaultPanel()" [marker]="markerToDisplay"></marker-detail>
+                    <marker-detail (back-to-list)="backToDefaultPanel()" [travel]="travel" [marker]="markerToDisplay"></marker-detail>
                 </div>
             </div>
         </div>
