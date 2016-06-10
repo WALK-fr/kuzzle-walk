@@ -32,9 +32,6 @@ export class NoteDetailComponent{
 
     toggleEditMode(){
         this.editMode = !this.editMode;
-        $(document).ready(function() {
-            Materialize.updateTextFields();
-        });
     }
 
     editItem(form){

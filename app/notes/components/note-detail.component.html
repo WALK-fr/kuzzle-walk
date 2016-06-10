@@ -13,14 +13,14 @@
                     <input [ngFormControl]="itemForm.controls['title']"  [(ngModel)]="currentNoteAndItem.item.title" #itemTitle id="item-title"
                            type="text"
                            value="">
-                    <label for="item-title">New item title</label>
+                    <label class="active" for="item-title">Item title</label>
                 </div>
                 <div class="input-field">
                     <textarea #itemContent [(ngModel)]="currentNoteAndItem.item.content"
                               [ngFormControl]="itemForm.controls['content']"
                               id="item-content"
                               class="materialize-textarea"></textarea>
-                    <label for="item-content">New item content</label>
+                    <label class="active" for="item-content">Item content</label>
                 </div>
                 <button class="waves-effect waves-light cyan btn">Save</button>
             </form>
