@@ -233,19 +233,32 @@ export class MapComponent implements OnInit{
         // this.map = L.map('mapid');
 
         // Search box
-        this.map.addControl( new L.Control.Search({
+        var self = this;
+        this.map.addControl(new L.Control.Search({
             url: 'http://nominatim.openstreetmap.org/search?format=json&q={s}',
-                jsonpParam: 'json_callback',
-                propertyName: 'display_name',
-                propertyLoc: ['lat','lon'],
-                collapsed: false,
-                markerLocation: true,
-                autoCollapse: false,
-                autoType: false,
-                autoResize: true,
-                minLength: 2,
-                position: 'bottomleft'
-        }) );
+            jsonpParam: 'json_callback',
+            propertyName: 'display_name',
+            propertyLoc: ['lat','lon'],
+            collapsed: false,
+            markerLocation: false,
+            autoCollapse: false,
+            autoType: false,
+            autoResize: true,
+            minLength: 2,
+            position: 'bottomleft',
+            moveToLocation: function(latlng, title, map) {
+                if(this.options.zoom)
+                    this._map.setView(latlng, this.options.zoom);
+                else
+                    this._map.panTo(latlng);
+
+                // add marker
+                self.temporaryMarker = self.addMarker(latlng.lat, latlng.lng, '', null);
+
+                // emit the new event to display the panel form
+                self.mapClick.emit({marker: self.temporaryMarker});
+            }
+        }));
 
         // We bind the clicks to the emitter so we can give it to the POI Form
         this.map.on('click', (e: L.LeafletMouseEvent) => {
