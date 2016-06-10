@@ -1,4 +1,19 @@
-<div *ngIf="marker.userId !== null" class="chip">
-    <img src="{{ travel.members[marker.userId].photoUrl }}" alt="Contact Person">
-    {{ travel.members[marker.userId].humanName() }}
+<div class="row">
+    <div class="marker-detail-content col s12">
+        <div (click)="emitBackToListEvent()" class="waves-effect waves-light btn">
+            <i class="material-icons left">arrow_left</i> back to list
+        </div>
+    </div>
+
+    <div class="marker-element col s12">
+        <img class="responsive-img" src="http://lorempixel.com/1200/600/food" alt="{{ marker.name }}">
+    </div>
+
+    <div class="marker-element col s12">
+        <h2> {{ marker.name }} </h2>
+        <p>
+            {{ marker.description }}
+        </p>
+    </div>
 </div>
+
