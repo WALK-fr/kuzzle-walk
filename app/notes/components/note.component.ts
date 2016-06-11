@@ -33,6 +33,7 @@ export class NoteComponent{
     }
 
     /**
+     * Triggered when a new item is added in a note
      *
      * @param form - is use only to collapse again the form once used
      */
@@ -41,8 +42,12 @@ export class NoteComponent{
         this._kuzzle.noteService.publishNote(this.note);
     }
 
+    /**
+     * Triggered when the user clicks on the delete button on a note
+     *
+     * @param $event
+     */
     deleteNote($event){
-
         this._kuzzle.noteService.deleteNote(this.note);
         $event.stopPropagation(); //prevent item form from opening
     }
@@ -56,6 +61,7 @@ export class NoteComponent{
 
     /**
      * Delete a item from a note and persist into kuzzle
+     * 
      * @param item
      */
     cancelItem(item:Item) {
