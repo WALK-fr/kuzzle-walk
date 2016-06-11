@@ -22,6 +22,15 @@ export class MapService {
         return this.kuzzle.dataCollectionFactory('markers').createDocument(travelMarker);
     }
 
+    /**
+     * Delete a marker in Kuzzle by it's Kuzzledocument ID
+     * @param travelMarker
+     * @returns {any}
+     */
+    public deleteTravelMarker(travelMarker: TravelMarker) {
+        return this.kuzzle.dataCollectionFactory('markers').deleteDocument(travelMarker.id);
+    }
+
 
     public getTravelMarkerStream():Subject<TravelMarker> {
         return this.travelMarkerStream;

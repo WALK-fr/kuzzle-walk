@@ -19,7 +19,7 @@
         <div id="map-container" class="col s12 m7 l8">
             <map #map
                  (map-mousemove)="sharePositionWithTeam($event)"
-                 (map-clicked)="poiForm.setMarkerPosition($event); requestFormFocus(TABS.TAB_MARKER_FORM)"
+                 (map-clicked)="markerForm.setMarkerPosition($event); requestFormFocus(TABS.TAB_MARKER_FORM)"
                  (marker-clicked)="markerList.highlightMarker($event); requestFormFocus(TABS.TAB_MARKER_LIST)">
             </map>
             <team (share-user-map)="map.shareMyMap(shareUserMap)"
@@ -38,7 +38,7 @@
                     </div>
                     <!-- NEW SPOT FORM -->
                     <div id="{{ TABS.TAB_MARKER_FORM }}" class="col s12">
-                        <poi-form #poiForm (marker-delete)="map.deleteTemporaryMarker($event); requestFormFocus(TABS.TAB_MARKER_LIST)"></poi-form>
+                        <marker-form #markerForm (marker-delete)="map.deleteTemporaryMarker($event); requestFormFocus(TABS.TAB_MARKER_LIST)"></marker-form>
                     </div>
                     <!-- ALL SPOTS-->
                     <div id="{{ TABS.TAB_MARKER_LIST }}" class="col s12">

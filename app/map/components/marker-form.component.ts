@@ -11,14 +11,14 @@ declare var $: any;
 declare var Materialize: any;
 
 @Component({
-    selector: 'poi-form',
-    templateUrl: 'app/map/components/poi-form.component.html',
+    selector: 'marker-form',
+    templateUrl: 'app/map/components/marker-form.component.html',
 })
-export class PoiFormComponent implements OnInit, AfterViewInit {
+export class MarkerFormComponent implements OnInit, AfterViewInit {
 
-    poiForm:ControlGroup;
-    travelMarker:TravelMarker;
-    travel:Travel;
+    markerForm: ControlGroup;
+    travelMarker: TravelMarker;
+    travel: Travel;
     user: User;
 
     //output property to notify map to destroy a temporary marker
@@ -30,7 +30,7 @@ export class PoiFormComponent implements OnInit, AfterViewInit {
     }
     
     createForm(){
-        this.poiForm = this._fb.group({
+        this.markerForm = this._fb.group({
             name: ['', Validators.required],
             description: [''],
             address: [''],
@@ -42,25 +42,20 @@ export class PoiFormComponent implements OnInit, AfterViewInit {
 
     /**
      * Set the Marker Lat Lng on each click on the Map component !
-     * @param marker
+     * @param $event
      */
-    setMarkerPosition(marker: TravelMarker){
-        this.travelMarker.latitude = marker.latitude;
-        this.travelMarker.longitude = marker.longitude;
+    setMarkerPosition($event){
+        this.travelMarker.latitude = $event.marker.latitude;
+        this.travelMarker.longitude = $event.marker.longitude;
     }
     
     ngOnInit() {
 
         this.travelMarker = new TravelMarker();
 
-        this.kuzzleService.userService.getCurrentUserStream().subscribe( user => {
+        this.kuzzleService.userService.getCurrentUserStream().subscribe(user => {
             this.user = user;
             this.travelMarker.userId = user.id;
-        });
-
-        this.kuzzleService.travelStream.subscribe(travel => {
-            this.travel = travel;
-            this.travelMarker.travelId = travel.id;
         });
     }
 
@@ -90,7 +85,6 @@ export class PoiFormComponent implements OnInit, AfterViewInit {
 
         //emit to delete the temporary marker on the map
         //this.markerDelete.emit(this.travelMarker);
-
         if(this.travelMarker.latitude && this.travelMarker.longitude){
             this.kuzzleService.mapService.publishTravelMarker(this.travelMarker);
 

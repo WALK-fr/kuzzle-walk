@@ -1,7 +1,7 @@
 import {Component, AfterViewInit, OnInit} from "@angular/core";
 import {TravelSelectorComponent} from "./travel-selector.component";
 import {Router} from "@angular/router-deprecated";
-import {MapComponent, PoiFormComponent, MarkerListComponent} from "../../map/index";
+import {MapComponent, MarkerFormComponent, MarkerListComponent} from "../../map/index";
 import {NavbarComponent} from "../../shared/index";
 import {Travel} from "../index";
 import {ChatComponent} from "../../chat/index";
@@ -21,7 +21,7 @@ declare var $: any;
     templateUrl: 'app/travel/components/travel.component.html',
     styleUrls: ['app/travel/components/travel.component.css'],
     directives: [
-        MapComponent, PoiFormComponent, MarkerListComponent, NavbarComponent,
+        MapComponent, MarkerFormComponent, MarkerListComponent, NavbarComponent,
         TravelSelectorComponent, ChatComponent, NotesComponent, TeamWidgetComponent,
         MarkerDetailComponent, MarkerComponent
     ]

@@ -12,23 +12,20 @@ declare var $: any;
 })
 export class MarkerListComponent implements OnInit {
     markers: TravelMarker[] = [];
-    travel:Travel;
 
     @Output('display-marker-information') markerInformationsEvent = new EventEmitter();
 
-    constructor(private kuzzleService:KuzzleService) {
-        this.travel = new Travel();
-    }
+    constructor(private kuzzleService:KuzzleService) {}
 
     ngOnInit() {
-
-        this.kuzzleService.travelStream.subscribe(travel => {
-            this.travel = travel;
-        });
-
         // ...therefore subscribe the new / update / delete of TravelMarkers
         this.kuzzleService.mapService.getTravelMarkerStream()
             .subscribe(marker => this.kuzzleService.updateLocalCollection(this.markers, marker));
+    }
+
+    deleteMarker($event, marker: TravelMarker) {
+        $event.stopPropagation();
+        this.kuzzleService.mapService.deleteTravelMarker(marker);
     }
 
     /**

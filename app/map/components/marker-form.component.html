@@ -1,13 +1,13 @@
-<form [ngFormModel]="poiForm" (ngSubmit)="persistNewMarker(poiForm.value)" id="tp-marker-form">
+<form [ngFormModel]="markerForm" (ngSubmit)="persistNewMarker(markerForm.value)" id="tp-marker-form">
     <h5> Basic informations </h5>
     <div class="row">
         <div class="input-field col s12">
             <i class="material-icons cyan-text prefix">location_on</i>
-            <input [ngFormControl]="poiForm.controls['name']"
-                   id="poi_name"
+            <input [ngFormControl]="markerForm.controls['name']"
+                   id="marker_name"
                    type="text"
                    class="validate">
-            <label for="poi_name" data-error="Name is required" data-success="">Name</label>
+            <label for="marker_name" data-error="Name is required" data-success="">Name</label>
         </div>
     </div>
     <div class="row">
@@ -49,18 +49,18 @@
     <div class="row">
         <div class="input-field col s12">
             <i class="material-icons cyan-text prefix">description</i>
-            <textarea id="description" class="materialize-textarea" [ngFormControl]="poiForm.controls['description']"></textarea>
+            <textarea id="description" class="materialize-textarea" [ngFormControl]="markerForm.controls['description']"></textarea>
             <label for="description">Description</label>
         </div>
     </div>
     <div class="row">
         <div class="input-field col s12">
             <i class="material-icons cyan-text prefix">location_city</i>
-            <input [ngFormControl]="poiForm.controls['address']"
-                   id="poi_address"
+            <input [ngFormControl]="markerForm.controls['address']"
+                   id="marker_address"
                    type="text"
                    class="validate">
-            <label for="poi_address" data-error="wrong" data-success="">Address</label>
+            <label for="marker_address" data-error="wrong" data-success="">Address</label>
         </div>
     </div>
 
@@ -69,13 +69,13 @@
     <div class="row">
         <div class="input-field col s12 m12 l6">
             <i class="material-icons cyan-text prefix">access_time</i>
-            <input [ngFormControl]="poiForm.controls['duration']" id="poi_duration" type="text" class="validate">
-            <label for="poi_duration" data-error="wrong" data-success="">Duration</label>
+            <input [ngFormControl]="markerForm.controls['duration']" id="marker_duration" type="text" class="validate">
+            <label for="marker_duration" data-error="wrong" data-success="">Duration</label>
         </div>
         <div class="input-field col s12 m12 l6">
             <i class="material-icons cyan-text prefix">attach_money</i>
-            <input [ngFormControl]="poiForm.controls['price']" id="poi_price" type="text" class="validate">
-            <label for="poi_price" data-error="wrong" data-success="">Price</label>
+            <input [ngFormControl]="markerForm.controls['price']" id="marker_price" type="text" class="validate">
+            <label for="marker_price" data-error="wrong" data-success="">Price</label>
         </div>
     </div>
 

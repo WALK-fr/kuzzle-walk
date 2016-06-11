@@ -69,10 +69,17 @@ export class KuzzleService {
                 documentCollection.push(document);
                 break;
             case 'update':
-                var indexToReplace = documentIDCollection.indexOf(document.id);
+                var documentAlreadyInCollection = documentIDCollection.indexOf(document.id) >= 0;
 
-                //document.status = null;
-                documentCollection[indexToReplace] = document;
+                if (!documentAlreadyInCollection) {
+                    documentCollection.push(document);
+                } else {
+                    var indexToReplace = documentIDCollection.indexOf(document.id);
+
+                    //document.status = null;
+                    documentCollection[indexToReplace] = document;
+                }
+
                 break;
             case 'delete':
             case User.USER_LEFT:
@@ -144,8 +151,8 @@ export class KuzzleService {
                         travelMarker.id = document.id;
                         travelMarker.status = KuzzleDocument.STATUS_FETCHED;
                         this.updateLocalCollection(travel.travelMarkerCollection, travelMarker);
-                        resolve();
                     });
+                    resolve();
                 });
             });
             var loadUsersPromise = new Promise((resolve, reject) => {

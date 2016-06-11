@@ -46,47 +46,15 @@ export class MapComponent implements OnInit{
     }
 
     ngOnInit() {
-        // Map initialization, Default view of the map that will be overrided if some markers are presents.
-        this.map = L.map('mapid', {minZoom: 3}).setView([38.82259, -2.8125], 3);
-        this.map.setMaxBounds(L.latLngBounds([84.67351256610522, -174.0234375], [-58.995311187950925, 223.2421875]));
-        // this.map = L.map('mapid');
+        // Map initialization, default view of the map that will be overrided if some markers are presents
+        this.mapInit();
 
-        // Search box
-        var self = this;
-        this.map.addControl(new L.Control.Search({
-            url: 'http://nominatim.openstreetmap.org/search?format=json&q={s}',
-            jsonpParam: 'json_callback',
-            propertyName: 'display_name',
-            propertyLoc: ['lat','lon'],
-            collapsed: false,
-            markerLocation: false,
-            autoCollapse: false,
-            autoType: false,
-            autoResize: true,
-            minLength: 2,
-            position: 'bottomleft',
-            moveToLocation: function(latlng, title, map) {
-                if(this.options.zoom)
-                    this._map.setView(latlng, this.options.zoom);
-                else
-                    this._map.panTo(latlng);
-
-                // add marker
-                self.temporaryMarker = new TravelMarker({latitude: latlng.lat, longitude: latlng.lng});
-
-                // emit the new event to display the panel form
-                self.mapClick.emit({marker: self.temporaryMarker});
-            }
-        }));
+        // Search box initialization
+        this.searchInit();
 
         // We bind the clicks to the emitter so we can give it to the POI Form
-        this.map.on('click', (e: L.LeafletMouseEvent) => {
+        this.bindClickOnMap();
 
-            this.temporaryMarker = new TravelMarker({latitude: e.latlng.lat, longitude: e.latlng.lng});
-
-            //emit the new event to display the panel Form
-            this.mapClick.emit({marker: this.temporaryMarker});
-        });
 
         //Bind the msouse over event for the shareMap feature
         this.map.on('mousemove', (e: L.LeafletMouseEvent) => {
@@ -130,6 +98,62 @@ export class MapComponent implements OnInit{
         // ...therefore subscribe the new / update / delete of TravelMarkers
         this.kuzzleService.mapService.getTravelMarkerStream()
             .subscribe(marker => this.kuzzleService.updateLocalCollection(this.markers, marker));
+    }
+
+    /**
+     * map initialization
+     */
+    mapInit() {
+        this.map = L.map('mapid', {minZoom: 3}).setView([38.82259, -2.8125], 3);
+        this.map.setMaxBounds(L.latLngBounds([84.67351256610522, -174.0234375], [-58.995311187950925, 223.2421875]));
+    }
+
+    /**
+     * Initialization of the search bar and the callback function triggered when the bar is used
+     */
+    searchInit() {
+        // save the context so we can use this "this" on the moveToLocation callback function
+        var self = this;
+
+        this.map.addControl(new L.Control.Search({
+            url: 'http://nominatim.openstreetmap.org/search?format=json&q={s}',
+            jsonpParam: 'json_callback',
+            propertyName: 'display_name',
+            propertyLoc: ['lat','lon'],
+            collapsed: false,
+            markerLocation: false,
+            autoCollapse: false,
+            autoType: false,
+            autoResize: true,
+            minLength: 2,
+            position: 'bottomleft',
+            moveToLocation: function(latlng, title, map) {
+                if(this.options.zoom)
+                    this._map.setView(latlng, this.options.zoom);
+                else
+                    this._map.panTo(latlng);
+
+                // add marker
+                self.temporaryMarker = new TravelMarker({latitude: latlng.lat, longitude: latlng.lng});
+
+                // emit the new event to display the panel form
+                self.mapClick.emit({marker: self.temporaryMarker});
+            }
+        }));
+    }
+
+    /**
+     * Add an onClick listener on the map so we can trigger event from it
+     */
+    bindClickOnMap() {
+        this.map.on('click', (e: L.LeafletMouseEvent) => {
+
+            // create a new temporary marker
+            this.temporaryMarker = new TravelMarker({latitude: e.latlng.lat, longitude: e.latlng.lng});
+
+            //emit the new event to display the panel Form
+            this.mapClick.emit({marker: this.temporaryMarker});
+        });
     }
 
     /**
