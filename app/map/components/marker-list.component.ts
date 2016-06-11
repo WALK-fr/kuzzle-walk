@@ -27,9 +27,8 @@ export class MarkerListComponent implements OnInit {
         });
 
         // ...therefore subscribe the new / update / delete of TravelMarkers
-        this.kuzzleService.mapService.getTravelMarkerStream().subscribe((x) => {
-            this.kuzzleService.updateLocalCollection(this.markers, x);
-        })
+        this.kuzzleService.mapService.getTravelMarkerStream()
+            .subscribe(marker => this.kuzzleService.updateLocalCollection(this.markers, marker));
     }
 
     /**

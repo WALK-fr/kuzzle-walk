@@ -42,11 +42,11 @@ export class PoiFormComponent implements OnInit, AfterViewInit {
 
     /**
      * Set the Marker Lat Lng on each click on the Map component !
-     * @param $event
+     * @param marker
      */
-    setMarkerPosition($event){
-        this.travelMarker.latitude = $event.marker.getLatLng().lat;
-        this.travelMarker.longitude = $event.marker.getLatLng().lng;
+    setMarkerPosition(marker: TravelMarker){
+        this.travelMarker.latitude = marker.latitude;
+        this.travelMarker.longitude = marker.longitude;
     }
     
     ngOnInit() {

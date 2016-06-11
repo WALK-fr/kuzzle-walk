@@ -14,6 +14,7 @@ declare var L:any;
     selector: 'map',
     template: `
         <div id="mapid">
+            <marker *ngIf="temporaryMarker" [map]="map" [marker-model]="temporaryMarker"></marker>
             <marker *ngFor="let marker of markers" [map]="map" [marker-model]="marker"></marker>
         </div>
 `,
@@ -24,14 +25,8 @@ export class MapComponent implements OnInit{
     map:L.Map;
     user:User;
     travel:Travel;
-    markers: TravelMarker[] = [
-        new TravelMarker({
-            name: "test marker from marker component",
-            latitude: 48.88354861533135,
-            longitude: 2.2360610961914062,
-            type: "informations"
-        })
-    ];
+    temporaryMarker: TravelMarker;
+    markers: TravelMarker[] = [];
     
     /** Event Emitter when map is clicked, used to trigger the POI Form **/
     @Output('map-clicked') mapClick = new EventEmitter();
@@ -75,7 +70,7 @@ export class MapComponent implements OnInit{
                     this._map.panTo(latlng);
 
                 // add marker
-                self.temporaryMarker = self.addMarker(latlng.lat, latlng.lng, '', null);
+                self.temporaryMarker = new TravelMarker({latitude: latlng.lat, longitude: latlng.lng});
 
                 // emit the new event to display the panel form
                 self.mapClick.emit({marker: self.temporaryMarker});
@@ -84,15 +79,8 @@ export class MapComponent implements OnInit{
 
         // We bind the clicks to the emitter so we can give it to the POI Form
         this.map.on('click', (e: L.LeafletMouseEvent) => {
-            //add a temporary marker on the map, while the user fill the POI FORM
 
-            if(this.temporaryMarker) {
-                this.deleteTemporaryMarker(this.temporaryMarker);
-            }
-
-            console.log(e.latlng.lat);
-            console.log(e.latlng.lng);
-            this.temporaryMarker = this.addMarker(e.latlng.lat, e.latlng.lng, '', null);
+            this.temporaryMarker = new TravelMarker({latitude: e.latlng.lat, longitude: e.latlng.lng});
 
             //emit the new event to display the panel Form
             this.mapClick.emit({marker: this.temporaryMarker});
@@ -138,9 +126,8 @@ export class MapComponent implements OnInit{
         });
 
         // ...therefore subscribe the new / update / delete of TravelMarkers
-        this.kuzzleService.mapService.getTravelMarkerStream().subscribe((travelMarker: TravelMarker) => {
-            this.addMarker(travelMarker.latitude, travelMarker.longitude, travelMarker.name, travelMarker.type, travelMarker.id);
-        });
+        this.kuzzleService.mapService.getTravelMarkerStream()
+            .subscribe(marker => this.kuzzleService.updateLocalCollection(this.markers, marker));
     }
 
     /**

@@ -65,13 +65,13 @@ export class KuzzleService {
                 if (documentAlreadyInCollection) {
                     return;
                 }
-                document.status = null;
+                //document.status = null;
                 documentCollection.push(document);
                 break;
             case 'update':
                 var indexToReplace = documentIDCollection.indexOf(document.id);
 
-                document.status = null;
+                //document.status = null;
                 documentCollection[indexToReplace] = document;
                 break;
             case 'delete':
