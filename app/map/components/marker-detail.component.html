@@ -1,15 +1,26 @@
+<div id="marker-detail-content" class="row">
+    <div class="col s12 m4 l4">
+        <div (click)="emitBackToListEvent()" class="waves-effect waves-light btn cyan">
+            <i class="material-icons">arrow_back</i>
+        </div>
+    </div>
+    <div class="col s12 m8 l8">
+        <div *ngIf="marker.userId !== null" class="chip right">
+            <img src="{{ travel.members[marker.userId].photoUrl }}" alt="Contact Person">
+            {{ travel.members[marker.userId].humanName() }}
+        </div>
+    </div>
+</div>
 <div class="row">
-    <div class="marker-detail-content col s12">
-        <div (click)="emitBackToListEvent()" class="waves-effect waves-light btn">
-            <i class="material-icons left">arrow_left</i> back to list
+    <div class="marker-element col s12">
+        <img class="responsive-img" src="http://lorempixel.com/1200/600/city" alt="{{ marker.name }}">
+        <div id="marker-type" class="chip orange white-text">
+            {{ marker.type }}
         </div>
     </div>
 
     <div class="marker-element col s12">
-        <img class="responsive-img" src="http://lorempixel.com/1200/600/food" alt="{{ marker.name }}">
-    </div>
-
-    <div class="marker-element col s12">
+        <p id="marker-address"> {{ marker.address }} </p>
         <h2> {{ marker.name }} </h2>
         <p>
             {{ marker.description }}
