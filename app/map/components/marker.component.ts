@@ -10,14 +10,8 @@ declare var L: any;
     template: ``
 })
 export class MarkerComponent implements OnInit, OnDestroy {
-    // @Input('marker-model') markerModel: TravelMarker;
-    markerModel: TravelMarker = new TravelMarker({
-        name: "test marker from marker component",
-        latitude: 48.88354861533135,
-        longitude: 2.2360610961914062,
-        type: "informations"
-    });
 
+    @Input('marker-model') markerModel: TravelMarker;
     leafletMarker: any;
     @Input('map') map: any;
     layerGroup: any;

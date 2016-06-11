@@ -4,6 +4,7 @@ import { KuzzleService } from "../../shared/kuzzle/index";
 import { User } from "../../users/index";
 import { TravelMarker } from "../models/travel-marker.model";
 import { CATEGORIES } from "../marker-categories";
+import { MarkerComponent } from "./marker.component";
 
 // this is used to accept jquery token at compilation time
 declare var $:any;
@@ -11,13 +12,26 @@ declare var L:any;
 
 @Component({
     selector: 'map',
-    template: `<div id="mapid"></div>`,
+    template: `
+        <div id="mapid">
+            <marker *ngFor="let marker of markers" [map]="map" [marker-model]="marker"></marker>
+        </div>
+`,
+    directives: [MarkerComponent]
 })
 export class MapComponent implements OnInit{
 
     map:L.Map;
     user:User;
     travel:Travel;
+    markers: TravelMarker[] = [
+        new TravelMarker({
+            name: "test marker from marker component",
+            latitude: 48.88354861533135,
+            longitude: 2.2360610961914062,
+            type: "informations"
+        })
+    ];
     
     /** Event Emitter when map is clicked, used to trigger the POI Form **/
     @Output('map-clicked') mapClick = new EventEmitter();
