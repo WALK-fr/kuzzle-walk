@@ -15,7 +15,9 @@ declare var L:any;
     template: `
         <div id="mapid">
             <marker *ngIf="temporaryMarker" [map]="map" [marker-model]="temporaryMarker"></marker>
-            <marker *ngFor="let marker of markers" [map]="map" [marker-model]="marker"></marker>
+            <marker *ngFor="let marker of markers"
+                (marker-click)="markerClicked($event)"
+                [map]="map" [marker-model]="marker"></marker>
         </div>
 `,
     directives: [MarkerComponent]
@@ -131,33 +133,11 @@ export class MapComponent implements OnInit{
     }
 
     /**
-     * Add a new Marker on the map
+     * triggered when a marker is clicked. This is used to forward the information to the travel component
+     * @param markerInfo
      */
-    addMarker(lat: number, long: number, popup: string, markerType: string, id?: string) {
-        (markerType == null || this.markersCategories.find( category => { return category.name === markerType }) === undefined) ? markerType = 'default' : '';
-
-        var markerCategory = this.markersCategories.find( category => { return category.name === markerType });
-
-        //get marker by type name
-        var marker = L.marker([lat, long], {icon: markerCategory.icon});
-
-        //it's a persisted marker, we had a click listener on it to display it on the right panel
-        if(id !== null){
-            marker.on('click', () => { this.markerClick.emit({id: id});});
-        }
-
-        // Add marker to his specific group
-        markerCategory.group.layerGroup.addLayer(marker);
-
-        return marker;
-    }
-
-    /**
-     * delete a previously created temporary marker to use with the panel form
-     * @param markerToDelete
-     */
-    deleteTemporaryMarker(markerToDelete: any){
-        this.map.removeLayer(markerToDelete);
+    markerClicked(markerInfo) {
+        this.markerClick.emit(markerInfo);
     }
 
     /**

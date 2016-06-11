@@ -1,4 +1,12 @@
-import { Component, OnInit, OnDestroy, Input, OnChanges } from "@angular/core";
+import {
+    Component,
+    OnInit,
+    OnDestroy,
+    Input,
+    OnChanges,
+    Output,
+    EventEmitter
+} from "@angular/core";
 
 import {TravelMarker} from "../models/travel-marker.model";
 import {CATEGORIES} from "../marker-categories";
@@ -11,10 +19,11 @@ declare var L: any;
 })
 export class MarkerComponent implements OnInit, OnDestroy, OnChanges {
 
-    @Input('marker-model') markerModel: TravelMarker;
     leafletMarker: any;
-    @Input('map') map: any;
     layerGroup: any;
+    @Input('marker-model') markerModel: TravelMarker;
+    @Input('map') map: any;
+    @Output('marker-click') markerClick = new EventEmitter();
 
     /**
      * create the leaflet marker when the component is initialized
@@ -57,8 +66,13 @@ export class MarkerComponent implements OnInit, OnDestroy, OnChanges {
 
         // set the marker layer depending on the marker category
         this.layerGroup = markerCategory.group.layerGroup;
-        
+
         this.leafletMarker = L.marker([this.markerModel.latitude, this.markerModel.longitude], {icon: markerCategory.icon});
+
+        // if it is a persisted marker, we emit an event with the marker id on click
+        if(this.markerModel.id !== null)
+            this.leafletMarker.on('click', () => this.markerClick.emit({id: this.markerModel.id}));
+
         this.layerGroup.addLayer(this.leafletMarker);
     }
 
