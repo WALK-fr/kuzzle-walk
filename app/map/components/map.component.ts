@@ -46,13 +46,77 @@ export class MapComponent implements OnInit{
     }
 
     ngOnInit() {
-        // Map initialization, Default view of the map that will be overrided if some markers are presents.
+        // Map initialization, default view of the map that will be overrided if some markers are presents
+        this.mapInit();
+
+        // Search box initialization
+        this.searchInit();
+
+        // We bind the clicks to the emitter so we can give it to the POI Form
+        this.bindClickOnMap();
+
+        // Pierre: on le garde ?
+        // Bind the msouse over event for the shareMap feature
+        this.map.on('mousemove', (e: L.LeafletMouseEvent) => {
+            this.mapHover.emit(e.latlng);
+        });
+
+        // Add layergroups for each category of marker
+        this.markersCategories
+            .forEach(category => this.map.addLayer((category.group.layerGroup)));
+
+        // And allow control on them
+        var allFilters = [];
+        this.markersCategories
+            .map(category => return category.group)
+            .forEach(group => allFilters[group.id] = group.layerGroup);
+
+        this.map.addControl(L.control.layers({}, allFilters, { position: 'bottomright'}));
+
+        // Fetch the travel
+        this.kuzzleService.travelStream
+            .subscribe(travel => {
+                this.travel = travel;
+
+                if(!this.travel.id)
+                    return;
+
+                var latLngCollection = [];
+
+                // Fetch the markers
+                this.travel.travelMarkerCollection
+                    .forEach(marker => latLngCollection.push(L.latLng(marker.latitude, marker.longitude)));
+
+                // Set the map view bounds
+                this.map.fitBounds(L.latLngBounds(latLngCollection));
+            });
+
+        // subscribe to travel marker stream
+        this.kuzzleService.mapService.getTravelMarkerStream()
+            .subscribe(marker => this.kuzzleService.updateLocalCollection(this.markers, marker));
+    }
+
+    /**
+     * map initialization
+     */
+    mapInit() {
         this.map = L.map('mapid', {minZoom: 3}).setView([38.82259, -2.8125], 3);
         this.map.setMaxBounds(L.latLngBounds([84.67351256610522, -174.0234375], [-58.995311187950925, 223.2421875]));
-        // this.map = L.map('mapid');
 
-        // Search box
+        // Add tiles to the map
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+            noWrap: true,
+            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors with TravelPlanner team'
+        }).addTo(this.map);
+    }
+
+    /**
+     * Initialization of the search bar and the callback function triggered when the bar is used
+     */
+    searchInit() {
+        // save the context so we can use this "this" on the moveToLocation callback function
         var self = this;
+
         this.map.addControl(new L.Control.Search({
             url: 'http://nominatim.openstreetmap.org/search?format=json&q={s}',
             jsonpParam: 'json_callback',
@@ -78,58 +142,22 @@ export class MapComponent implements OnInit{
                 self.mapClick.emit({marker: self.temporaryMarker});
             }
         }));
+    }
 
-        // We bind the clicks to the emitter so we can give it to the POI Form
+
+
+    /**
+     * Add an onClick listener on the map so we can trigger event from it
+     */
+    bindClickOnMap() {
         this.map.on('click', (e: L.LeafletMouseEvent) => {
 
+            // create a new temporary marker
             this.temporaryMarker = new TravelMarker({latitude: e.latlng.lat, longitude: e.latlng.lng});
 
             //emit the new event to display the panel Form
             this.mapClick.emit({marker: this.temporaryMarker});
         });
-
-        //Bind the msouse over event for the shareMap feature
-        this.map.on('mousemove', (e: L.LeafletMouseEvent) => {
-            this.mapHover.emit(e.latlng);
-        });
-
-        // We add tiles to the map
-        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-            noWrap: true,
-            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors with TravelPlanner team'
-        }).addTo(this.map);
-
-        // Add layergroups for each category of POI
-        this.markersCategories.forEach( category => {
-           this.map.addLayer((category.group.layerGroup));
-        });
-
-        // And allow control on them
-        var allFilters = [];
-        this.markersCategories.map( (category) => { return  category.group } ).forEach( (group) => allFilters[group.id] = group.layerGroup);
-
-        this.map.addControl(L.control.layers({}, allFilters, { position: 'bottomright' }));
-
-        // Fetch the travel async + markers from database
-        this.kuzzleService.travelStream.subscribe(travel => {
-            this.travel = travel;
-
-            // TODO : Replace default null travel coming from stream with a default travel in each component, this stream
-            // will return only a valid fetched travel see @behaviorSubject;
-            if(this.travel.id){
-            // Now Fitbound the map to center the view on a BBOX containing initials markers
-            var latLngCollection = [];
-            this.travel.travelMarkerCollection.forEach((marker: TravelMarker) => {
-                latLngCollection.push(L.latLng(marker.latitude, marker.longitude));
-            });
-            var bounds = L.latLngBounds(latLngCollection);
-            this.map.fitBounds(bounds);
-            }
-        });
-
-        // ...therefore subscribe the new / update / delete of TravelMarkers
-        this.kuzzleService.mapService.getTravelMarkerStream()
-            .subscribe(marker => this.kuzzleService.updateLocalCollection(this.markers, marker));
     }
 
     /**

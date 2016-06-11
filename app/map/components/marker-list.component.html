@@ -8,7 +8,7 @@
         <span class="title">{{ marker.name }}</span>
         <p> {{ marker.description }} </p>
         <div class="secondary-content">
-            <i (click)="deleteMarker(marker)" class="material-icons red-text right">clear</i>
+            <i (click)="deleteMarker($event, marker)" class="material-icons red-text right">clear</i>
         </div>
     </li>
 </ul>

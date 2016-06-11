@@ -36,15 +36,13 @@ export class NotesComponent implements OnInit{
     }
 
     ngOnInit(){
-        // TODO : remove if we don't need it
-        this._kuzzle.travelStream.subscribe(x => {
-            this.travel = x;
-        });
+        // Subcribe to travel stream
+        this._kuzzle.travelStream
+            .subscribe(travel => this.travel = travel);
 
-        // Subscribe to note Fetch collection and subscribe to create / update / delete
-        this._kuzzle.noteService.getNoteStream().subscribe((note) => {
-            this._kuzzle.updateLocalCollection(this.allNotes, note);
-        });
+        // Subscribe to note stream
+        this._kuzzle.noteService.getNoteStream()
+            .subscribe(note => this._kuzzle.updateLocalCollection(this.allNotes, note));
     }
 
     /**

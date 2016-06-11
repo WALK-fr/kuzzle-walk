@@ -32,7 +32,9 @@ export class LoginFormComponent {
         if (!this.loginForm.valid)
             return;
 
-        this._kuzzleService.userService.login(form.username, form.password)
+        // log the user using the user service
+        this._kuzzleService.userService
+            .login(form.username, form.password)
             .then(res => this.loginEvent.emit({}))
             .catch(error => {
                 if (error.message === 'Bad Credentials') {

@@ -30,11 +30,19 @@ export class NoteDetailComponent{
         });
     }
 
-    toggleEditMode(){
+    /**
+     * Switch on/off the edit mode
+     */
+    toggleEditMode() {
         this.editMode = !this.editMode;
     }
 
-    editItem(form){
+    /**
+     * Triggered when the form is submitted and the edit mode is activated
+     *
+     * @param form
+     */
+    editItem(form) {
         var itemIndex = this.currentNoteAndItem.note.items.indexOf(this.currentNoteAndItem.item);
         this.currentNoteAndItem.note.items[itemIndex].title = form.title;
         this.currentNoteAndItem.note.items[itemIndex].content = form.content;
@@ -44,6 +52,7 @@ export class NoteDetailComponent{
 
     /**
      * Mark a note item as done and persist the modification in kuzzle
+     *
      * @param $event
      * @param note
      * @param item
@@ -58,6 +67,7 @@ export class NoteDetailComponent{
 
     /**
      * Delete a item from a note and persist into kuzzle
+     *
      * @param note
      * @param item
      */
