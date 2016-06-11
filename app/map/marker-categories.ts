@@ -1,3 +1,5 @@
+declare var L: any;
+
 export var CATEGORIES = [
     {
         name: "default",

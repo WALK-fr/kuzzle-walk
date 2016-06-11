@@ -18,7 +18,7 @@ export class MapComponent implements OnInit{
     map:L.Map;
     user:User;
     travel:Travel;
-
+    
     /** Event Emitter when map is clicked, used to trigger the POI Form **/
     @Output('map-clicked') mapClick = new EventEmitter();
     @Output('map-mousemove') mapHover = new EventEmitter();
@@ -76,6 +76,8 @@ export class MapComponent implements OnInit{
                 this.deleteTemporaryMarker(this.temporaryMarker);
             }
 
+            console.log(e.latlng.lat);
+            console.log(e.latlng.lng);
             this.temporaryMarker = this.addMarker(e.latlng.lat, e.latlng.lng, '', null);
 
             //emit the new event to display the panel Form

@@ -3,6 +3,8 @@ import {TravelMarker} from "../models/travel-marker.model";
 import {KuzzleService} from "../../shared/kuzzle/services/kuzzle.service";
 import {Travel} from "../../travel/index";
 
+declare var $: any;
+
 @Component({
     selector: 'marker-list',
     templateUrl: 'app/map/components/marker-list.component.html',
@@ -37,7 +39,7 @@ export class MarkerListComponent implements OnInit {
     emitMarkerInformationsEvent(marker:TravelMarker){
         this.markerInformationsEvent.emit(marker);
     }
-    
+
     //Handles the event emitter that comes from the map (marker-click) event (when a persisted marker is clicked)
     highlightMarker($marker){
         //remove class from previously clicked marker

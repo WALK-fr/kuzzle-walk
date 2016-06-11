@@ -11,6 +11,7 @@ import {TeamWidgetComponent} from "../../team/components/team-widget.component";
 import LatLng = L.LatLng;
 import { TravelMarker } from "../../map/models/travel-marker.model";
 import {MarkerDetailComponent} from "../../map/components/marker-detail.component";
+import {MarkerComponent} from "../../map/components/marker.component";
 
 // this is used to accept jquery token at compilation time
 declare var $: any;
@@ -21,14 +22,16 @@ declare var $: any;
     styleUrls: ['app/travel/components/travel.component.css'],
     directives: [
         MapComponent, PoiFormComponent, MarkerListComponent, NavbarComponent,
-        TravelSelectorComponent, ChatComponent, NotesComponent, TeamWidgetComponent, MarkerDetailComponent
+        TravelSelectorComponent, ChatComponent, NotesComponent, TeamWidgetComponent,
+        MarkerDetailComponent, MarkerComponent
     ]
 })
 export class TravelComponent implements OnInit, AfterViewInit {
 
     isChatOpened = false;
+    testmarker = true;
     //when clicking on a marker of the list, it triggers the display of it's informations
-    markerToDisplay; 
+    markerToDisplay;
     chatUnreadMessages = 0;
     travel: Travel;
     TABS = {TAB_MARKER_FORM: 'panel-form', TAB_MARKER_LIST: 'panel-marker-list', TAB_SCHEDULE: 'panel-scheduler'};
@@ -108,7 +111,7 @@ export class TravelComponent implements OnInit, AfterViewInit {
      * @param latlng
      */
     sharePositionWithTeam(latlng:LatLng){
-        
+
     }
 
     /**
