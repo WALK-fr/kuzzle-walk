@@ -6,8 +6,8 @@ import { KuzzleDocument } from "../../shared/kuzzle/model/kuzzle-document.model"
 export class User extends KuzzleDocument{
 
     static USER_ALREADY_HERE = 'already_here';
-    static USER_JOINED = 'on';
-    static USER_LEFT = 'off';
+    static USER_CONNECTED = 'connected';
+    static USER_DISCONNECTED = 'disconnected';
     firstName: string;
     lastName: string;
     photoUrl: string;
@@ -24,5 +24,15 @@ export class User extends KuzzleDocument{
 
     humanName():string {
         return this.firstName + " " + this.lastName;
+    }
+
+    /**
+     * Return if the user is online : 2 case,
+     * User has been fetched from back-office or user has join the session.
+     *
+     * @returns {boolean}
+     */
+    isOnline(): boolean {
+        return this.status === User.USER_CONNECTED || this.status === User.USER_ALREADY_HERE;
     }
 }

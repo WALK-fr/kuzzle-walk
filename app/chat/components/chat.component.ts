@@ -35,7 +35,7 @@ export class ChatComponent implements OnInit{
         this.messagesList = [];
 
         // Get user
-        this.kuzzleService.userService.getCurrentUserStream().subscribe(x => this.user = x);
+        this.kuzzleService.userService.getApplicationUserStream().subscribe(x => this.user = x);
 
         // Get travel
         this.kuzzleService.travelStream.subscribe(travel => {

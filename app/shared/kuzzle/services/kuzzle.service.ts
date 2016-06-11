@@ -59,7 +59,6 @@ export class KuzzleService {
             case 'created':
             case 'publish':
             case KuzzleDocument.STATUS_FETCHED:
-            case User.USER_JOINED:
                 var documentAlreadyInCollection = documentIDCollection.indexOf(document.id) >= 0;
 
                 if (documentAlreadyInCollection) {
@@ -75,10 +74,21 @@ export class KuzzleService {
                 documentCollection[indexToReplace] = document;
                 break;
             case 'delete':
-            case User.USER_LEFT:
                 var indexToDelete = documentIDCollection.indexOf(document.id);
                 documentCollection.splice(indexToDelete, 1);
                 break;
+            case User.USER_CONNECTED:
+            case User.USER_DISCONNECTED:
+                // Check if user is already in the collection of users
+                var probableUserIndex = documentIDCollection.indexOf(document.id);
+                var userAlreadyInCollection = probableUserIndex >= 0;
+
+                if(!userAlreadyInCollection){
+                    documentCollection.push(document);
+                } else {
+                    var relatedUser = documentCollection[probableUserIndex];
+                    relatedUser.status = document.status;
+                }
         }
     }
 
@@ -161,7 +171,7 @@ export class KuzzleService {
                         .forEach((document) => {
                             let user = new User(document.content);
                             user.id = document.id;
-                            travel.members[user.id] = user;
+                            travel.members.push(user);
                         });
 
                     // Validated action

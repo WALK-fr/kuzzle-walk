@@ -20,7 +20,7 @@ export class Travel extends KuzzleDocument{
 
         super();
         this.name = obj && obj.name;
-        this.travelMarkerCollection = [];
-        this.members = obj && obj.members;
+        this.travelMarkerCollection = [] || [];
+        this.members = obj && obj.members || [];
     }
 }

@@ -1,11 +1,11 @@
 <a (click)="toggleTeam()" id="tp-team-opener" [class.righten]="isTeamOpened" class="orange">
     <i class="material-icons">people</i>
-    <span class="badge-nb-connected white grey-text text-darken-1 z-depth-2">{{connectedUserCollection.length}}</span>
+    <span class="badge-nb-connected white grey-text text-darken-1 z-depth-2">{{travel.members.length}}</span>
 </a>
 <section *ngIf="isTeamOpened" id="tp-team-window" class="orange">
     <ul class="collection">
         <!-- is connected feature TODO - replace i == 1 by the value of the test userInfo.isLoggedIn when implemented -->
-        <li *ngFor="let userInfo of connectedUserCollection; let i = index"
+        <li *ngFor="let userInfo of travel.members; let i = index"
             class="team-item collection-item avatar"
             [class.white]="i == 1">
 
@@ -23,7 +23,7 @@
                 </p>
             </div>
             <!-- is connected feature TODO - replace i == 1 by the value of the test userInfo.isLoggedIn when implemented -->
-            <i class="is-connected" [class.green]="i == 1"></i>
+            <i class="is-connected" [class.green]="userInfo.isOnline()"></i>
         </li>
     </ul>
 </section>
