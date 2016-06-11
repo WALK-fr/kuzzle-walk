@@ -67,6 +67,7 @@ export class MarkerComponent implements OnInit, OnDestroy, OnChanges {
         // set the marker layer depending on the marker category
         this.layerGroup = markerCategory.group.layerGroup;
 
+        // create the leaflet marker
         this.leafletMarker = L.marker([this.markerModel.latitude, this.markerModel.longitude], {icon: markerCategory.icon});
 
         // if it is a persisted marker, we emit an event with the marker id on click

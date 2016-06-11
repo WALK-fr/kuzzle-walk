@@ -24,18 +24,9 @@ export class DestinationFormComponent {
 
         if (!this.destinationForm.valid)
             return;
-        // TODO: keep the destination for the next step
-        //console.log("destination: " + form.destination);
-
-        //var googleGeocodeProvider = new L.GeoSearch.Provider.OpenStreetMap();
-        //console.log(googleGeocodeProvider);
-        //googleGeocodeProvider.GetLocations(form.destination, (data:any) => {
-        //    console.log(data);
-        //});
 
         // emit a signal to notify that the destination has been picked
         this.destinationEvent.emit({name: form.destination, latitude: 45.0, longitude: 1.5, defaultZoom: 13});
-        //this.kuzzleService.createTravel(this.travel);
     }
 
 }

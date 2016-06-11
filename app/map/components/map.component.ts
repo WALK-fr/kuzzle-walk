@@ -55,47 +55,43 @@ export class MapComponent implements OnInit{
         // We bind the clicks to the emitter so we can give it to the POI Form
         this.bindClickOnMap();
 
-
-        //Bind the msouse over event for the shareMap feature
+        // Pierre: on le garde ?
+        // Bind the msouse over event for the shareMap feature
         this.map.on('mousemove', (e: L.LeafletMouseEvent) => {
             this.mapHover.emit(e.latlng);
         });
 
-        // We add tiles to the map
-        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-            noWrap: true,
-            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors with TravelPlanner team'
-        }).addTo(this.map);
-
-        // Add layergroups for each category of POI
-        this.markersCategories.forEach( category => {
-           this.map.addLayer((category.group.layerGroup));
-        });
+        // Add layergroups for each category of marker
+        this.markersCategories
+            .forEach(category => this.map.addLayer((category.group.layerGroup)));
 
         // And allow control on them
         var allFilters = [];
-        this.markersCategories.map( (category) => { return  category.group } ).forEach( (group) => allFilters[group.id] = group.layerGroup);
+        this.markersCategories
+            .map(category => return category.group)
+            .forEach(group => allFilters[group.id] = group.layerGroup);
 
-        this.map.addControl(L.control.layers({}, allFilters, { position: 'bottomright' }));
+        this.map.addControl(L.control.layers({}, allFilters, { position: 'bottomright'}));
 
-        // Fetch the travel async + markers from database
-        this.kuzzleService.travelStream.subscribe(travel => {
-            this.travel = travel;
+        // Fetch the travel
+        this.kuzzleService.travelStream
+            .subscribe(travel => {
+                this.travel = travel;
 
-            // TODO : Replace default null travel coming from stream with a default travel in each component, this stream
-            // will return only a valid fetched travel see @behaviorSubject;
-            if(this.travel.id){
-            // Now Fitbound the map to center the view on a BBOX containing initials markers
-            var latLngCollection = [];
-            this.travel.travelMarkerCollection.forEach((marker: TravelMarker) => {
-                latLngCollection.push(L.latLng(marker.latitude, marker.longitude));
+                if(!this.travel.id)
+                    return;
+
+                var latLngCollection = [];
+
+                // Fetch the markers
+                this.travel.travelMarkerCollection
+                    .forEach(marker => latLngCollection.push(L.latLng(marker.latitude, marker.longitude)));
+
+                // Set the map view bounds
+                this.map.fitBounds(L.latLngBounds(latLngCollection));
             });
-            var bounds = L.latLngBounds(latLngCollection);
-            this.map.fitBounds(bounds);
-            }
-        });
 
-        // ...therefore subscribe the new / update / delete of TravelMarkers
+        // subscribe to travel marker stream
         this.kuzzleService.mapService.getTravelMarkerStream()
             .subscribe(marker => this.kuzzleService.updateLocalCollection(this.markers, marker));
     }
@@ -106,6 +102,12 @@ export class MapComponent implements OnInit{
     mapInit() {
         this.map = L.map('mapid', {minZoom: 3}).setView([38.82259, -2.8125], 3);
         this.map.setMaxBounds(L.latLngBounds([84.67351256610522, -174.0234375], [-58.995311187950925, 223.2421875]));
+
+        // Add tiles to the map
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+            noWrap: true,
+            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors with TravelPlanner team'
+        }).addTo(this.map);
     }
 
     /**
@@ -141,6 +143,8 @@ export class MapComponent implements OnInit{
             }
         }));
     }
+
+
 
     /**
      * Add an onClick listener on the map so we can trigger event from it

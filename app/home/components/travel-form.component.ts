@@ -24,9 +24,7 @@ export class TravelFormComponent implements OnInit, AfterViewInit {
     travel: Travel;
     step: number;
 
-    constructor(private _router:Router) {
-
-    }
+    constructor(private _router:Router) {}
 
     /**
      * triggered on the component initialization. here, input properties are initialized

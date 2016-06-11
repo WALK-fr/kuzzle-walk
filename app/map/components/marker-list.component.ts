@@ -18,11 +18,17 @@ export class MarkerListComponent implements OnInit {
     constructor(private kuzzleService:KuzzleService) {}
 
     ngOnInit() {
-        // ...therefore subscribe the new / update / delete of TravelMarkers
+        // subscribe to the marker stream
         this.kuzzleService.mapService.getTravelMarkerStream()
             .subscribe(marker => this.kuzzleService.updateLocalCollection(this.markers, marker));
     }
 
+    /**
+     * Triggered when the user clicks on the delete button on the marker list
+     *
+     * @param $event
+     * @param marker
+     */
     deleteMarker($event, marker: TravelMarker) {
         $event.stopPropagation();
         this.kuzzleService.mapService.deleteTravelMarker(marker);
@@ -36,7 +42,10 @@ export class MarkerListComponent implements OnInit {
         this.markerInformationsEvent.emit(marker);
     }
 
-    //Handles the event emitter that comes from the map (marker-click) event (when a persisted marker is clicked)
+    /**
+     * Handles the event emitter that comes from the map (marker-click) event (when a persisted marker is clicked)
+     * @param $marker
+     */
     highlightMarker($marker){
         //remove class from previously clicked marker
         $('#panel-marker-list').find('li').removeClass('hightlight-marker');
