@@ -20,7 +20,7 @@ export class UserService {
      *
      * @returns {Subject<User>}
      */
-    public getApplicationUserStream(): Subject<User> {
+    public getCurrentApplicationUserStream(): Subject<User> {
         return this.currentApplicationUserStream;
     }
 
@@ -71,52 +71,53 @@ export class UserService {
     }
 
     /**
-     * Connect the user to the application and subscribe to userStream that will listen for user connection / disconnection.
-     * Also emit to others a hello notification.
+     * Connect the user from a jwt token in cookie.
      *
-     * If user has a jwt cookie, this will be used to connect the user.
-     *
-     * @returns {boolean}
+     * @returns {Promise<User>}
      */
-    public connectAndSendConnectionNotificationAndSubscribeToUserStream():boolean {
+    public connectUserOnKuzzleBackend(): Promise<User> {
+        return new Promise<User>((resolve, reject) => {
+            // Connection from session if the user has one in memory
 
-        // Connection from session if the user has one in memory
-        let jwt = this.cookieService.get('jwt');
-        if (jwt) {
-            this.kuzzle.setJwtToken(jwt);
-        } else {
-            return false;
-        }
+            let jwt = this.cookieService.get('jwt');
+            if (jwt) {
+                this.kuzzle.setJwtToken(jwt);
+            } else {
+                reject(new Error("User doesn't have cookie jwt, can't automatically connect him !"));
+                return;
+            }
 
-        // Fetch current application user data and then notify connection to the stream.
-        this.refreshCurrentUser().then((user: User) => {
-            this.currentApplicationUserStream.next(user); // And send this object to all subscribing components
-        }).catch((error: Error) => {
-            console.log(error.message);
+            // Fetch current application user data and then notify connection to the stream.
+            this.refreshCurrentUser().then((user: User) => {
+                resolve(user);
+            }).catch((error: Error) => {
+                reject(error);
+            });
         });
-
-        // Subscribe to variation
-        this.subscribeToConnectUserVariation();
-
-        return true;
     }
 
-    private subscribeToConnectUserVariation() {
+    /**
+     * Enable listener on joining / leaving users.
+     * Also respond to incoming user to say "hello i'm here"
+     */
+    public subscribeToConnectUserVariation() {
         var usersDataCollection = this.kuzzle.dataCollectionFactory('users');
         // Subscribe to users list to notify the user presence and listen to incoming / leaving users
         usersDataCollection.subscribe({}, {
-            // scope: 'none', // This scope must be none because we only are interested on subscription users
-            scope: 'in', // This scope must be in because we only are interested on subscription users
-            users: 'all',
-            metadata: this.user,
-            subscribeToSelf: false // We don't want to receive i'm here notification if we send it
+            scope: 'in', // Listen for notify "I'm already here"
+            users: 'all', // Listen for incoming users and leaving users
+            metadata: this.user, // We send user data each time, useful because on network error, metadata are sent back
+            subscribeToSelf: false // We don't want to receive "I'm already here" notifications if we send them.
         }, (error: any, result: any) => {
-            // Notify each users of our presence when someone join the room in the which we are.
-
             var user = new User(result.metadata);
 
+            if(user.id === null){
+                return; // TODO : Filter on subscription to avoid kuzzle BO no ID.
+            }
+
+            // Update user status depending on action
             switch (result.action) {
-                case 'publish': // Volatile message send
+                case 'publish': // Volatile message - "Already here" notification
                     // Already connected user announce themselves
                     if (result.result._source.notify === User.USER_ALREADY_HERE) {
                         user.status = User.USER_ALREADY_HERE;

@@ -24,22 +24,20 @@ declare var L:any;
 })
 export class MapComponent implements OnInit{
 
-    map:L.Map;
-    user:User;
-    travel:Travel;
-    temporaryMarker: TravelMarker;
-    markers: TravelMarker[] = [];
-    
     /** Event Emitter when map is clicked, used to trigger the POI Form **/
     @Output('map-clicked') mapClick = new EventEmitter();
     @Output('map-mousemove') mapHover = new EventEmitter();
     @Output('marker-clicked') markerClick = new EventEmitter();
 
+    map:L.Map;
+    user:User;
+    travel:Travel;
+    temporaryMarker: TravelMarker;
+    markers: TravelMarker[] = [];
     /**
      *  MARKERS - one marker per type of TravelMarkers
      */
     private markersCategories = CATEGORIES;
-    private temporaryMarker: any;
 
     constructor(private kuzzleService:KuzzleService) {
         this.travel = new Travel();
@@ -68,7 +66,7 @@ export class MapComponent implements OnInit{
         // And allow control on them
         var allFilters = [];
         this.markersCategories
-            .map(category => return category.group)
+            .map(category => {return category.group})
             .forEach(group => allFilters[group.id] = group.layerGroup);
 
         this.map.addControl(L.control.layers({}, allFilters, { position: 'bottomright'}));

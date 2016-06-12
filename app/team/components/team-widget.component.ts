@@ -23,7 +23,7 @@ export class TeamWidgetComponent implements OnInit {
     isTeamOpened = false;
     shareMyOwnMap: boolean = false;
 
-    @Input() isMapSharerActive = false; //set this to true to enable map sharing events
+    @Input() isMapSharerActive = false; // Set this to true to enable map sharing events
     @Output('share-user-map') shareMyOwnMapEvent = new EventEmitter();
     @Output('see-other-user-map') seeOtherUserMapEvent = new EventEmitter();
 
@@ -43,15 +43,20 @@ export class TeamWidgetComponent implements OnInit {
         });
 
         // Listen for change on current application user
-        this.kuzzleService.userService.getApplicationUserStream().subscribe(user => {
+        this.kuzzleService.userService.getCurrentApplicationUserStream().subscribe(user => {
             // Init current user
             this.user = user;
         });
 
         // Subscribe to incoming and leaving users notifications
         this.kuzzleService.userService.getTravelMembersStream().subscribe(user => {
+
+            if(!this.user){
+                console.warn('Suspicious behavior : No current user detected but this method is called !');
+            }
+
             // Display notification Toast
-            if (this.user && this.user.id !== user.id) {
+            if (this.user.id !== user.id) {
                 switch (user.status) {
                     case User.USER_CONNECTED:
                         Materialize.toast(user.humanName() + ' s\'est connecté !', 3000, 'team-toast');

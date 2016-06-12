@@ -51,7 +51,7 @@ export class MarkerFormComponent implements OnInit, AfterViewInit {
 
         this.travelMarker = new TravelMarker();
 
-        this.kuzzleService.userService.getApplicationUserStream().subscribe(user => {
+        this.kuzzleService.userService.getCurrentApplicationUserStream().subscribe(user => {
             this.user = user;
             this.travelMarker.userId = user.id;
         });

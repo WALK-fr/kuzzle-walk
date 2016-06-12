@@ -34,6 +34,12 @@ export class NoteService {
         return this.noteStream;
     }
 
+    /**
+     * Enable listeners for incoming notes from Kuzzle, each time a note is dispatched, this method will forward it to
+     * each components that are listening to the NoteStream.
+     * 
+     * @param travel
+     */
     public initNoteSubscriptionStream(travel:Travel) {
         var collectionName = 'notes';
         var filter = {

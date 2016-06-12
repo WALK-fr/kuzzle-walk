@@ -86,6 +86,7 @@ export class KuzzleService {
                 break;
             case User.USER_CONNECTED:
             case User.USER_DISCONNECTED:
+            case User.USER_ALREADY_HERE:
                 // Check if user is already in the collection of users
                 var probableUserIndex = documentIDCollection.indexOf(document.id);
                 var userAlreadyInCollection = probableUserIndex >= 0;
@@ -125,70 +126,86 @@ export class KuzzleService {
 
     /**
      * Load the travel with given ID that will be the base of the application.
-     * This method will automatically dispatch the travel to every components listeting on travelStream Subject
+     * It also includes Members and Markers.
      *
      * @param travelID The id of the travel we want to load from Kuzzle
      */
-    public initializeTravel(travelID: string) {
-        var travel;
+    public initializeTravel(travelID: string): Promise<Travel> {
+        return new Promise<Travel>((resolveInitialize, rejectInitialize) => {
+            var travel;
 
-        // Load travel and then init application
-        var travelLoaded = new Promise((resolve, reject) => {
-            this.kuzzle.dataCollectionFactory('travel').fetchDocument(travelID, (err, travelFromKuzzle) => {
-                // TODO : Handle errors
-                travel = new Travel(travelFromKuzzle.content);
-                travel.id = travelFromKuzzle.id;
-                resolve();
+            // Load travel and then init application
+            var travelLoaded = new Promise((resolve, reject) => {
+                this.kuzzle.dataCollectionFactory('travel').fetchDocument(travelID, (err, travelFromKuzzle) => {
+                    if (err) {
+                        reject(new Error('Error while fetching Travel in travel Initialization ! Kuzzle error message : ' + err.message));
+                        return;
+                    }
+                    travel = new Travel(travelFromKuzzle.content);
+                    travel.id = travelFromKuzzle.id;
+                    resolve();
+                });
             });
-        });
 
-        // On travel loaded
-        travelLoaded.then(() => {
+            // On travel loaded
+            travelLoaded.then(() => {
 
-            var loadTravelMarkersPromise = new Promise((resolve, reject) => {
-                var filter = {
-                    query: {
-                        match: {
-                            travelId: travel.id
+                var loadTravelMarkersPromise = new Promise((resolve, reject) => {
+                    var filter = {
+                        query: {
+                            match: {
+                                travelId: travel.id
+                            }
                         }
-                    }
-                };
-                // Fetch all markers
-                this.kuzzle.dataCollectionFactory('markers').advancedSearch(filter, {}, (err, markersFromKuzzle) => {
-                    // When we get results, we notify the stream of fetched documents
-                    markersFromKuzzle.documents.forEach(document => {
-                        var travelMarker = new TravelMarker(document.content);
-                        travelMarker.id = document.id;
-                        travelMarker.status = KuzzleDocument.STATUS_FETCHED;
-                        this.updateLocalCollection(travel.travelMarkerCollection, travelMarker);
-                    });
-                    resolve();
-                });
-            });
-            var loadUsersPromise = new Promise((resolve, reject) => {
-                // Fetch users
-                var userFilters = {
-                    filter: {
-                        terms: {_id: travel.members}
-                    }
-                };
-                this.kuzzle.security.searchUsers(userFilters, (error, usersFromKuzzle) => {
-                    travel.members = []; // Reset array because id are replaced by instances of User
-                    usersFromKuzzle.users
-                        .forEach((document) => {
-                            let user = new User(document.content);
-                            user.id = document.id;
-                            travel.members.push(user);
+                    };
+                    // Fetch all markers
+                    this.kuzzle.dataCollectionFactory('markers').advancedSearch(filter, {}, (err, markersFromKuzzle) => {
+
+                        if(err){
+                            reject(new Error('Error while fetching markers in travel Initialization ! Kuzzle error message : ' + err.message));
+                            return;
+                        }
+                        // When we get results, we notify the stream of fetched documents
+                        markersFromKuzzle.documents.forEach(document => {
+                            var travelMarker = new TravelMarker(document.content);
+                            travelMarker.id = document.id;
+                            travelMarker.status = KuzzleDocument.STATUS_FETCHED;
+                            this.updateLocalCollection(travel.travelMarkerCollection, travelMarker);
                         });
+                        resolve();
+                    });
+                });
+                var loadUsersPromise = new Promise((resolve, reject) => {
+                    // Fetch users
+                    var userFilters = {
+                        filter: {
+                            terms: {_id: travel.members}
+                        }
+                    };
+                    this.kuzzle.security.searchUsers(userFilters, (error, usersFromKuzzle) => {
+                        travel.members = []; // Reset array because id are replaced by instances of User
+                        if (error) {
+                            reject(new Error('Error while fetching users in travel Initialization ! Kuzzle error message : ' + error.message));
+                            return;
+                        }
 
-                    // Validated action
-                    resolve();
+                        // Parse users and hydrate travel
+                        usersFromKuzzle.users
+                            .forEach((document) => {
+                                let user = new User(document.content);
+                                user.id = document.id;
+                                travel.members.push(user);
+                            });
+
+                        // Validated action
+                        resolve();
+                    });
+
                 });
 
-            });
-
-            // When everything is loaded, we dispatch the travel
-            Promise.all([loadTravelMarkersPromise, loadUsersPromise]).then(promisesResult => this._travelStream.next(travel))
+                // When everything is loaded, we mark promise as resolved
+                Promise.all([loadTravelMarkersPromise, loadUsersPromise]).then(() => resolveInitialize(travel)).catch((error: Error) => rejectInitialize(error));
+            }).catch((error : Error) => {rejectInitialize(error)});
         });
     }
 

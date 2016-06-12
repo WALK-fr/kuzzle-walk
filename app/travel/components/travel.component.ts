@@ -1,17 +1,18 @@
-import {Component, AfterViewInit, OnInit} from "@angular/core";
-import {TravelSelectorComponent} from "./travel-selector.component";
-import {Router} from "@angular/router-deprecated";
-import {MapComponent, MarkerFormComponent, MarkerListComponent} from "../../map/index";
-import {NavbarComponent} from "../../shared/index";
-import {Travel} from "../index";
-import {ChatComponent} from "../../chat/index";
-import {KuzzleService} from "../../shared/kuzzle/index";
-import {NotesComponent} from "../../notes/index";
-import {TeamWidgetComponent} from "../../team/components/team-widget.component";
-import LatLng = L.LatLng;
+import { Component, AfterViewInit, OnInit } from "@angular/core";
+import { TravelSelectorComponent } from "./travel-selector.component";
+import { Router } from "@angular/router-deprecated";
+import { MapComponent, MarkerFormComponent, MarkerListComponent } from "../../map/index";
+import { NavbarComponent } from "../../shared/index";
+import { Travel } from "../index";
+import { ChatComponent } from "../../chat/index";
+import { KuzzleService } from "../../shared/kuzzle/index";
+import { NotesComponent } from "../../notes/index";
+import { TeamWidgetComponent } from "../../team/components/team-widget.component";
 import { TravelMarker } from "../../map/models/travel-marker.model";
-import {MarkerDetailComponent} from "../../map/components/marker-detail.component";
-import {MarkerComponent} from "../../map/components/marker.component";
+import { MarkerDetailComponent } from "../../map/components/marker-detail.component";
+import { MarkerComponent } from "../../map/components/marker.component";
+import { User } from "../../users/models/user";
+import LatLng = L.LatLng;
 
 // this is used to accept jquery token at compilation time
 declare var $: any;
@@ -29,36 +30,48 @@ declare var $: any;
 export class TravelComponent implements OnInit, AfterViewInit {
 
     isChatOpened = false;
-    testmarker = true;
     //when clicking on a marker of the list, it triggers the display of it's informations
     markerToDisplay;
     chatUnreadMessages = 0;
-    travel: Travel;
     TABS = {TAB_MARKER_FORM: 'panel-form', TAB_MARKER_LIST: 'panel-marker-list', TAB_SCHEDULE: 'panel-scheduler'};
 
 
     constructor(private kuzzleService: KuzzleService, private _router: Router) {
-        this.travel = new Travel();
     }
 
     ngOnInit() {
-        // Connection
-        let hasSessionCookie = this.kuzzleService.userService.connectAndSendConnectionNotificationAndSubscribeToUserStream();
+        // Connect the user to kuzzle and then bootstrap
+        this.kuzzleService.userService.connectUserOnKuzzleBackend()
+            .then((user) => {
+                // Bootstrap application
+                this.bootstrapApplication(user.travels[0], user); // TODO : Add possibility to choose travel
+            })
+            .catch((error) => {
+                // Othewise send error and direct to home login form
+                console.error(error.message);
+                this._router.navigate(['Home']);
+                return;
+            });
+    }
 
-        if (!hasSessionCookie) {
-            // Force reconnect
-            this._router.navigate(['Home']);
-            return;
-        }
-
-        // We fetch the travel and on response we init all streams
-        this.kuzzleService.travelStream.subscribe((x) => {
-            this.travel = x;
-            this.initApplication();
-        });
-
-        // Bootstrap application
-        this.kuzzleService.initializeTravel('AVS5a8AIeivQYXVQtlJN')
+    /**
+     * Initialize the application for a given user and TravelID selected.
+     *
+     * @param travelID
+     * @param user
+     */
+    private bootstrapApplication(travelID: string, user: User) {
+        // Initialize travel for given ID
+        this.kuzzleService.initializeTravel(travelID)
+            .then((travel: Travel) => {
+                this.initApplicationKuzzleListeners(travel); // Initialize the application streams and listeners
+                this.kuzzleService.userService.getCurrentApplicationUserStream().next(user); // Notify all component of the current application user
+                this.kuzzleService.updateLocalCollection(travel.members, user); // Mark user as connected in current travel members list
+                this.kuzzleService.travelStream.next(travel); // And then dispatch travel to each component
+            })
+            .catch((error: Error) => {
+                console.error(error.message)
+            })
     }
 
     /**
@@ -88,6 +101,16 @@ export class TravelComponent implements OnInit, AfterViewInit {
                 $('#tp-right-panel').height(dynamicHeight);
             })
         });
+    }
+
+    /**
+     * Init all kuzzle stream subscribers of the application. Those will dispatch incoming documents and data to
+     * internal stream listeners that subscribe on them.
+     */
+    private initApplicationKuzzleListeners(travel: Travel) {
+        this.kuzzleService.noteService.initNoteSubscriptionStream(travel);
+        this.kuzzleService.mapService.initTravelMarkersSubscriptionStream(travel);
+        this.kuzzleService.userService.subscribeToConnectUserVariation();
     }
 
     /**
@@ -122,7 +145,7 @@ export class TravelComponent implements OnInit, AfterViewInit {
     }
 
     /**
-     * Open / Close the chat panel
+     * This method is called inside the template to open / close the chat component.
      */
     toggleChat() {
         this.isChatOpened = !this.isChatOpened;
@@ -131,14 +154,11 @@ export class TravelComponent implements OnInit, AfterViewInit {
         }
     }
 
-    incrementChatUnreadMessages(){
-        this.chatUnreadMessages++;
-    }
     /**
-     * Init all streams of the application
+     * This method is called inside the template to increment unread chat upon receiving a new message without having
+     * the chat message pop-in opened.
      */
-    private initApplication() {
-        this.kuzzleService.noteService.initNoteSubscriptionStream(this.travel);
-        this.kuzzleService.mapService.initTravelMarkersSubscriptionStream(this.travel);
+    incrementChatUnreadMessages() {
+        this.chatUnreadMessages++;
     }
 }

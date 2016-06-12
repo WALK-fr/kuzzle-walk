@@ -1,4 +1,3 @@
-import { Travel } from "../../travel/models/travel.model";
 import { KuzzleDocument } from "../../shared/kuzzle/model/kuzzle-document.model";
 /**
  * Represent one user of the application.
@@ -11,7 +10,7 @@ export class User extends KuzzleDocument{
     firstName: string;
     lastName: string;
     photoUrl: string;
-    travels: Travel[];
+    travels: any[];
 
     constructor(obj?: any) {
         super();
