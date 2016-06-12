@@ -87,7 +87,8 @@ export class MarkerFormComponent implements OnInit, AfterViewInit {
         this.travelMarker.type = $('#type-selector').val();
 
         //emit to delete the temporary marker on the map
-        //this.markerDelete.emit(this.travelMarker);
+        this.markerDelete.emit(this.travelMarker);
+        
         if(this.travelMarker.latitude && this.travelMarker.longitude){
             this.kuzzleService.mapService.publishTravelMarker(this.travelMarker);
 
@@ -96,7 +97,6 @@ export class MarkerFormComponent implements OnInit, AfterViewInit {
             $(document).ready(function() {
                 Materialize.updateTextFields();
             });
-
         }
     }
 }

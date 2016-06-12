@@ -195,4 +195,11 @@ export class MapComponent implements OnInit{
     seeOtherUserMap(user:User, allowSharing:boolean){
 
     }
+
+    /**
+     * triggered when a marker is persisted in order to delete the temporary and display the persistant
+     */
+    deleteTemporaryMarker() {
+        this.temporaryMarker = null;
+    }
 }
