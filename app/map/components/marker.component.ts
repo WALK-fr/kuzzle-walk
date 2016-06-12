@@ -38,15 +38,17 @@ export class MarkerComponent implements OnInit, OnDestroy, OnChanges {
      */
     ngOnChanges() {
 
-        // used to handle the bouncing
-        if(this.selectedMarkerId == this.markerModel.id)
-            console.log("BOUNCE MICHEL BOUNCE");
-
         if(!this.layerGroup)
             return;
 
         this.removeMarker();
         this.createMarker();
+
+        // used to handle the bouncing
+        if(this.selectedMarkerId == this.markerModel.id){
+            L.Marker.stopAllBouncingMarkers();
+            this.leafletMarker.bounce(3);
+        }
     }
 
     /**

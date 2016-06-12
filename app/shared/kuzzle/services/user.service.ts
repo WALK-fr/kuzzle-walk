@@ -65,8 +65,8 @@ export class UserService {
      */
     public logout() {
         this.kuzzle.logout(function (err, res) {
-            console.log(err);
-            console.log(res);
+            //console.log(err);
+            //console.log(res);
         });
     }
 

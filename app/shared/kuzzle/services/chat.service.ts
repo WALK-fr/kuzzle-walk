@@ -49,7 +49,7 @@ export class ChatService {
      */
     public sendMessage(message: ChatMessage) {
         if (message.travelId === undefined || message.travelId === null) {
-            console.log('Please provide travelId for message');
+            //console.log('Please provide travelId for message');
             return
         }
         return this.kuzzle.dataCollectionFactory('message').publishMessage(message);

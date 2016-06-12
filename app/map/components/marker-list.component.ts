@@ -15,6 +15,7 @@ export class MarkerListComponent implements OnInit {
     searchMarkers: TravelMarker[] = [];
 
     @Output('display-marker-information') markerInformationsEvent = new EventEmitter();
+    @Output('bounce-marker') markerBounceEvent = new EventEmitter();
 
     constructor(private kuzzleService:KuzzleService) {}
 
@@ -78,6 +79,16 @@ export class MarkerListComponent implements OnInit {
     emitMarkerInformationsEvent(marker:TravelMarker){
         this.markerInformationsEvent.emit(marker);
     }
+
+    /**
+     * Send an event to bounce a marker in the map.
+     *
+     * @param marker
+     */
+    emitMarkerBounceEvent(marker:TravelMarker){
+        this.markerBounceEvent.emit(marker);
+    }
+
 
     /**
      * Handles the event emitter that comes from the map (marker-click) event (when a persisted marker is clicked)

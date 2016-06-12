@@ -23,8 +23,8 @@ export class InviteFriendsFormComponent {
      */
     inviteFriends(form) {
         // TODO: Handle invite friends here
-        console.log("friends: " + form.friends);
-        console.log("message: " + form.message);
+        //console.log("friends: " + form.friends);
+        //console.log("message: " + form.message);
 
         this.inviteFriendsEvent.emit({});
     }
