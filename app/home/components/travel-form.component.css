@@ -20,10 +20,6 @@ input#destination{
     font-weight: 300;
 }
 
-#tp-first-form-social-networks button{
-    display: block;
-    width: 100%;
-}
 
 #tp-form-card3 textarea {
     min-height: 7rem;

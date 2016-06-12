@@ -61,6 +61,8 @@ In order to persist the marker, you have to fill the form on the right side of t
 
 Once the form is submitted, the marker is persisted and the other members will receive the marker.
 
+You also can filter the markers that are displayed on the map, simply use filters at the bottom-right corner of the map.
+
 ### Write some notes
 
 ![Notes button](http://img11.hostingpics.net/pics/507677notes.png "Notes button")
@@ -78,6 +80,11 @@ You can use the search on the right to see only the poi you wants
 
 Then click on one POI in the list and you can see the details of that one.
 
+
+### Mobile ready
+
+You can also use the tool with a smartphone or a tablet, try it ! On smartphones, you can also disable the map with the pink button at the top. this
+can be handful if you just want to see some markers informations.
 
 ## Angular 2 Style Guide
 

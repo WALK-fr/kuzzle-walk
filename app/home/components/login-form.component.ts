@@ -6,7 +6,8 @@ import {KuzzleService} from "../../shared/kuzzle/index";
 
 @Component({
     selector: 'login-form',
-    templateUrl: 'app/home/components/login-form.component.html'
+    templateUrl: 'app/home/components/login-form.component.html',
+    styleUrls: ['app/home/components/login-form.component.css'],
 })
 export class LoginFormComponent {
 
