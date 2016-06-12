@@ -24,6 +24,7 @@ export class NoteComponent{
     @Input() note;
     itemForm: ControlGroup;
     @Output('display-item') itemDisplayEvent = new EventEmitter();
+    @Output('item-deleted') itemDeletedEvent = new EventEmitter();
 
     constructor(private _element: ElementRef, private _kuzzle: KuzzleService, private fb: FormBuilder) {
         this.createForm();
@@ -58,7 +59,7 @@ export class NoteComponent{
     }
 
     /**
-     * load the details of a specific note
+     * load the details of a specific note item
      */
     emitItem(item:Item){
         this.itemDisplayEvent.emit({note: this.note, item: item});
@@ -73,6 +74,7 @@ export class NoteComponent{
         var itemIndex = this.note.items.indexOf(item);
         this.note.items.splice(itemIndex, 1);
 
+        this.itemDeletedEvent.emit({});
         //delete the item and push the note to kuzzle
         this._kuzzle.noteService.publishNote(this.note);
     }

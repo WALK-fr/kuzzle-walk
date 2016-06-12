@@ -1,22 +1,22 @@
-<div *ngIf="currentNoteAndItem" class="card" >
+<div *ngIf="currentNote && currentItem" class="card" >
     <div class="card-content">
         <div *ngIf="!editMode">
-            <span class="card-title activator grey-text text-darken-4">{{currentNoteAndItem.item.title}}</span>
+            <span class="card-title activator grey-text text-darken-4">{{currentItem.title}}</span>
             <div class="panel-item-content">
-                {{currentNoteAndItem.item.content}}
+                {{currentItem.content}}
             </div>
         </div>
         <div *ngIf="editMode">
-            <span class="card-title activator grey-text text-darken-4">{{currentNoteAndItem.item.title}}</span>
+            <span class="card-title activator grey-text text-darken-4">{{currentItem.title}}</span>
             <form [ngFormModel]="itemForm" (ngSubmit)="editItem(itemForm.value)">
                 <div class="form-input input-field">
-                    <input [ngFormControl]="itemForm.controls['title']"  [(ngModel)]="currentNoteAndItem.item.title" #itemTitle id="item-title"
+                    <input [ngFormControl]="itemForm.controls['title']"  [(ngModel)]="currentItem.title" #itemTitle id="item-title"
                            type="text"
                            value="">
                     <label class="active" for="item-title">Item title</label>
                 </div>
                 <div class="input-field">
-                    <textarea #itemContent [(ngModel)]="currentNoteAndItem.item.content"
+                    <textarea #itemContent [(ngModel)]="currentItem.content"
                               [ngFormControl]="itemForm.controls['content']"
                               id="item-content"
                               class="materialize-textarea"></textarea>
@@ -31,17 +31,17 @@
             <i class="large material-icons">edit</i>
         </a>
         <ul>
-            <li (click)="markAsDone($event,currentNoteAndItem.item)">
+            <li (click)="markAsDone($event)">
                 <a class="btn-floating green darken-1">
                     <i class="material-icons">done</i>
                 </a>
             </li>
-            <li (click)="cancelItem(currentNoteAndItem.item)">
+            <li (click)="cancelItem()">
                 <a class="btn-floating red darken-1">
                     <i class="material-icons">delete</i>
                 </a>
             </li>
-            <li *ngIf="!currentNoteAndItem.item.done" (click)="toggleEditMode()">
+            <li *ngIf="!currentItem.done" (click)="toggleEditMode()">
                 <a class="btn-floating orange">
                     <i class="material-icons">mode_edit</i>
                 </a>

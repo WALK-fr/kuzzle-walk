@@ -23,12 +23,13 @@
                 <note *ngFor="let note of allNotes, let index = index"
                       [note]="note"
                       id="note-{{note.id}}"
-                      (display-item)="loadItem($event)">
+                      (display-item)="loadItem($event)"
+                      (delete-item)="clearCurrentDisplayedItem()">
                 </note>
             </div>
             <!-- this contain the note detail zone -->
-            <div fadeToggle *ngIf="currentNoteAndItem" id="panel-details" class="col s12 m6 l6 grey lighten-4">
-                <note-detail [currentNoteAndItem]="currentNoteAndItem"> </note-detail>
+            <div fadeToggle *ngIf="shouldWeDisplayInformations()" id="panel-details" class="col s12 m6 l6 grey lighten-4">
+                <note-detail [currentNote]="allNotes[currentNoteIndex]" [currentItem]="allNotes[currentNoteIndex].items[currentItemIndex]"> </note-detail>
             </div>
         </section>
     </div>

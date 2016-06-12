@@ -24,7 +24,8 @@ export class NotesComponent implements OnInit{
 
     allNotes:Note[] = [];
     travel:Travel;
-    currentNoteAndItem;
+    currentNoteIndex;
+    currentItemIndex;
     noteForm: ControlGroup;
     isNoteFormActive: boolean = false;
 
@@ -53,7 +54,23 @@ export class NotesComponent implements OnInit{
      * load the details of a specific note
      */
     loadItem(currentNoteAndItem){
-        this.currentNoteAndItem = currentNoteAndItem;
+        this.currentNoteIndex = this.allNotes.findIndex( note => { return note.id === currentNoteAndItem.note.id });
+        this.currentItemIndex = this.allNotes[this.currentNoteIndex].items.findIndex( item => { return item.title === currentNoteAndItem.item.title });
+    }
+
+    /**
+     * When item is deleted from the list, we need to clear the currentNote and currentItem
+     */
+    clearCurrentDisplayedItem(){
+        this.currentItemIndex = null;
+        this.currentNoteIndex = null;
+    }
+
+    /**
+     * All conditions for item informations to be displayed
+     */
+    shouldWeDisplayInformations(){
+        return this.currentNoteIndex != null && this.currentNoteIndex != -1 && this.currentItemIndex != null && this.currentItemIndex != -1;
     }
 
     /**

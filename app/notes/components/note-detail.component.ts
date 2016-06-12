@@ -19,7 +19,8 @@ declare var Materialize:any;
 })
 export class NoteDetailComponent{
 
-    @Input() currentNoteAndItem;
+    @Input() currentNote;
+    @Input() currentItem;
     itemForm: ControlGroup;
     editMode: boolean = false;
 
@@ -43,10 +44,10 @@ export class NoteDetailComponent{
      * @param form
      */
     editItem(form) {
-        var itemIndex = this.currentNoteAndItem.note.items.indexOf(this.currentNoteAndItem.item);
-        this.currentNoteAndItem.note.items[itemIndex].title = form.title;
-        this.currentNoteAndItem.note.items[itemIndex].content = form.content;
-        this._kuzzle.noteService.publishNote(this.currentNoteAndItem.note);
+        var itemIndex = this.currentNote.items.indexOf(this.currentItem);
+        this.currentNote.items[itemIndex].title = form.title;
+        this.currentNote.items[itemIndex].content = form.content;
+        this._kuzzle.noteService.publishNote(this.currentNote);
         this.toggleEditMode();
     }
 
@@ -57,12 +58,12 @@ export class NoteDetailComponent{
      * @param note
      * @param item
      */
-    markAsDone($event:any, item:Item) {
-        var itemIndex = this.currentNoteAndItem.note.items.indexOf(item);
-        this.currentNoteAndItem.note.items[itemIndex].done = !this.currentNoteAndItem.note.items[itemIndex].done;
+    markAsDone($event:any) {
+        var itemIndex = this.currentNote.items.indexOf(this.currentItem);
+        this.currentNote.items[itemIndex].done = !this.currentNote.items[itemIndex].done;
 
         //update the document in Kuzzle
-        this._kuzzle.noteService.publishNote(this.currentNoteAndItem.note);
+        this._kuzzle.noteService.publishNote(this.currentNote);
     }
 
     /**
@@ -71,13 +72,14 @@ export class NoteDetailComponent{
      * @param note
      * @param item
      */
-    cancelItem(item:Item) {
-        var itemIndex = this.currentNoteAndItem.note.items.indexOf(item);
-        this.currentNoteAndItem.note.items.splice(itemIndex, 1);
+    cancelItem() {
+        var itemIndex = this.currentNote.items.indexOf(this.currentItem);
+        this.currentNote.items.splice(itemIndex, 1);
 
         //delete the item and push the note to kuzzle
-        this._kuzzle.noteService.publishNote(this.currentNoteAndItem.note);
-        this.currentNoteAndItem = null;
+        this._kuzzle.noteService.publishNote(this.currentNote);
+        this.currentNote= null;
+        this.currentItem= null;
     }
     
 }
