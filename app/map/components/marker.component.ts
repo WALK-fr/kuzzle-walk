@@ -72,7 +72,11 @@ export class MarkerComponent implements OnInit, OnDestroy, OnChanges {
 
         // if it is a persisted marker, we emit an event with the marker id on click
         if(this.markerModel.id !== null)
-            this.leafletMarker.on('click', () => this.markerClick.emit({id: this.markerModel.id}));
+            this.leafletMarker.on('click', () => {
+                L.Marker.stopAllBouncingMarkers();
+                this.leafletMarker.bounce(3);
+                this.markerClick.emit({id: this.markerModel.id})
+            });
 
         this.layerGroup.addLayer(this.leafletMarker);
     }

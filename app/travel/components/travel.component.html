@@ -44,7 +44,7 @@
                     </div>
                     <!-- ALL SPOTS-->
                     <div id="{{ TABS.TAB_MARKER_LIST }}" class="col s12">
-                        <marker-list #markerList (display-marker-information)="displayMarkerInformation($event)"></marker-list>
+                        <marker-list #markerList (display-marker-information)="displayMarkerInformation($event); map.highlightMarkerOnMap($event)"></marker-list>
                     </div>
                     <div id="{{ TABS.TAB_SCHEDULE }}" class="col s12">
                         <h4> Schedule yout trip day by day </h4>

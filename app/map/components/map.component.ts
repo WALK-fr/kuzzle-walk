@@ -159,6 +159,14 @@ export class MapComponent implements OnInit{
     }
 
     /**
+     * When a marker is clicked on the panel list, we make it bounce on the map
+     * @param marker
+     */
+    highlightMarkerOnMap(marker:TravelMarker){
+        //TODO- bounce the marker through the marker component
+    }
+
+    /**
      * triggered when a marker is clicked. This is used to forward the information to the travel component
      * @param markerInfo
      */
