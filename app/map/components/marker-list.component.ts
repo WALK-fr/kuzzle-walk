@@ -39,7 +39,7 @@ export class MarkerListComponent implements OnInit {
             .distinctUntilChanged()
             .map(searchTerm => {
                 return this.markers.filter( marker => {
-                    return marker.name.indexOf(searchTerm) != -1;
+                    return marker.name.toLowerCase().indexOf(searchTerm.toLowerCase()) != -1;
                 })
             });
 
