@@ -47,7 +47,12 @@ export class NotesComponent implements OnInit{
 
         // Subscribe to note stream
         this._kuzzle.noteService.getNoteStream()
-            .subscribe(note => this._kuzzle.updateLocalCollection(this.allNotes, note));
+            .subscribe(note => {
+                if(note.status === "delete" || note.status === "update"){
+                    this.clearCurrentDisplayedItem();
+                }
+                this._kuzzle.updateLocalCollection(this.allNotes, note);
+            });
     }
 
     /**
