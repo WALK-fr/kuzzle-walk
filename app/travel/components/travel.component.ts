@@ -55,6 +55,11 @@ export class TravelComponent implements OnInit, AfterViewInit {
                 this._router.navigate(['Home']);
                 return;
             });
+
+        // Initialize travel
+        this.kuzzleService.travelStream.subscribe(travel => {
+            this.travel = travel;
+        });
     }
 
     /**

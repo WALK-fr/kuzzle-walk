@@ -6,8 +6,8 @@
     </div>
     <div class="col s12 m8 l8">
         <div *ngIf="marker.userId !== null" class="chip right">
-            <img src="{{ travel.members[marker.userId].photoUrl }}" alt="Contact Person">
-            {{ travel.members[marker.userId].humanName() }}
+            <img src="{{getMarkerUser().photoUrl }}" alt="Contact Person">
+            {{ getMarkerUser().humanName() }}
         </div>
     </div>
 </div>
