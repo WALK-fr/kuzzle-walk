@@ -52,6 +52,7 @@ interface Kuzzle {
      * @return KuzzleDataCollection
      */
     dataCollectionFactory(index?: string, collection?: string): KuzzleDataCollection; // Todo change optionnal parameters when signature will be updated
+    checkToken(jwt: string, callBack: (err, res) => any): void;
 }
 
 interface KuzzleDataCollection {

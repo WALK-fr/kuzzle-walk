@@ -79,19 +79,65 @@ export class UserService {
         return new Promise<User>((resolve, reject) => {
             // Connection from session if the user has one in memory
 
+
             let jwt = this.cookieService.get('jwt');
-            if (jwt) {
-                this.kuzzle.setJwtToken(jwt);
-            } else {
+            if (!jwt) {
                 reject(new Error("User doesn't have cookie jwt, can't automatically connect him !"));
                 return;
             }
 
+            // TODO : Mock code need checkToken method to work
+            this.kuzzle.setJwtToken(jwt);
             // Fetch current application user data and then notify connection to the stream.
             this.refreshCurrentUser().then((user: User) => {
                 resolve(user);
             }).catch((error: Error) => {
                 reject(error);
+            });
+
+            // TODO : Seems kuzzle is broken because respond not connected, uncomment when OK
+            // // Check token validity if found
+            // this.checkTokenValidity(jwt)
+            //     .then((token) => {
+            //         // Set token if valid
+            //         this.kuzzle.setJwtToken(token);
+            //
+            //         // Fetch current application user data and then notify connection to the stream.
+            //         this.refreshCurrentUser().then((user: User) => {
+            //             resolve(user);
+            //         }).catch((error: Error) => {
+            //             reject(error);
+            //         });
+            //
+            //     })
+            //     .catch((error) => {
+            //         reject(error); // Forward error
+            //     });
+        });
+    }
+
+    /**
+     * Query kuzzle to check the validity of a session Token.
+     *
+     * @param token The jwt token to check.
+     * @returns {Promise<string>}
+     */
+    private checkTokenValidity(token): Promise<string> {
+        return new Promise((resolve, reject) => {
+
+            this.kuzzle.checkToken(token, (err, res) => {
+                if (err) {
+                    console.log(err);
+                    reject(new Error(err.message));
+                    return;
+                }
+
+                if (res.valid !== true) {
+                    reject(new Error('Invalid JWT Token ! Kuzzle Reason : ' + res.state));
+                    return;
+                }
+
+                resolve(token);
             });
         });
     }

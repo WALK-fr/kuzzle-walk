@@ -31,13 +31,15 @@ export class TravelComponent implements OnInit, AfterViewInit {
 
     isChatOpened = false;
     isMapDisplayed = true;
-    //when clicking on a marker of the list, it triggers the display of it's informations
-    markerToDisplay;
+    //when clicking on a marker of the list, it triggers the display of it's information
+    markerToDisplay: TravelMarker;
     chatUnreadMessages = 0;
+    travel: Travel;
     TABS = {TAB_MARKER_FORM: 'panel-form', TAB_MARKER_LIST: 'panel-marker-list', TAB_SCHEDULE: 'panel-scheduler'};
 
 
     constructor(private kuzzleService: KuzzleService, private _router: Router) {
+        this.travel = new Travel();
     }
 
     ngOnInit() {
@@ -48,7 +50,7 @@ export class TravelComponent implements OnInit, AfterViewInit {
                 this.bootstrapApplication(user.travels[0], user); // TODO : Add possibility to choose travel
             })
             .catch((error) => {
-                // Othewise send error and direct to home login form
+                // Otherwise send error and direct to home login form
                 console.error(error.message);
                 this._router.navigate(['Home']);
                 return;
@@ -76,8 +78,7 @@ export class TravelComponent implements OnInit, AfterViewInit {
     }
 
     /**
-     * triggered after the view initialization. this is used to apply
-     * materialize js on the select
+     * Triggered after the view initialization. This is used to apply materialize js on the select.
      */
     ngAfterViewInit() {
         $('.dropdown-button').dropdown({
@@ -94,7 +95,7 @@ export class TravelComponent implements OnInit, AfterViewInit {
         this.adjustMapAndPanelHeight();
     }
 
-    adjustMapAndPanelHeight(){
+    public adjustMapAndPanelHeight(){
         if(window.innerWidth > 600) {
             //set the map to fit the window height
             $(document).ready(function () {

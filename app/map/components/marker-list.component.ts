@@ -1,7 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import {TravelMarker} from "../models/travel-marker.model";
 import {KuzzleService} from "../../shared/kuzzle/services/kuzzle.service";
-import {Travel} from "../../travel/index";
 
 declare var $: any;
 
@@ -35,8 +34,9 @@ export class MarkerListComponent implements OnInit {
     }
 
     /**
-     * send an event to display the detail of a marker in the right panel
-     * @param $marker
+     * Send an event to display the detail of a marker in the right panel.
+     *
+     * @param marker
      */
     emitMarkerInformationsEvent(marker:TravelMarker){
         this.markerInformationsEvent.emit(marker);
@@ -44,6 +44,7 @@ export class MarkerListComponent implements OnInit {
 
     /**
      * Handles the event emitter that comes from the map (marker-click) event (when a persisted marker is clicked)
+     *
      * @param $marker
      */
     highlightMarker($marker){

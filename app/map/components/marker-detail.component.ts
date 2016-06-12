@@ -12,7 +12,6 @@ export class MarkerDetailComponent{
     @Input() marker: TravelMarker;
     @Output('back-to-list') backToListEvent = new EventEmitter();
 
-
     /**
      * Remove the information of a marker and display the default panel view
      */

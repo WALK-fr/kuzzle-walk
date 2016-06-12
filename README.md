@@ -50,8 +50,13 @@ You will also receive a notification if members join or leave the current sessio
 
 ### Insert some markers
 
-Just click on the map to put a temporary marker therefore, fill the form that opened on the right side of the screen
-to add some information related to that marker.
+Just click on the map to put a temporary marker therefore.
+
+To add a marker you have two way :
+- Click somewhere on the map.
+- Use the search bar on the bottom left corner by typings you location and press `ENTER`.
+
+Then fill the form that opened on the right side of the screen and add some information related to that marker.
 
 You just have to click submit and others people will receive that marker instantly, it is also persisted in the backend.
 
