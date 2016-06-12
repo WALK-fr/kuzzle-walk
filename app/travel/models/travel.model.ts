@@ -23,4 +23,15 @@ export class Travel extends KuzzleDocument{
         this.travelMarkerCollection = [] || [];
         this.members = obj && obj.members || [];
     }
+
+    /**
+     * Return the list of currently connected users.
+     *
+     * @returns {User[]}
+     */
+    public connectedUsers(): User[] {
+        return this.members.filter(member => {
+            return member.isOnline()
+        });
+    }
 }

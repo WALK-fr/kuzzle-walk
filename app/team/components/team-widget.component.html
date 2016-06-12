@@ -1,6 +1,6 @@
 <a (click)="toggleTeam()" id="tp-team-opener" [class.righten]="isTeamOpened" class="orange">
     <i class="material-icons">people</i>
-    <span class="badge-nb-connected white grey-text text-darken-1 z-depth-2">{{travel.members.length}}</span>
+    <span class="badge-nb-connected white grey-text text-darken-1 z-depth-2">{{travel.connectedUsers().length}}</span>
 </a>
 <section *ngIf="isTeamOpened" id="tp-team-window" class="orange">
     <ul class="collection">

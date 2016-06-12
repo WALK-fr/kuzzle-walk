@@ -95,7 +95,6 @@ export class TravelComponent implements OnInit, AfterViewInit {
     }
 
     adjustMapAndPanelHeight(){
-        console.log(window.innerWidth);
         if(window.innerWidth > 600) {
             //set the map to fit the window height
             $(document).ready(function () {
@@ -175,13 +174,5 @@ export class TravelComponent implements OnInit, AfterViewInit {
      */
     toggleMap(){
         this.isMapDisplayed = !this.isMapDisplayed;
-    }
-
-    /**
-     * Init all streams of the application
-     */
-    private initApplication() {
-        this.kuzzleService.noteService.initNoteSubscriptionStream(this.travel);
-        this.kuzzleService.mapService.initTravelMarkersSubscriptionStream(this.travel);
     }
 }
