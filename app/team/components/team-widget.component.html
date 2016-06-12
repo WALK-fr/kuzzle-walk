@@ -4,10 +4,10 @@
 </a>
 <section *ngIf="isTeamOpened" id="tp-team-window" class="orange">
     <ul class="collection">
-        <!-- is connected feature TODO - replace i == 1 by the value of the test userInfo.isLoggedIn when implemented -->
+        <!-- is connected feature -->
         <li *ngFor="let userInfo of travel.members; let i = index"
             class="team-item collection-item avatar"
-            [class.white]="i == 1">
+            [class.white]="userInfo.isOnline()">
 
             <img class="circle" src="{{ userInfo.photoUrl }}" alt="Contact Person">
             <span class="title">{{ userInfo.humanName() }}</span>
@@ -22,7 +22,7 @@
                     <label [attr.for]="'shareBox'+i">Allow map sharing</label>
                 </p>
             </div>
-            <!-- is connected feature TODO - replace i == 1 by the value of the test userInfo.isLoggedIn when implemented -->
+            <!-- is connected feature -->
             <i class="is-connected" [class.green]="userInfo.isOnline()"></i>
         </li>
     </ul>
