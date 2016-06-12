@@ -204,7 +204,10 @@ export class KuzzleService {
                 });
 
                 // When everything is loaded, we mark promise as resolved
-                Promise.all([loadTravelMarkersPromise, loadUsersPromise]).then(() => resolveInitialize(travel)).catch((error: Error) => rejectInitialize(error));
+                Promise.all([loadTravelMarkersPromise, loadUsersPromise])
+                    .then(() => resolveInitialize(travel))
+                    .catch((error: Error) => rejectInitialize(error)
+                );
             }).catch((error : Error) => {rejectInitialize(error)});
         });
     }
