@@ -17,12 +17,21 @@
         <div id="marker-type" class="chip orange white-text">
             {{ marker.type }}
         </div>
+
+
+        <span *ngIf="marker.price" class="badge marker-price cyan white-text">
+            {{ marker.price }}
+        </span>
+
+        <span *ngIf="marker.duration" class="badge marker-duration pink white-text">
+            {{ marker.duration }}
+        </span>
     </div>
 
     <div class="marker-element col s12">
         <p id="marker-address"> {{ marker.address }} </p>
         <h2> {{ marker.name }} </h2>
-        <p>
+        <p *ngIf="marker.description">
             {{ marker.description }}
         </p>
     </div>

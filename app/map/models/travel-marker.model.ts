@@ -22,7 +22,6 @@ export class TravelMarker extends KuzzleDocument{
         this.longitude = obj && obj.longitude || null;
         this.travelId = obj && obj.travelId || null;
         this.userId = obj && obj.userId || null;
-        this.userId = obj && obj.userId || null;
         this.address = obj && obj.address || null;
         this.type = obj && obj.type || null;
         this.duration = obj && obj.duration || null;

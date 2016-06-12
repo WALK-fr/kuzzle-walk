@@ -2,9 +2,31 @@
     margin-top: 30px;
 }
 
+#marker-detail-hero{
+    position: relative;
+}
+
 .marker-element{
     position: relative;
     margin-top: 10px;
+}
+
+.marker-price, .marker-duration{
+    position: absolute;
+    font-weight: 300;
+    width: 3rem;
+    font-size: 1rem;
+    border-radius: 2px;
+}
+
+.marker-duration{
+    bottom: 10px;
+    left: 20px;
+}
+
+.marker-price{
+    top: 10px;
+    right: 20px;
 }
 
 #marker-type{

@@ -9,10 +9,17 @@
         id="marker-{{ marker.id }}">
 
         <img src="http://lorempixel.com/100/100/city/?random={{ index }}" alt="" class="circle">
+
         <span class="title">{{ marker.name }}</span>
-        <p> {{ marker.description|slice:0:120 }} </p>
+
+        <p *ngIf="marker.description"> {{ marker.description|slice:0:120 }} </p>
+
         <div class="secondary-content">
-            <i (click)="deleteMarker($event, marker)" class="material-icons red-text right">clear</i>
+            <i (click)="deleteMarker($event, marker)" class="material-icons red-text delete-marker">clear</i>
         </div>
+
+        <span *ngIf="marker.price" class="marker-price badge cyan white-text">
+            {{ marker.price }}$
+        </span>
     </li>
 </ul>

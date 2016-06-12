@@ -23,3 +23,19 @@
     top: 10px;
     right: 10px;
 }
+
+.delete-marker{
+    position: absolute;
+    top: -10px;
+    right: -10px;
+}
+
+.marker-price{
+    font-weight: 300;
+    width: 3rem;
+    font-size: 0.8rem;
+    border-radius: 2px;
+    position: absolute;
+    left: 14px;
+    bottom: 7px;
+}
