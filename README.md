@@ -39,13 +39,21 @@ Once the application is running, you can use one of the three built-in accounts 
 - pcavalet / pcavalet
 
 ### Use the chat to communicate and see connected people
+
+![Chat button](http://img11.hostingpics.net/pics/884697chat.png "Chat button")
+
 In the navigation bar, you can find a button that toggles a real time chat. There is a tracker on the messages you have not read yet.
 
-On the left, you can find the of the travel's members and a little green circle that indicate if they are currently connected or not.
+
+![Team button](http://img11.hostingpics.net/pics/535439team.png "Team button")
+
+On the left, you can find the list of the travel's members and a little green circle that indicate if they are currently connected or not.
 
 You will also receive a notification when a member starts or stops working on the travel.
 
 ### Insert some markers
+
+![Search Field](http://img11.hostingpics.net/pics/930205search.png "Search field")
 
 You can click on the map or use the search bar on the bottom left corner to add a temporary marker.
 
@@ -55,10 +63,19 @@ Once the form is submitted, the marker is persisted and the other members will r
 
 ### Write some notes
 
+![Notes button](http://img11.hostingpics.net/pics/507677notes.png "Notes button")
+
 Alongside the chat’s button in the navbar, you can find the note’s button that allows you to write some notes related
 to your travel.
 
 Click on it and a new panel will appear, and the usage is quite straightforward, so let's try it !
+
+### Search some POI
+
+You can use the search on the right to see only the poi you wants
+
+![Search List](http://img11.hostingpics.net/pics/202196markerlist.png "Search and poi list")
+
 
 ## Angular 2 Style Guide
 
