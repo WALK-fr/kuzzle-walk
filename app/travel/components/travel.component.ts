@@ -30,6 +30,7 @@ declare var $: any;
 export class TravelComponent implements OnInit, AfterViewInit {
 
     isChatOpened = false;
+    isMapDisplayed = true;
     //when clicking on a marker of the list, it triggers the display of it's informations
     markerToDisplay;
     chatUnreadMessages = 0;
@@ -90,17 +91,24 @@ export class TravelComponent implements OnInit, AfterViewInit {
             }
         );
 
-        //set the map to fit the window height
-        $(document).ready(function () {
-            var dynamicHeight = window.innerHeight - $('#tp-top-bar').height();
-            $('#tp-content').height(dynamicHeight);
-            $('#tp-right-panel').height(dynamicHeight);
-            $(window).resize(function () {
+        this.adjustMapAndPanelHeight();
+    }
+
+    adjustMapAndPanelHeight(){
+        console.log(window.innerWidth);
+        if(window.innerWidth > 600) {
+            //set the map to fit the window height
+            $(document).ready(function () {
                 var dynamicHeight = window.innerHeight - $('#tp-top-bar').height();
                 $('#tp-content').height(dynamicHeight);
                 $('#tp-right-panel').height(dynamicHeight);
-            })
-        });
+                $(window).resize(function () {
+                    var dynamicHeight = window.innerHeight - $('#tp-top-bar').height();
+                    $('#tp-content').height(dynamicHeight);
+                    $('#tp-right-panel').height(dynamicHeight);
+                })
+            });
+        }
     }
 
     /**
@@ -158,7 +166,22 @@ export class TravelComponent implements OnInit, AfterViewInit {
      * This method is called inside the template to increment unread chat upon receiving a new message without having
      * the chat message pop-in opened.
      */
-    incrementChatUnreadMessages() {
+    incrementChatUnreadMessages(){
         this.chatUnreadMessages++;
+    }
+
+    /**
+     * Open / Close the map on mobile devices
+     */
+    toggleMap(){
+        this.isMapDisplayed = !this.isMapDisplayed;
+    }
+
+    /**
+     * Init all streams of the application
+     */
+    private initApplication() {
+        this.kuzzleService.noteService.initNoteSubscriptionStream(this.travel);
+        this.kuzzleService.mapService.initTravelMarkersSubscriptionStream(this.travel);
     }
 }

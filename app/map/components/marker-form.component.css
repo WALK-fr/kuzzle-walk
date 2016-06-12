@@ -1,0 +1,12 @@
+#tp-marker-form{
+    position: relative;
+}
+
+#form-didactic-overlay{
+    position: absolute;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    color: #000;
+    z-index: 999;
+    padding: 20px;
+}

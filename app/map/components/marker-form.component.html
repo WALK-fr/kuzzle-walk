@@ -1,4 +1,9 @@
 <form [ngFormModel]="markerForm" (ngSubmit)="persistNewMarker(markerForm.value)" id="tp-marker-form">
+
+    <div *ngIf="(!travelMarker.latitude && !travelMarker.longitude)" id="form-didactic-overlay" class="valign-wrapper">
+        <h4 class="valign"> First thing first, click on the map or do a research do add a new Marker !</h4>
+    </div>
+
     <h5> Basic informations </h5>
     <div class="row">
         <div class="input-field col s12">

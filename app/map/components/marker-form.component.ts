@@ -13,6 +13,7 @@ declare var Materialize: any;
 @Component({
     selector: 'marker-form',
     templateUrl: 'app/map/components/marker-form.component.html',
+    styleUrls: ['app/map/components/marker-form.component.css']
 })
 export class MarkerFormComponent implements OnInit, AfterViewInit {
 

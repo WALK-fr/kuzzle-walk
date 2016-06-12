@@ -19,6 +19,11 @@
                    class="btn-floating btn-large waves-effect waves-light #26c6da cyan lighten-1"><i
                         class="material-icons">note_add</i></a>
             </div>
+
+            <div *ngIf="isMapTogglerActivated" class="col right hide-on-med-and-up right-align">
+                <a (click)="toggleMap()"
+                   class="btn-floating btn-large waves-effect waves-light pink"><i class="material-icons">map</i></a>
+            </div>
         </div>
     </div>
 </div>
