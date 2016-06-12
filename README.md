@@ -27,8 +27,7 @@ Go to the root folder of the current repository and run `npm install` then run `
 Then just visit [http://localhost:3000](http://localhost:3000)
 
 ## Disclaimer
-_That is app is given for test purpose only, which mean that the code is not ready for a production usage
-but only to demonstrate the power of angular2 coupled with a Kuzzle backend._
+_This app was created for a testing purpose, which means that the code is not production ready. The goal is to illustrate the power of Angular 2 and the Kuzzle backend used together._
 
 ## Usage
 
@@ -40,35 +39,28 @@ Once the application is running, you can use one of the three built-in accounts 
 - pcavalet / pcavalet
 
 ### Use the chat to communicate and see connected people
-On the top you have a chat pop-in that listen for incoming chat messages.
-You also have the count of not read messages in the little circle linked.
+In the navigation bar, you can find a button that toggles a real time chat. There is a tracker on the messages you have not read yet.
 
-On the left side of the screen you have the list of travel's members and a little greed circle that indicate if they are
-currently connected and editing the travel with you.
+On the left, you can find the of the travel's members and a little green circle that indicate if they are currently connected or not.
 
-You will also receive a notification if members join or leave the current session.
+You will also receive a notification when a member starts or stops working on the travel.
 
 ### Insert some markers
 
-Just click on the map to put a temporary marker therefore.
+You can click on the map or use the search bar on the bottom left corner to add a temporary marker.
 
-To add a marker you have two way :
-- Click somewhere on the map.
-- Use the search bar on the bottom left corner by typings you location and press `ENTER`.
+In order to persist the marker, you have to fill the form on the right side of the screen and add some informations related to the marker.
 
-Then fill the form that opened on the right side of the screen and add some information related to that marker.
-
-You just have to click submit and others people will receive that marker instantly, it is also persisted in the backend.
+Once the form is submitted, the marker is persisted and the other members will receive the marker.
 
 ### Write some notes
 
-Alongside the button of chat at the top of the screen, you have the note button that allows you to write some notes related
+Alongside the chat’s button in the navbar, you can find the note’s button that allows you to write some notes related
 to your travel.
 
-Click on it and a new panel will pan, it's enough easy to understand how it work, so let's try it !
+Click on it and a new panel will appear, and the usage is quite straightforward, so let's try it !
 
 ## Angular 2 Style Guide
 
-The root code folder is located in the `app` folder, compiled files are server from `compiled` folder.
+The root code folder is located in the `app` folder, compiled files are served from `compiled` folder.
 Please read more about angular2 style guide : [https://angular.io/styleguide](https://angular.io/styleguide)
-
