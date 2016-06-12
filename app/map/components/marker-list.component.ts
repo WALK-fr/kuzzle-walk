@@ -29,7 +29,7 @@ export class MarkerListComponent implements OnInit {
 
         //binding the search input and search in all markers name
         var keyUpObservable = Observable.fromEvent($("#searchMarkers"), "keyup")
-            .map(e => {
+            .map((e: any) => {
                 return e.target.value
             })
             .filter(text => {
