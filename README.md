@@ -70,11 +70,13 @@ to your travel.
 
 Click on it and a new panel will appear, and the usage is quite straightforward, so let's try it !
 
-### Search some POI
+### Search some POI and view details of it
 
 You can use the search on the right to see only the poi you wants
 
 ![Search List](http://img11.hostingpics.net/pics/202196markerlist.png "Search and poi list")
+
+Then click on one POI in the list and you can see the details of that one.
 
 
 ## Angular 2 Style Guide
