@@ -88,7 +88,9 @@ export class MapComponent implements OnInit{
                     .forEach(marker => latLngCollection.push(L.latLng(marker.latitude, marker.longitude)));
 
                 // Set the map view bounds
-                this.map.fitBounds(L.latLngBounds(latLngCollection));
+                if (latLngCollection.length > 0) {
+                    this.map.fitBounds(L.latLngBounds(latLngCollection));
+                }
             });
 
         // subscribe to travel marker stream
@@ -192,5 +194,12 @@ export class MapComponent implements OnInit{
      */
     seeOtherUserMap(user:User, allowSharing:boolean){
 
+    }
+
+    /**
+     * triggered when a marker is persisted in order to delete the temporary and display the persistant
+     */
+    deleteTemporaryMarker() {
+        this.temporaryMarker = null;
     }
 }
