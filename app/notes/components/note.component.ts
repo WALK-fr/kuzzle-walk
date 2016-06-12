@@ -25,8 +25,12 @@ export class NoteComponent{
     itemForm: ControlGroup;
     @Output('display-item') itemDisplayEvent = new EventEmitter();
 
-    constructor(private _element: ElementRef, private _kuzzle: KuzzleService, fb: FormBuilder) {
-        this.itemForm = fb.group({
+    constructor(private _element: ElementRef, private _kuzzle: KuzzleService, private fb: FormBuilder) {
+        this.createForm();
+    }
+
+    createForm(){
+        this.itemForm = this.fb.group({
             title: ['', Validators.required],
             content: ['']
         });
@@ -40,6 +44,7 @@ export class NoteComponent{
     persistNewItem(form){
         this.note.items.push(new Item({title: form.title, content: form.content.replace("\r\n", "\\n"), done: false}));
         this._kuzzle.noteService.publishNote(this.note);
+        this.createForm();
     }
 
     /**

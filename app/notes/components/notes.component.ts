@@ -28,11 +28,15 @@ export class NotesComponent implements OnInit{
     noteForm: ControlGroup;
     isNoteFormActive: boolean = false;
 
-    constructor(private _kuzzle: KuzzleService, fb: FormBuilder) {
-        this.noteForm = fb.group({
+    constructor(private _kuzzle: KuzzleService, private fb: FormBuilder) {
+        this.createForm();
+        this.travel = new Travel();
+    }
+
+    createForm(){
+        this.noteForm = this.fb.group({
             name: ['', Validators.required]
         });
-        this.travel = new Travel();
     }
 
     ngOnInit(){
@@ -72,6 +76,7 @@ export class NotesComponent implements OnInit{
         $('.bottom-sheet').animate({
             scrollTop: $('#tp-all-notes-panel').height()
         }, 'slow');
+        this.createForm();
     }
 
     /**
