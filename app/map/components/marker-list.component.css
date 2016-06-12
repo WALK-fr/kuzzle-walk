@@ -8,3 +8,18 @@
     background-color: #eeeeee;
     border-bottom: 2px solid #ff9800 !important;
 }
+
+#panel-marker-list-search{
+    position:relative;
+}
+
+#panel-marker-list-search input[type=search]:focus{
+    border-bottom:  1px solid #ff9800 !important;
+    box-shadow: 0 1px 0 0 #ff9800;
+}
+
+#panel-marker-list-search i{
+    position:absolute;
+    top: 10px;
+    right: 10px;
+}

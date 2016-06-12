@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import {TravelMarker} from "../models/travel-marker.model";
 import {KuzzleService} from "../../shared/kuzzle/services/kuzzle.service";
+import {Observable} from "rxjs/Observable";
 
 declare var $: any;
 
@@ -11,6 +12,7 @@ declare var $: any;
 })
 export class MarkerListComponent implements OnInit {
     markers: TravelMarker[] = [];
+    searchMarkers: TravelMarker[] = [];
 
     @Output('display-marker-information') markerInformationsEvent = new EventEmitter();
 
@@ -19,7 +21,42 @@ export class MarkerListComponent implements OnInit {
     ngOnInit() {
         // subscribe to the marker stream
         this.kuzzleService.mapService.getTravelMarkerStream()
-            .subscribe(marker => this.kuzzleService.updateLocalCollection(this.markers, marker));
+            .subscribe(marker => {
+                this.kuzzleService.updateLocalCollection(this.markers, marker);
+                //we use the markers collection just to keep all markers somewhere, we will use the searchMarkers var in HTML
+                this.kuzzleService.updateLocalCollection(this.searchMarkers, marker);
+            });
+
+        //binding the search input and search in all markers name
+        var keyUpObservable = Observable.fromEvent($("#searchMarkers"), "keyup")
+            .map(e => {
+                return e.target.value
+            })
+            .filter(text => {
+                return (text.length >= 3)
+            })
+            .debounceTime(400)
+            .distinctUntilChanged()
+            .map(searchTerm => {
+                return this.markers.filter( marker => {
+                    return marker.name.indexOf(searchTerm) != -1;
+                })
+            });
+
+        //fill a second array with all matching markers
+        keyUpObservable.subscribe(markersResults => {
+            this.searchMarkers = markersResults
+        });
+    }
+
+    /**
+     * return searchMarkers only if there is more than 3 characters in the input
+     */
+    getContextMarkers(){
+        if($("#searchMarkers").val().length > 3){
+            return this.searchMarkers;
+        }
+        return this.markers;
     }
 
     /**

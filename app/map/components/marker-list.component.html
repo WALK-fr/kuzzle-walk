@@ -1,5 +1,9 @@
+<div class="row" id="panel-marker-list-search">
+    <input type="search" id="searchMarkers" placeholder="Search in markers (minimum 3 characters)"/>
+    <i class="material-icons black-text">search</i>
+</div>
 <ul class="collection" id="panel-marker-list">
-    <li *ngFor="let marker of markers, let index = index"
+    <li *ngFor="let marker of getContextMarkers(), let index = index"
         (click)="emitMarkerInformationsEvent(marker)"
         class="collection-item avatar"
         id="marker-{{ marker.id }}">
