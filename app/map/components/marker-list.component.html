@@ -5,6 +5,7 @@
 <ul class="collection" id="panel-marker-list">
     <li *ngFor="let marker of getContextMarkers(), let index = index"
         (click)="emitMarkerInformationsEvent(marker)"
+        (mouseover)="emitMarkerBounceEvent(marker)"
         class="collection-item avatar"
         id="marker-{{ marker.id }}">
 

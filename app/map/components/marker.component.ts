@@ -23,6 +23,7 @@ export class MarkerComponent implements OnInit, OnDestroy, OnChanges {
     layerGroup: any;
     @Input('marker-model') markerModel: TravelMarker;
     @Input('map') map: any;
+    @Input('selected-marker') selectedMarkerId: string;
     @Output('marker-click') markerClick = new EventEmitter();
 
     /**
@@ -36,12 +37,18 @@ export class MarkerComponent implements OnInit, OnDestroy, OnChanges {
      * remove the old marker and create the new one on the map when data is modified
      */
     ngOnChanges() {
-        //
+
         if(!this.layerGroup)
             return;
 
         this.removeMarker();
         this.createMarker();
+
+        // used to handle the bouncing
+        if(this.selectedMarkerId == this.markerModel.id){
+            L.Marker.stopAllBouncingMarkers();
+            this.leafletMarker.bounce(3);
+        }
     }
 
     /**

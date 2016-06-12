@@ -17,7 +17,8 @@ declare var L:any;
             <marker *ngIf="temporaryMarker" [map]="map" [marker-model]="temporaryMarker"></marker>
             <marker *ngFor="let marker of markers"
                 (marker-click)="markerClicked($event)"
-                [map]="map" [marker-model]="marker"></marker>
+                [map]="map" [marker-model]="marker"
+                [selected-marker]="selectedMarkerId"></marker>
         </div>
 `,
     directives: [MarkerComponent]
@@ -32,6 +33,7 @@ export class MapComponent implements OnInit{
     map:L.Map;
     user:User;
     travel:Travel;
+    selectedMarkerId: string;
     temporaryMarker: TravelMarker;
     markers: TravelMarker[] = [];
     /**
@@ -163,7 +165,8 @@ export class MapComponent implements OnInit{
      * @param marker
      */
     highlightMarkerOnMap(marker:TravelMarker){
-        //TODO- bounce the marker through the marker component
+        // change the selected marker id
+        this.selectedMarkerId = marker.id;
     }
 
     /**

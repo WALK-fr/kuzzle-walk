@@ -13,7 +13,7 @@ export class MarkerDetailComponent implements OnInit{
     @Output('back-to-list') backToListEvent = new EventEmitter();
 
     ngOnInit(){
-        console.log("marker detail :", this.travel);
+        //console.log("marker detail :", this.travel);
     }
 
     /**

@@ -23,7 +23,7 @@ export class LoginFormComponent {
      * handle login when the form is submitted
      */
     login() {
-        console.log(this.userForm);
+        //console.log(this.userForm);
         // this.kuzzleService.userService.login(this);
     }
 
