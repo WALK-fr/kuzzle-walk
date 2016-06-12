@@ -1,0 +1,8 @@
+#form-didactic-overlay{
+    position: absolute;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    color: #FFF;
+    z-index: 999;
+    padding: 20px;
+}

@@ -12,11 +12,13 @@ export class NavbarComponent {
     @Input() isChatActivated = false;
     @Input() isNotesActivated = false;
     @Input() isLoginformActivated = false;
+    @Input() isMapTogglerActivated = false;
     @Input() chatUnreadMessages;
 
     @Output('toggle-chat') chatOuput = new EventEmitter();
     @Output('toggle-notes') notesOutput = new EventEmitter();
     @Output('toggle-login-form') loginOutput = new EventEmitter();
+    @Output('toggle-map-panel') mapOutput = new EventEmitter();
 
     constructor(private _router: Router){}
 
@@ -30,6 +32,10 @@ export class NavbarComponent {
 
     toggleLoginForm(){
         this.loginOutput.emit({});
+    }
+
+    toggleMap(){
+        this.mapOutput.emit({});
     }
 
 }

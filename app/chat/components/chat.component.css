@@ -7,7 +7,7 @@ chat{
 #tp-chat-window{
     position: absolute;
     right: 0px;
-    top: 200px;
+    top: 170px;
     z-index: 1;
 }
 
@@ -17,7 +17,15 @@ chat{
     margin-left: 66%;
     border-style: solid;
     border-width: 0 15px 26.0px 15px;
-    border-color: transparent transparent #FF9800 transparent;
+    border-color: transparent transparent #FFFFFF transparent;
+}
+
+
+#tp-chat-window #tp-chat-window-container{
+    display: block;
+    position: relative;
+    height: 200px;
+    padding: 10px;
 }
 
 @media only screen and (min-width: 601px) {
@@ -25,9 +33,13 @@ chat{
         width: 0px;
         height: 0px;
         margin-left: 79%;
+        border-color: transparent transparent #FF9800 transparent;
     }
     #tp-chat-window{
         top: 180px;
+    }
+    #tp-chat-window #tp-chat-window-container{
+        height: 300px;
     }
 }
 
@@ -35,13 +47,9 @@ chat{
     #tp-chat-window{
         top: 110px;
     }
-}
-
-#tp-chat-window #tp-chat-window-container{
-    display: block;
-    position: relative;
-    min-height: 450px;
-    padding: 10px;
+    #tp-chat-window #tp-chat-window-container{
+        height: 450px;
+    }
 }
 
 #tp-chat-window-input{

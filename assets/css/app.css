@@ -55,7 +55,7 @@ h1, h2, h3, h4, h5, h6{
   background: #fff;
   border-radius: 0;
   box-shadow: none;
-  width: 340px;
+  width: 300px;
 }
 
 .leaflet-control-search .search-button:hover {
@@ -78,7 +78,7 @@ h1, h2, h3, h4, h5, h6{
   bottom: 54px;
   background:#FFF;
   min-height: 200px;
-  max-width: 340px;
+  max-width: 300px;
 }
 
 .leaflet-control-search .search-tooltip li{
@@ -88,6 +88,11 @@ h1, h2, h3, h4, h5, h6{
 
 .leaflet-control-search .search-tooltip li:hover{
   background:#eee;
+}
+@media only screen and (max-width: 601px) {
+  .leaflet-control-attribution{
+    display:none;
+  }
 }
 
 

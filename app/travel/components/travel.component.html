@@ -3,8 +3,10 @@
 
         <navbar (toggle-chat)="toggleChat()"
                 (toggle-notes)="notes.displayModal()"
+                (toggle-map-panel)="toggleMap()"
                 [isChatActivated]="true"
                 [isLoginformActivated]="false"
+                [isMapTogglerActivated]="true"
                 [isNotesActivated]="true"
                 [chatUnreadMessages]="chatUnreadMessages"></navbar>
 
@@ -16,7 +18,7 @@
 </div>
 <section id="tp-content">
     <div class="row">
-        <div id="map-container" class="col s12 m7 l8">
+        <div [hidden]="!isMapDisplayed" id="map-container" class="col s12 m7 l8">
             <map #map
                  (map-mousemove)="sharePositionWithTeam($event)"
                  (map-clicked)="markerForm.setMarkerPosition($event); requestFormFocus(TABS.TAB_MARKER_FORM)"

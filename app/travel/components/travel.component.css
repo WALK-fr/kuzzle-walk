@@ -15,10 +15,17 @@
     position:relative;
 }
 
+/** min-height map on mobile devices **/
+@media only screen and (max-width: 601px) {
+    #map-container, #mapid{
+        height:320px;
+    }
+}
+
 #tp-panel-container{
-    margin: 0;
-    padding: 0px;
-    background: #FFF;
+margin: 0;
+padding: 0px;
+background: #FFF;
 }
 
 
