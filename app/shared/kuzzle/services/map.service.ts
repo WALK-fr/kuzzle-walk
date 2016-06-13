@@ -86,7 +86,7 @@ export class MapService {
             //console.log('Please provide travelId for message');
             return
         }
-        return this.kuzzle.dataCollectionFactory('map-sharing').publishMessage(mapPosition);
+        return this.kuzzle.dataCollectionFactory('mapSharing').publishMessage(mapPosition);
     }
 
     public getMapPositionStream():Subject<MapPosition> {
@@ -94,7 +94,7 @@ export class MapService {
     }
 
     public initMapPositionSubscriptionStream(usersToSuscribe: User[], travel:Travel) {
-        var collectionName = 'map-sharing';
+        var collectionName = 'mapSharing';
         var filter = {
             and: [
                 {
