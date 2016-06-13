@@ -11,7 +11,10 @@ import { User } from "../../../users/models/user";
 export class MapService {
     private kuzzle:Kuzzle;
     private travelMarkerStream:Subject<TravelMarker> = new Subject<TravelMarker>();
-    private travelMapPositionStram:Subject<MapPosition> = new Subject<MapPosition>();
+
+    //map sharing
+    private travelMapPositionStream:Subject<MapPosition> = new Subject<MapPosition>();
+    mapPositionKuzzleRoom;
 
     public constructor(kuzzle:Kuzzle) {
         this.kuzzle = kuzzle;
@@ -87,25 +90,27 @@ export class MapService {
     }
 
     public getMapPositionStream():Subject<MapPosition> {
-        return this.travelMapPositionStram;
+        return this.travelMapPositionStream;
     }
 
     public initMapPositionSubscriptionStream(usersToSuscribe: User[], travel:Travel) {
         var collectionName = 'map-sharing';
         var filter = {
-            query: {
-                match: {
-                    travelId: travel.id,
-                    userId: usersToSuscribe.map( user => user.id)
+            and: [
+                {
+                    term: { travelId: travel.id }
                 },
-            }
+                {
+                    term: { userId: usersToSuscribe.map( user => user.id) }
+                }
+            ]
         };
 
-        // Subscribe to variation of notes collection (Create / update / delete)
-        this.kuzzle.dataCollectionFactory(collectionName).subscribe(filter, {}, (error:any, result:any) => {
+        // Subscribe to variation of map moves
+        this.mapPositionKuzzleRoom = this.kuzzle.dataCollectionFactory(collectionName).subscribe({}, {}, (error:any, result:any) => {
             // and then you notify the observer
             var mapPosition = new MapPosition(result.result._source);
-            this.travelMapPositionStram.next(mapPosition);
+            this.travelMapPositionStream.next(mapPosition);
         });
     }
 }

@@ -71,6 +71,11 @@ export class TravelComponent implements OnInit, AfterViewInit {
                 this.userMapSharing.push({member: member, isSharingActive: false});
             });
         });
+
+        //map sharing subscription
+        this.kuzzleService.mapService.getMapPositionStream().subscribe( mapPosition =>{
+            console.log("received from user "+mapPosition.userId+ " position : lat"+mapPosition.latlng.lat+" lng:"+mapPosition.latlng.lng);
+        });
     }
 
     /**
@@ -135,6 +140,7 @@ export class TravelComponent implements OnInit, AfterViewInit {
         this.kuzzleService.noteService.initNoteSubscriptionStream(travel);
         this.kuzzleService.mapService.initTravelMarkersSubscriptionStream(travel);
         this.kuzzleService.userService.subscribeToConnectUserVariation();
+        this.kuzzleService.mapService.initMapPositionSubscriptionStream(this.userMapSharing, travel);
     }
 
     /**
@@ -153,7 +159,7 @@ export class TravelComponent implements OnInit, AfterViewInit {
     }
 
     /**
-     * enable kuzzle publish current user map position
+     * toggle enable / disable kuzzle publish current user map position
      * @param shareUserMap
      */
     shareMyMap(shareUserMap:boolean){
@@ -166,12 +172,11 @@ export class TravelComponent implements OnInit, AfterViewInit {
      */
     seeOtherUserMap(userSharingInfo){
         //update members for the kuzzle filter
-        console.log("User wants to see "+userSharingInfo.user.humanName()+" map mousemoves ? : ", userSharingInfo.allowSharing);
         this.userMapSharing.find( mapSharing =>  mapSharing.member.id === userSharingInfo.user.id).isSharingActive = userSharingInfo.allowSharing;
         //TODO - unsubscribe to current map sharing stream
-
-        //TODO subscribe with the updated filter
-
+        // this.kuzzleService.mapService.mapPositionKuzzleRoom.unsubscribe();
+        // //TODO subscribe with the updated filter
+        // this.kuzzleService.mapService.initMapPositionSubscriptionStream(this.userMapSharing, this.travel);
     }
     
     /**
@@ -186,7 +191,7 @@ export class TravelComponent implements OnInit, AfterViewInit {
                 {
                     travelId: this.travel.id,
                     latlng: position,
-                    userId: this.currentUser
+                    userId: this.currentUser.id
                 }
             ));
         }
