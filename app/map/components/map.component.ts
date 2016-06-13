@@ -6,6 +6,8 @@ import { TravelMarker } from "../models/travel-marker.model";
 import { CATEGORIES } from "../marker-categories";
 import { MarkerComponent } from "./marker.component";
 import LeafletMouseEvent = L.LeafletMouseEvent;
+import Point = L.Point;
+import Circle = L.Circle;
 
 // this is used to accept jquery token at compilation time
 declare var $:any;
@@ -35,6 +37,7 @@ export class MapComponent implements OnInit{
     map:L.Map;
     user:User;
     travel:Travel;
+    temporaryPoint: Circle = new L.Circle(new L.LatLng(48,2.3), 3);
     selectedMarkerId: string;
     temporaryMarker: TravelMarker;
     markers: TravelMarker[] = [];
@@ -56,6 +59,15 @@ export class MapComponent implements OnInit{
 
         // We bind the clicks to the emitter so we can give it to the POI Form
         this.bindClickOnMap();
+
+        //map sharing subscription
+        this.kuzzleService.mapService.getMapPositionStream().subscribe( mapPosition =>{
+            console.log("received from user "+mapPosition.userId+ " position : lat"+mapPosition.latlng.lat+" lng:"+mapPosition.latlng.lng);
+            if(this.temporaryPoint){
+                this.map.removeLayer(this.temporaryPoint);
+                this.temporaryPoint.setLatLng(mapPosition.latlng).addTo(this.map);
+            }
+        });
 
         // Pierre: on le garde ?
         // Bind the msouse over event for the shareMap feature

@@ -107,7 +107,7 @@ export class MapService {
         };
 
         // Subscribe to variation of map moves
-        this.mapPositionKuzzleRoom = this.kuzzle.dataCollectionFactory(collectionName).subscribe({}, {}, (error:any, result:any) => {
+        this.mapPositionKuzzleRoom = this.kuzzle.dataCollectionFactory(collectionName).subscribe(filter, {}, (error:any, result:any) => {
             // and then you notify the observer
             var mapPosition = new MapPosition(result.result._source);
             this.travelMapPositionStream.next(mapPosition);

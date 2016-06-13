@@ -71,11 +71,6 @@ export class TravelComponent implements OnInit, AfterViewInit {
                 this.userMapSharing.push({member: member, isSharingActive: false});
             });
         });
-
-        //map sharing subscription
-        this.kuzzleService.mapService.getMapPositionStream().subscribe( mapPosition =>{
-            console.log("received from user "+mapPosition.userId+ " position : lat"+mapPosition.latlng.lat+" lng:"+mapPosition.latlng.lng);
-        });
     }
 
     /**
@@ -173,10 +168,10 @@ export class TravelComponent implements OnInit, AfterViewInit {
     seeOtherUserMap(userSharingInfo){
         //update members for the kuzzle filter
         this.userMapSharing.find( mapSharing =>  mapSharing.member.id === userSharingInfo.user.id).isSharingActive = userSharingInfo.allowSharing;
-        //TODO - unsubscribe to current map sharing stream
-        // this.kuzzleService.mapService.mapPositionKuzzleRoom.unsubscribe();
-        // //TODO subscribe with the updated filter
-        // this.kuzzleService.mapService.initMapPositionSubscriptionStream(this.userMapSharing, this.travel);
+        // TODO - unsubscribe to current map sharing stream
+        this.kuzzleService.mapService.mapPositionKuzzleRoom.unsubscribe();
+        //TODO subscribe with the updated filter
+        this.kuzzleService.mapService.initMapPositionSubscriptionStream(this.userMapSharing, this.travel);
     }
     
     /**
