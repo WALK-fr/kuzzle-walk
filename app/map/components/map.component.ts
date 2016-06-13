@@ -1,10 +1,11 @@
-import { Component, OnInit, Output, EventEmitter } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
 import { Travel } from "../../travel/models/travel.model";
 import { KuzzleService } from "../../shared/kuzzle/index";
 import { User } from "../../users/index";
 import { TravelMarker } from "../models/travel-marker.model";
 import { CATEGORIES } from "../marker-categories";
 import { MarkerComponent } from "./marker.component";
+import LeafletMouseEvent = L.LeafletMouseEvent;
 
 // this is used to accept jquery token at compilation time
 declare var $:any;
@@ -29,6 +30,7 @@ export class MapComponent implements OnInit{
     @Output('map-clicked') mapClick = new EventEmitter();
     @Output('map-mousemove') mapHover = new EventEmitter();
     @Output('marker-clicked') markerClick = new EventEmitter();
+    @Input() isMapSharingActive = false;
 
     map:L.Map;
     user:User;
@@ -58,7 +60,7 @@ export class MapComponent implements OnInit{
         // Pierre: on le garde ?
         // Bind the msouse over event for the shareMap feature
         this.map.on('mousemove', (e: L.LeafletMouseEvent) => {
-            this.mapHover.emit(e.latlng);
+            this.emitMouseMouvements(e);
         });
 
         // Add layergroups for each category of marker
@@ -180,26 +182,19 @@ export class MapComponent implements OnInit{
     }
 
     /**
-     * enable kuzzle publish current user map position
-     * @param shareUserMap
-     */
-    shareMyMap(shareUserMap:boolean){
-
-    }
-
-    /**
-     * enable subscribing to another user map move events
-     * @param user
-     * @param allowSharing
-     */
-    seeOtherUserMap(user:User, allowSharing:boolean){
-
-    }
-
-    /**
      * triggered when a marker is persisted in order to delete the temporary and display the persistant
      */
     deleteTemporaryMarker() {
         this.temporaryMarker = null;
+    }
+
+    /**
+     * emit current latlng of the user mouse on the map
+     * @param e
+     */
+    emitMouseMouvements(e:LeafletMouseEvent){
+        if(this.isMapSharingActive) {
+            this.mapHover.emit(e.latlng);
+        }
     }
 }

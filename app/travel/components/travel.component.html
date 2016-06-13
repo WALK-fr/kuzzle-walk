@@ -20,12 +20,14 @@
     <div class="row">
         <div [hidden]="!isMapDisplayed" id="map-container" class="col s12 m7 l8">
             <map #map
+                 [isMapSharingActive]="isMapSharingActive"
                  (map-mousemove)="sharePositionWithTeam($event)"
                  (map-clicked)="markerForm.setMarkerPosition($event); requestFormFocus(TABS.TAB_MARKER_FORM)"
                  (marker-clicked)="markerList.highlightMarker($event); requestFormFocus(TABS.TAB_MARKER_LIST)">
             </map>
-            <team (share-user-map)="map.shareMyMap(shareUserMap)"
-                  (see-other-user-map)="map.seeOtherUserMap(user, allowSharing)">
+            <team (share-user-map)="shareMyMap($event)"
+                  (see-other-user-map)="seeOtherUserMap($event)"
+                  [isMapSharerActive]="true">
             </team>
         </div>
         <div class="col s12 m5 l4" id="tp-panel-container">

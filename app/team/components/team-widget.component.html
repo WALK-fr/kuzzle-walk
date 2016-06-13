@@ -11,8 +11,7 @@
 
             <img class="circle" src="{{ userInfo.photoUrl }}" alt="Contact Person">
             <span class="title">{{ userInfo.humanName() }}</span>
-            <!--  TODO - replace i == 1 by the value of the test userInfo.isLoggedIn when implemented -->
-            <div *ngIf="isMapSharerActive && i == 1">
+            <div *ngIf="isMapSharerActive">
                 <p *ngIf="user.id === userInfo.id">
                     <input (change)="shareMyMap()" type="checkbox" id="shareBox{{ i }}"/>
                     <label [attr.for]="'shareBox'+i">Share my map</label>

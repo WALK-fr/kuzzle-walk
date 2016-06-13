@@ -13,6 +13,7 @@ import { MarkerDetailComponent } from "../../map/components/marker-detail.compon
 import { MarkerComponent } from "../../map/components/marker.component";
 import { User } from "../../users/models/user";
 import LatLng = L.LatLng;
+import { MapPosition } from "../../notes/models/map-position.model";
 
 // this is used to accept jquery token at compilation time
 declare var $: any;
@@ -31,6 +32,12 @@ export class TravelComponent implements OnInit, AfterViewInit {
 
     isChatOpened = false;
     isMapDisplayed = true;
+
+    //map sharing vars
+    isMapSharingActive = false;
+    userMapSharing = [];
+    currentUser;
+
     //when clicking on a marker of the list, it triggers the display of it's information
     markerToDisplay: TravelMarker;
     chatUnreadMessages = 0;
@@ -46,6 +53,7 @@ export class TravelComponent implements OnInit, AfterViewInit {
         // Connect the user to kuzzle and then bootstrap
         this.kuzzleService.userService.connectUserOnKuzzleBackend()
             .then((user) => {
+                this.currentUser = user;
                 // Bootstrap application
                 this.bootstrapApplication(user.travels[0], user); // TODO : Add possibility to choose travel
             })
@@ -59,6 +67,9 @@ export class TravelComponent implements OnInit, AfterViewInit {
         // Initialize travel
         this.kuzzleService.travelStream.subscribe(travel => {
             this.travel = travel;
+            this.travel.members.forEach( (member:User) => {
+                this.userMapSharing.push({member: member, isSharingActive: false});
+            });
         });
     }
 
@@ -142,12 +153,43 @@ export class TravelComponent implements OnInit, AfterViewInit {
     }
 
     /**
+     * enable kuzzle publish current user map position
+     * @param shareUserMap
+     */
+    shareMyMap(shareUserMap:boolean){
+        console.log("User wants to share his map", shareUserMap);
+        this.isMapSharingActive = shareUserMap;
+    }
+
+    /**
+     * enable subscribing to another user map move events
+     */
+    seeOtherUserMap(userSharingInfo){
+        //update members for the kuzzle filter
+        console.log("User wants to see "+userSharingInfo.user.humanName()+" map mousemoves ? : ", userSharingInfo.allowSharing);
+        this.userMapSharing.find( mapSharing =>  mapSharing.member.id === userSharingInfo.user.id).isSharingActive = userSharingInfo.allowSharing;
+        //TODO - unsubscribe to current map sharing stream
+
+        //TODO subscribe with the updated filter
+
+    }
+    
+    /**
      * TODO - Share the cursor latlng on mousemove with team mates
      * an event is received from the map with the current latlng hovered by the mouse, need to share it with kuzzle
      * @param latlng
      */
-    sharePositionWithTeam(latlng:LatLng){
-
+    sharePositionWithTeam(position:LatLng){
+        console.log("current mouse position: ", position);
+        if(this.isMapSharingActive){
+            this.kuzzleService.mapService.publishMapPosition(new MapPosition(
+                {
+                    travelId: this.travel.id,
+                    latlng: position,
+                    userId: this.currentUser
+                }
+            ));
+        }
     }
 
     /**
