@@ -95,17 +95,19 @@ export class MapService {
 
     public initMapPositionSubscriptionStream(usersToSuscribe: User[], travel:Travel) {
         var collectionName = 'mapSharing';
+        var usersIds = [];
+        usersToSuscribe.map(user => user.id).forEach( element => usersIds.push(element) );
+
         var filter = {
             and: [
                 {
                     term: { travelId: travel.id }
                 },
                 {
-                    term: { userId: usersToSuscribe.map( user => user.id) }
+                    term: { userId: usersIds }
                 }
             ]
         };
-        console.log(filter);
 
         // Subscribe to variation of map moves
         this.mapPositionKuzzleRoom = this.kuzzle.dataCollectionFactory(collectionName).subscribe(filter, {}, (error:any, result:any) => {
