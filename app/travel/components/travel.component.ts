@@ -171,7 +171,8 @@ export class TravelComponent implements OnInit, AfterViewInit {
         // TODO - unsubscribe to current map sharing stream
         this.kuzzleService.mapService.mapPositionKuzzleRoom.unsubscribe();
         //TODO subscribe with the updated filter
-        this.kuzzleService.mapService.initMapPositionSubscriptionStream(this.userMapSharing, this.travel);
+        let usersToSubscribe = this.userMapSharing.filter( sharing => sharing.isSharingActive === true ).map( sharing => sharing.member );
+        this.kuzzleService.mapService.initMapPositionSubscriptionStream(usersToSubscribe, this.travel);
     }
     
     /**
@@ -180,7 +181,7 @@ export class TravelComponent implements OnInit, AfterViewInit {
      * @param latlng
      */
     sharePositionWithTeam(position:LatLng){
-        console.log("current mouse position: ", position);
+        //console.log("current mouse position: ", position);
         if(this.isMapSharingActive){
             this.kuzzleService.mapService.publishMapPosition(new MapPosition(
                 {

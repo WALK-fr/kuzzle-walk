@@ -105,6 +105,7 @@ export class MapService {
                 }
             ]
         };
+        console.log(filter);
 
         // Subscribe to variation of map moves
         this.mapPositionKuzzleRoom = this.kuzzle.dataCollectionFactory(collectionName).subscribe(filter, {}, (error:any, result:any) => {
