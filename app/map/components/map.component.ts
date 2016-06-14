@@ -38,7 +38,8 @@ export class MapComponent implements OnInit{
     map:L.Map;
     user:User;
     travel:Travel;
-    temporaryPoint: Circle = new L.Circle(new L.LatLng(48,2.3), 3);
+    travelMembersCursors: any = [];
+
     selectedMarkerId: string;
     temporaryMarker: TravelMarker;
     markers: TravelMarker[] = [];
@@ -60,16 +61,6 @@ export class MapComponent implements OnInit{
 
         // We bind the clicks to the emitter so we can give it to the POI Form
         this.bindClickOnMap();
-
-        //map sharing subscription
-        this.kuzzleService.mapService.getMapPositionStream().subscribe( mapPosition =>{
-            //console.log("received from user "+mapPosition.userId+ " position : lat"+mapPosition.latlng.lat+" lng:"+mapPosition.latlng.lng);
-            if(this.temporaryPoint){
-                this.map.removeLayer(this.temporaryPoint);
-                this.temporaryPoint.setLatLng(mapPosition.latlng).addTo(this.map);
-            }
-        });
-
 
         this.bindMouseMoveOnMap();
 
@@ -98,6 +89,14 @@ export class MapComponent implements OnInit{
                 // Fetch the markers
                 this.travel.travelMarkerCollection
                     .forEach(marker => latLngCollection.push(L.latLng(marker.latitude, marker.longitude)));
+
+                //create a mapMove circle for each travel member
+                this.travel.members.forEach( (member, index) => {
+                    this.travelMembersCursors.push({
+                        member : member,
+                        cursor: new L.Circle(new L.LatLng(43,2.2), {color: "#000000", fill: true, fillOpacity: 0.5, clickable: false, className: 'cursor'+index })
+                    });
+                });
 
                 // Set the map view bounds
                 if (latLngCollection.length > 0) {
@@ -179,11 +178,26 @@ export class MapComponent implements OnInit{
      * debounce reduce the number of emittions
      */
     bindMouseMoveOnMap(){
-        // Bind the msouse over event for the shareMap feature with an Observable so we can debounce and reduce by 10 the number of transmitted points
+
+        // Bind the mouse over event for the shareMap feature with an Observable so we can debounce and reduce by 10 the number of transmitted points
         var mouseMoveObservable = Observable.fromEvent(this.map, "mousemove")
             .debounceTime(10);
 
         mouseMoveObservable.subscribe((e: L.LeafletMouseEvent) => this.emitMouseMouvements(e));
+
+        //map sharing subscription to receive other people's positions
+        this.kuzzleService.mapService.getMapPositionStream().subscribe( mapPosition =>{
+            //console.log("received from user "+mapPosition.userId+ " position : lat"+mapPosition.latlng.lat+" lng:"+mapPosition.latlng.lng);
+
+            //let's find each members cursor and move them on the map
+            let userCursor = this.travelMembersCursors.find(cursors => cursors.member.id === mapPosition.userId).cursor;
+            if(userCursor && mapPosition.latlng.lat && mapPosition.latlng.lng){
+                console.log('hello', mapPosition.latlng);
+                this.map.removeLayer(userCursor);
+                userCursor.setLatLng(mapPosition.latlng).addTo(this.map);
+            }
+        });
+
     }
 
     /**
