@@ -95,16 +95,13 @@ export class MapService {
 
     public initMapPositionSubscriptionStream(usersToSuscribe: User[], travel:Travel) {
         var collectionName = 'mapSharing';
-        var usersIds = [];
-        usersToSuscribe.map(user => user.id).forEach( element => usersIds.push(element) );
-
         var filter = {
             and: [
                 {
                     term: { travelId: travel.id }
                 },
                 {
-                    term: { userId: usersIds }
+                    terms: { userId: usersToSuscribe.map(user => user.id) }
                 }
             ]
         };

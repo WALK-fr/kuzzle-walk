@@ -158,7 +158,7 @@ export class TravelComponent implements OnInit, AfterViewInit {
      * @param shareUserMap
      */
     shareMyMap(shareUserMap:boolean){
-        console.log("User wants to share his map", shareUserMap);
+        //console.log("User wants to share his map", shareUserMap);
         this.isMapSharingActive = shareUserMap;
     }
 

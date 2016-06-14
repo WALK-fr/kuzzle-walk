@@ -8,6 +8,7 @@ import { MarkerComponent } from "./marker.component";
 import LeafletMouseEvent = L.LeafletMouseEvent;
 import Point = L.Point;
 import Circle = L.Circle;
+import {Observable} from "rxjs/Observable";
 
 // this is used to accept jquery token at compilation time
 declare var $:any;
@@ -62,18 +63,15 @@ export class MapComponent implements OnInit{
 
         //map sharing subscription
         this.kuzzleService.mapService.getMapPositionStream().subscribe( mapPosition =>{
-            console.log("received from user "+mapPosition.userId+ " position : lat"+mapPosition.latlng.lat+" lng:"+mapPosition.latlng.lng);
+            //console.log("received from user "+mapPosition.userId+ " position : lat"+mapPosition.latlng.lat+" lng:"+mapPosition.latlng.lng);
             if(this.temporaryPoint){
                 this.map.removeLayer(this.temporaryPoint);
                 this.temporaryPoint.setLatLng(mapPosition.latlng).addTo(this.map);
             }
         });
 
-        // Pierre: on le garde ?
-        // Bind the msouse over event for the shareMap feature
-        this.map.on('mousemove', (e: L.LeafletMouseEvent) => {
-            this.emitMouseMouvements(e);
-        });
+
+        this.bindMouseMoveOnMap();
 
         // Add layergroups for each category of marker
         this.markersCategories
@@ -174,6 +172,18 @@ export class MapComponent implements OnInit{
             //emit the new event to display the panel Form
             this.mapClick.emit({marker: this.temporaryMarker});
         });
+    }
+
+    /**
+     * emits latlng of cursor on the map when user hover it
+     * debounce reduce the number of emittions
+     */
+    bindMouseMoveOnMap(){
+        // Bind the msouse over event for the shareMap feature with an Observable so we can debounce and reduce by 10 the number of transmitted points
+        var mouseMoveObservable = Observable.fromEvent(this.map, "mousemove")
+            .debounceTime(10);
+
+        mouseMoveObservable.subscribe((e: L.LeafletMouseEvent) => this.emitMouseMouvements(e));
     }
 
     /**
