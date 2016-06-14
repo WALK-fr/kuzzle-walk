@@ -94,7 +94,18 @@ export class MapComponent implements OnInit{
                 this.travel.members.forEach( (member, index) => {
                     this.travelMembersCursors.push({
                         member : member,
-                        cursor: new L.Circle(new L.LatLng(43,2.2), {color: "#000000", fill: true, fillOpacity: 0.5, clickable: false, className: 'cursor'+index })
+                        cursor: new L.Circle(
+                            new L.LatLng(43.0,2.2),
+                            10,
+                            {
+                                color: "#FFFFFF",
+                                fill: true,
+                                fillColor: "#"+((1<<24)*Math.random()|0).toString(16),
+                                fillOpacity: 0.5,
+                                clickable: false,
+                                className: 'cursor'+index
+                            }
+                        )
                     });
                 });
 
@@ -194,7 +205,9 @@ export class MapComponent implements OnInit{
             if(userCursor && mapPosition.latlng.lat && mapPosition.latlng.lng){
                 console.log('hello', mapPosition.latlng);
                 this.map.removeLayer(userCursor);
+                console.log('trhhh', userCursor);
                 userCursor.setLatLng(mapPosition.latlng).addTo(this.map);
+                console.log('trrrrrrezze', mapPosition.latlng);
             }
         });
 
