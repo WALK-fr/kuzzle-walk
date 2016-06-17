@@ -99,7 +99,7 @@ export class MapComponent implements OnInit{
                             {
                                 color: "#000000",
                                 fill: true,
-                                radius: 30,
+                                radius: 10,
                                 fillColor: "#"+((1<<24)*Math.random()|0).toString(16),
                                 fillOpacity: 0.5,
                                 clickable: false,
