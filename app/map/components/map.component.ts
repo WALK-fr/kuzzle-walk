@@ -94,7 +94,7 @@ export class MapComponent implements OnInit{
                 this.travel.members.forEach( (member, index) => {
                     this.travelMembersCursors.push({
                         member : member,
-                        cursor: new L.CircleMarker(
+                        cursor: new L.Marker(
                             new L.LatLng(43.0,2.2),
                             {
                                 icon: new L.icon({iconUrl: member.photoUrl, iconSize: [32, 32], iconAnchor: [0,0]}),
