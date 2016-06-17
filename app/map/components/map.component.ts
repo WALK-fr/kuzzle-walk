@@ -97,6 +97,7 @@ export class MapComponent implements OnInit{
                         cursor: new L.CircleMarker(
                             new L.LatLng(43.0,2.2),
                             {
+                                icon: new L.icon({iconUrl: member.photoUrl, iconSize: [32, 32]}),
                                 color: "#333333",
                                 fill: true,
                                 radius: 8,
