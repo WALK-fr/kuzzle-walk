@@ -96,7 +96,7 @@ export class MapComponent implements OnInit{
                         member : member,
                         cursor: new L.Circle(
                             new L.LatLng(43.0,2.2),
-                            10,
+                            250,
                             {
                                 color: "#FFFFFF",
                                 fill: true,
@@ -203,11 +203,8 @@ export class MapComponent implements OnInit{
             //let's find each members cursor and move them on the map
             let userCursor = this.travelMembersCursors.find(cursors => cursors.member.id === mapPosition.userId).cursor;
             if(userCursor && mapPosition.latlng.lat && mapPosition.latlng.lng){
-                console.log('hello', mapPosition.latlng);
                 this.map.removeLayer(userCursor);
-                console.log('trhhh', userCursor);
                 userCursor.setLatLng(mapPosition.latlng).addTo(this.map);
-                console.log('trrrrrrezze', mapPosition.latlng);
             }
         });
 
