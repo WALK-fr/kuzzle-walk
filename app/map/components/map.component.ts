@@ -93,17 +93,24 @@ export class MapComponent implements OnInit{
                 //create a mapMove circle for each travel member
                 this.travel.members.forEach( (member, index) => {
                     let cursor = new L.Marker(
-                        new L.LatLng(43.0,2.2),
+                        new L.LatLng(0,0),
                         {
                             icon: new L.icon({iconUrl: member.photoUrl, iconSize: [28, 28], iconAnchor: [0,0]}),
-                            opacity: 0.9,
+                            opacity: 0,
                             clickable: false,
                             draggable: false,
                             keyboard: false,
                             zIndexOffset: 999,
-                            riseOnHover: false,
+                            riseOnHover: false
                         }
                     );
+
+                    //adding a circle class to the icon when added on map
+                    cursor.on('add', (e) => {
+                        $(e.target._icon).addClass('circle member-marker');
+                    });
+
+                    this.map.addLayer(cursor);
 
                     this.travelMembersCursors.push({
                         member : member,
@@ -205,14 +212,7 @@ export class MapComponent implements OnInit{
             //let's find each members cursor and move them on the map
             let userCursor = this.travelMembersCursors.find(cursors => cursors.member.id === mapPosition.userId).cursor;
             if(userCursor && mapPosition.latlng.lat && mapPosition.latlng.lng){
-                this.map.removeLayer(userCursor);
-
-                //adding a circle class to the icon when added on map
-                userCursor.on('add', function(e){
-                    $(e.target._icon).addClass('circle member-marker');
-                });
-
-                userCursor.setLatLng(mapPosition.latlng).addTo(this.map);
+                userCursor.setLatLng(mapPosition.latlng).setOpacity(0.9);
             }
         });
 
@@ -233,13 +233,6 @@ export class MapComponent implements OnInit{
      */
     markerClicked(markerInfo) {
         this.markerClick.emit(markerInfo);
-    }
-
-    /**
-     * triggered when a marker is persisted in order to delete the temporary and display the persistant
-     */
-    deleteTemporaryMarker() {
-        this.temporaryMarker = null;
     }
 
     /**

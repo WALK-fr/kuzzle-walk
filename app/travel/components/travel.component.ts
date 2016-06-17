@@ -157,9 +157,9 @@ export class TravelComponent implements OnInit, AfterViewInit {
      * toggle enable / disable kuzzle publish current user map position
      * @param shareUserMap
      */
-    shareMyMap(shareUserMap:boolean){
+    shareMyMap(shareUserMap:any){
         //console.log("User wants to share his map", shareUserMap);
-        this.isMapSharingActive = shareUserMap;
+        this.isMapSharingActive = shareUserMap.shareUserMap;
     }
 
     /**
@@ -181,6 +181,7 @@ export class TravelComponent implements OnInit, AfterViewInit {
      * @param latlng
      */
     sharePositionWithTeam(position:LatLng){
+        // console.log(this.isMapSharingActive);
         //console.log("current mouse position: ", position);
         if(this.isMapSharingActive){
             this.kuzzleService.mapService.publishMapPosition(new MapPosition(
