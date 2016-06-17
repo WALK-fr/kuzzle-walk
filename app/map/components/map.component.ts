@@ -94,12 +94,12 @@ export class MapComponent implements OnInit{
                 this.travel.members.forEach( (member, index) => {
                     this.travelMembersCursors.push({
                         member : member,
-                        cursor: new L.Circle(
+                        cursor: new L.CircleMarker(
                             new L.LatLng(43.0,2.2),
-                            250,
                             {
-                                color: "#FFFFFF",
+                                color: "#000000",
                                 fill: true,
+                                radius: 30,
                                 fillColor: "#"+((1<<24)*Math.random()|0).toString(16),
                                 fillOpacity: 0.5,
                                 clickable: false,
