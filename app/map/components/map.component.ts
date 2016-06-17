@@ -92,18 +92,22 @@ export class MapComponent implements OnInit{
 
                 //create a mapMove circle for each travel member
                 this.travel.members.forEach( (member, index) => {
+                    let cursor = new L.Marker(
+                        new L.LatLng(43.0,2.2),
+                        {
+                            icon: new L.icon({iconUrl: member.photoUrl, iconSize: [28, 28], iconAnchor: [0,0]}),
+                            opacity: 0.9,
+                            clickable: false,
+                            draggable: false,
+                            keyboard: false,
+                            zIndexOffset: 999,
+                            riseOnHover: false,
+                        }
+                    );
+
                     this.travelMembersCursors.push({
                         member : member,
-                        cursor: new L.Marker(
-                            new L.LatLng(43.0,2.2),
-                            {
-                                icon: new L.icon({iconUrl: member.photoUrl, iconSize: [32, 32], iconAnchor: [0,0]}),
-                                color: "#333333",
-                                radius: 8,
-                                clickable: false,
-                                className: 'cursor'+index
-                            }
-                        )
+                        cursor: cursor
                     });
                 });
 
@@ -202,6 +206,12 @@ export class MapComponent implements OnInit{
             let userCursor = this.travelMembersCursors.find(cursors => cursors.member.id === mapPosition.userId).cursor;
             if(userCursor && mapPosition.latlng.lat && mapPosition.latlng.lng){
                 this.map.removeLayer(userCursor);
+
+                //adding a circle class to the icon when added on map
+                userCursor.on('add', function(e){
+                    $(e.target._icon).addClass('circle member-marker');
+                });
+
                 userCursor.setLatLng(mapPosition.latlng).addTo(this.map);
             }
         });

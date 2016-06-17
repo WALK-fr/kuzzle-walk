@@ -112,3 +112,7 @@ h1, h2, h3, h4, h5, h6{
   left: auto;
   opacity: 1;
 }
+
+.member-marker{
+  border: 2px solid #FFF;
+}
