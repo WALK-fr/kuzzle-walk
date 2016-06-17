@@ -97,9 +97,9 @@ export class MapComponent implements OnInit{
                         cursor: new L.CircleMarker(
                             new L.LatLng(43.0,2.2),
                             {
-                                color: "#000000",
+                                color: "#333333",
                                 fill: true,
-                                radius: 10,
+                                radius: 8,
                                 fillColor: "#"+((1<<24)*Math.random()|0).toString(16),
                                 fillOpacity: 0.5,
                                 clickable: false,
@@ -192,7 +192,7 @@ export class MapComponent implements OnInit{
 
         // Bind the mouse over event for the shareMap feature with an Observable so we can debounce and reduce by 10 the number of transmitted points
         var mouseMoveObservable = Observable.fromEvent(this.map, "mousemove")
-            .debounceTime(10);
+            .debounceTime(5);
 
         mouseMoveObservable.subscribe((e: L.LeafletMouseEvent) => this.emitMouseMouvements(e));
 
